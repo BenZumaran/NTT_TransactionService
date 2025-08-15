@@ -1,0 +1,202 @@
+openapi: 3.0.0
+info:
+  title: Transaction API
+  version: 1.0.0
+  description: API to manage financial transactions
+
+servers:
+  - url: http://localhost:8095/api/v1
+
+paths:
+  /transactions:
+    get:
+      summary: Get all transactions
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionGet'
+    post:
+      summary: Create a new transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionPost'
+      responses:
+        '201':
+          description: Transaction created
+  /transactions/{id}:
+    get:
+      summary: Get a transaction by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single transaction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionGet'
+        '404':
+          description: Transaction not found
+    put:
+      summary: Update a transaction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionPut'
+      responses:
+        '200':
+          description: Transaction updated
+    delete:
+      summary: Delete a transaction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Transaction deleted
+
+components:
+  schemas:
+    TransactionGet:
+      type: object
+      properties:
+        id:
+          type: string
+          format: string
+          description: Transaction unique id
+        number:
+          type: integer
+          description: Transaction number
+        product:
+          $ref: '#/components/schemas/Product'
+        type:
+          type: string
+          enum: [deposit, withdrawal, payment, purchase, charge]
+          description: Type of transaction
+        amount:
+          type: number
+          description: Amount to change according transaction type
+        createdDate:
+          type: string
+          format: date-time
+          description: Transaction date
+        client:
+          $ref: '#/components/schemas/Client'
+        holder:
+          $ref: '#/components/schemas/Person'
+        signatory:
+          $ref: '#/components/schemas/Person'
+
+    TransactionPost:
+      type: object
+      properties:
+        product:
+          $ref: '#/components/schemas/Product'
+        type:
+          type: string
+          enum: [deposit, withdrawal, payment, purchase, charge]
+          description: Type of transaction
+        amount:
+          type: number
+          description: Amount to change according transaction type
+        createdDate:
+          type: string
+          format: date-time
+          description: Transaction date
+        client:
+          $ref: '#/components/schemas/Client'
+        holder:
+          $ref: '#/components/schemas/Person'
+        signatory:
+          $ref: '#/components/schemas/Person'
+
+    TransactionPut:
+      type: object
+      properties:
+        id:
+          type: string
+          format: string
+          description: Transaction unique id
+        product:
+          $ref: '#/components/schemas/Product'
+        type:
+          type: string
+          enum: [deposit, withdrawal, payment, purchase, charge]
+          description: Type of transaction
+        amount:
+          type: number
+          description: Amount to change according transaction type
+        client:
+          $ref: '#/components/schemas/Client'
+        holder:
+          $ref: '#/components/schemas/Person'
+        signatory:
+          $ref: '#/components/schemas/Person'
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: string
+          description: Unique ID
+        type:
+          type: string
+          format: string
+          enum: [account, credit]
+          description: Type of product
+        balance:
+          type: number
+          description: Product Balance
+        limit:
+          type: number
+          description: Limit for a Credit Type Product
+    Client:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID
+        type:
+          type: string
+          enum: [personal, business]
+          description: Type of Client
+        document:
+          type: string
+          pattern: '^\d{8,11}$'
+          description: Document number (8, 9, or 11 digits)
+    Person:
+      type: object
+      properties:
+        document:
+          type: string
+          pattern: '^\d{8,11}$'
+          description: Document number (8, 9, or 11 digits)
+        fullName:
+          type: string
+          description: Full responsible name
+        signature:
+          type: string
+          description: URL to signature image

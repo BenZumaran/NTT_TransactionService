@@ -1,0 +1,10 @@
+README.md
+generated-sources/com/nttdata/transaction_service/api/ApiUtil.java
+generated-sources/com/nttdata/transaction_service/api/DefaultApi.java
+generated-sources/com/nttdata/transaction_service/model/Client.java
+generated-sources/com/nttdata/transaction_service/model/Person.java
+generated-sources/com/nttdata/transaction_service/model/Product.java
+generated-sources/com/nttdata/transaction_service/model/TransactionGet.java
+generated-sources/com/nttdata/transaction_service/model/TransactionPost.java
+generated-sources/com/nttdata/transaction_service/model/TransactionPut.java
+pom.xml

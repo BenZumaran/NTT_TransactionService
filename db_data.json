@@ -1,0 +1,117 @@
+[
+  {
+    "_id": { "$oid": "66b85f49e5a4a92c4a302a71" },
+    "number": 1001,
+    "product": {
+      "_id": { "$oid": "66b85f49e5a4a92c4a302a81" },
+      "type": "account"
+    },
+    "type": "deposit",
+    "amount": 1250.75,
+    "createdDate": { "$date": "2016-03-03T08:00:00.000" },
+    "client": {
+      "_id": { "$oid": "66b85f49e5a4a92c4a302a91" },
+      "type": "personal"
+    },
+    "holder": {
+      "document": "45237689",
+      "fullName": "Lucas Hernández",
+      "signature": "https://example.com/signatures/lucas_hernandez.png"
+    },
+    "signatory": {
+      "document": "45237689",
+      "fullName": "Lucas Hernández",
+      "signature": "https://example.com/signatures/lucas_hernandez.png"
+    }
+  },
+  {
+    "_id": { "$oid": "66b85f49e5a4a92c4a302a72" },
+    "number": 1002,
+    "product": {
+      "_id": { "$oid": "66b85f49e5a4a92c4a302a82" },
+      "type": "credit"
+    },
+    "type": "purchase",
+    "amount": 320.5,
+    "createdDate": { "$date": "2016-03-03T08:00:00.000" },
+    "client": {
+      "_id": { "$oid": "66b85f49e5a4a92c4a302a92" },
+      "type": "business"
+    },
+    "holder": {
+      "document": "982734569",
+      "fullName": "Marta Ruiz",
+      "signature": "https://example.com/signatures/marta_ruiz.png"
+    }
+  },
+  {
+    "_id": { "$oid": "66b85f49e5a4a92c4a302a73" },
+    "number": 1003,
+    "product": {
+      "_id": { "$oid": "66b85f49e5a4a92c4a302a83" },
+      "type": "account"
+    },
+    "type": "withdrawal",
+    "amount": 850.0,
+    "createdDate": { "$date": "2016-03-03T08:00:00.000" },
+    "client": {
+      "_id": { "$oid": "66b85f49e5a4a92c4a302a93" },
+      "type": "personal"
+    },
+    "holder": {
+      "document": "10384756211",
+      "fullName": "Diego Torres",
+      "signature": "https://example.com/signatures/diego_torres.png"
+    },
+    "signatory": {
+      "document": "10384756211",
+      "fullName": "Diego Torres",
+      "signature": "https://example.com/signatures/diego_torres.png"
+    }
+  },
+  {
+    "_id": { "$oid": "66b85f49e5a4a92c4a302a74" },
+    "number": 1004,
+    "product": {
+      "_id": { "$oid": "66b85f49e5a4a92c4a302a84" },
+      "type": "credit"
+    },
+    "type": "charge",
+    "amount": 150.25,
+    "createdDate": { "$date": "2016-03-03T08:00:00.000" },
+    "client": {
+      "_id": { "$oid": "66b85f49e5a4a92c4a302a94" },
+      "type": "business"
+    },
+    "signatory": {
+      "document": "78546321",
+      "fullName": "Andrea Fernández",
+      "signature": "https://example.com/signatures/andrea_fernandez.png"
+    }
+  },
+  {
+    "_id": { "$oid": "66b85f49e5a4a92c4a302a75" },
+    "number": 1005,
+    "product": {
+      "_id": { "$oid": "66b85f49e5a4a92c4a302a85" },
+      "type": "account"
+    },
+    "type": "payment",
+    "amount": 940.9,
+    "createdDate": { "$date": "2016-03-03T08:00:00.000" },
+    "client": {
+      "_id": { "$oid": "66b85f49e5a4a92c4a302a95" },
+      "type": "personal"
+    },
+    "holder": {
+      "document": "849375610",
+      "fullName": "Sofía Castillo",
+      "signature": "https://example.com/signatures/sofia_castillo.png"
+    },
+    "signatory": {
+      "document": "849375610",
+      "fullName": "Sofía Castillo",
+      "signature": "https://example.com/signatures/sofia_castillo.png"
+    }
+  }
+]
