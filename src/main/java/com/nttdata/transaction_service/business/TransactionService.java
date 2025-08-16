@@ -15,12 +15,12 @@ public interface TransactionService {
 
     ResponseEntity<List<TransactionGet>> transactionsGet();
 
-    ResponseEntity<Void> transactionsPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody TransactionPost transactionPost);
+    ResponseEntity<TransactionGet> transactionsPost(TransactionPost transactionPost);
 
-    ResponseEntity<Void> transactionsIdPut(@ApiParam(value = "",required=true) @PathVariable("id") String id, @ApiParam(value = "" ,required=true )  @Valid @RequestBody TransactionPut transactionPut);
+    ResponseEntity<TransactionGet> transactionsPut(TransactionPut transactionPut);
 
-    ResponseEntity<TransactionGet> transactionsIdGet(@ApiParam(value = "",required=true) @PathVariable("id") String id);
+    ResponseEntity<TransactionGet> transactionsIdGet(String id);
 
-    ResponseEntity<Void> transactionsIdDelete(@ApiParam(value = "",required=true) @PathVariable("id") String id);
+    ResponseEntity<Void> transactionsIdDelete(String id);
 
 }

@@ -6,17 +6,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.io.Serializable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Product
+ * TransactionPostProduct
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class Product  implements Serializable {
+public class TransactionPostProduct  implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @JsonProperty("id")
@@ -60,16 +59,7 @@ public class Product  implements Serializable {
   @JsonProperty("type")
   private TypeEnum type;
 
-  @JsonProperty("number")
-  private JsonNullable<String> number = JsonNullable.undefined();
-
-  @JsonProperty("balance")
-  private BigDecimal balance;
-
-  @JsonProperty("limit")
-  private BigDecimal limit;
-
-  public Product id(String id) {
+  public TransactionPostProduct id(String id) {
     this.id = id;
     return this;
   }
@@ -89,7 +79,7 @@ public class Product  implements Serializable {
     this.id = id;
   }
 
-  public Product type(TypeEnum type) {
+  public TransactionPostProduct type(TypeEnum type) {
     this.type = type;
     return this;
   }
@@ -109,68 +99,6 @@ public class Product  implements Serializable {
     this.type = type;
   }
 
-  public Product number(String number) {
-    this.number = JsonNullable.of(number);
-    return this;
-  }
-
-  /**
-   * Number of products if corresponds
-   * @return number
-  */
-  @ApiModelProperty(value = "Number of products if corresponds")
-
-
-  public JsonNullable<String> getNumber() {
-    return number;
-  }
-
-  public void setNumber(JsonNullable<String> number) {
-    this.number = number;
-  }
-
-  public Product balance(BigDecimal balance) {
-    this.balance = balance;
-    return this;
-  }
-
-  /**
-   * Product Balance
-   * @return balance
-  */
-  @ApiModelProperty(value = "Product Balance")
-
-  @Valid
-
-  public BigDecimal getBalance() {
-    return balance;
-  }
-
-  public void setBalance(BigDecimal balance) {
-    this.balance = balance;
-  }
-
-  public Product limit(BigDecimal limit) {
-    this.limit = limit;
-    return this;
-  }
-
-  /**
-   * Limit for a Credit Type Product
-   * @return limit
-  */
-  @ApiModelProperty(value = "Limit for a Credit Type Product")
-
-  @Valid
-
-  public BigDecimal getLimit() {
-    return limit;
-  }
-
-  public void setLimit(BigDecimal limit) {
-    this.limit = limit;
-  }
-
 
   @Override
   public boolean equals(Object o) {
@@ -180,29 +108,23 @@ public class Product  implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Product product = (Product) o;
-    return Objects.equals(this.id, product.id) &&
-        Objects.equals(this.type, product.type) &&
-        Objects.equals(this.number, product.number) &&
-        Objects.equals(this.balance, product.balance) &&
-        Objects.equals(this.limit, product.limit);
+    TransactionPostProduct transactionPostProduct = (TransactionPostProduct) o;
+    return Objects.equals(this.id, transactionPostProduct.id) &&
+        Objects.equals(this.type, transactionPostProduct.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type, number, balance, limit);
+    return Objects.hash(id, type);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Product {\n");
+    sb.append("class TransactionPostProduct {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    number: ").append(toIndentedString(number)).append("\n");
-    sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
-    sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
     sb.append("}");
     return sb.toString();
   }

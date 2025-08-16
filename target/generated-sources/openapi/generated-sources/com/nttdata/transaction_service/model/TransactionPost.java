@@ -4,13 +4,12 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.nttdata.transaction_service.model.Client;
 import com.nttdata.transaction_service.model.Person;
-import com.nttdata.transaction_service.model.Product;
+import com.nttdata.transaction_service.model.TransactionPostClient;
+import com.nttdata.transaction_service.model.TransactionPostProduct;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import java.util.Date;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.io.Serializable;
 import javax.validation.Valid;
@@ -24,7 +23,7 @@ public class TransactionPost  implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @JsonProperty("product")
-  private Product product;
+  private TransactionPostProduct product;
 
   /**
    * Type of transaction
@@ -73,20 +72,16 @@ public class TransactionPost  implements Serializable {
   @JsonProperty("amount")
   private BigDecimal amount;
 
-  @JsonProperty("createdDate")
-  @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME)
-  private Date createdDate;
-
   @JsonProperty("client")
-  private Client client;
+  private TransactionPostClient client;
 
   @JsonProperty("holder")
-  private Person holder;
+  private JsonNullable<Person> holder = JsonNullable.undefined();
 
   @JsonProperty("signatory")
-  private Person signatory;
+  private JsonNullable<Person> signatory = JsonNullable.undefined();
 
-  public TransactionPost product(Product product) {
+  public TransactionPost product(TransactionPostProduct product) {
     this.product = product;
     return this;
   }
@@ -99,11 +94,11 @@ public class TransactionPost  implements Serializable {
 
   @Valid
 
-  public Product getProduct() {
+  public TransactionPostProduct getProduct() {
     return product;
   }
 
-  public void setProduct(Product product) {
+  public void setProduct(TransactionPostProduct product) {
     this.product = product;
   }
 
@@ -148,28 +143,7 @@ public class TransactionPost  implements Serializable {
     this.amount = amount;
   }
 
-  public TransactionPost createdDate(Date createdDate) {
-    this.createdDate = createdDate;
-    return this;
-  }
-
-  /**
-   * Transaction date
-   * @return createdDate
-  */
-  @ApiModelProperty(value = "Transaction date")
-
-  @Valid
-
-  public Date getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(Date createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public TransactionPost client(Client client) {
+  public TransactionPost client(TransactionPostClient client) {
     this.client = client;
     return this;
   }
@@ -182,16 +156,16 @@ public class TransactionPost  implements Serializable {
 
   @Valid
 
-  public Client getClient() {
+  public TransactionPostClient getClient() {
     return client;
   }
 
-  public void setClient(Client client) {
+  public void setClient(TransactionPostClient client) {
     this.client = client;
   }
 
   public TransactionPost holder(Person holder) {
-    this.holder = holder;
+    this.holder = JsonNullable.of(holder);
     return this;
   }
 
@@ -203,16 +177,16 @@ public class TransactionPost  implements Serializable {
 
   @Valid
 
-  public Person getHolder() {
+  public JsonNullable<Person> getHolder() {
     return holder;
   }
 
-  public void setHolder(Person holder) {
+  public void setHolder(JsonNullable<Person> holder) {
     this.holder = holder;
   }
 
   public TransactionPost signatory(Person signatory) {
-    this.signatory = signatory;
+    this.signatory = JsonNullable.of(signatory);
     return this;
   }
 
@@ -224,11 +198,11 @@ public class TransactionPost  implements Serializable {
 
   @Valid
 
-  public Person getSignatory() {
+  public JsonNullable<Person> getSignatory() {
     return signatory;
   }
 
-  public void setSignatory(Person signatory) {
+  public void setSignatory(JsonNullable<Person> signatory) {
     this.signatory = signatory;
   }
 
@@ -245,7 +219,6 @@ public class TransactionPost  implements Serializable {
     return Objects.equals(this.product, transactionPost.product) &&
         Objects.equals(this.type, transactionPost.type) &&
         Objects.equals(this.amount, transactionPost.amount) &&
-        Objects.equals(this.createdDate, transactionPost.createdDate) &&
         Objects.equals(this.client, transactionPost.client) &&
         Objects.equals(this.holder, transactionPost.holder) &&
         Objects.equals(this.signatory, transactionPost.signatory);
@@ -253,7 +226,7 @@ public class TransactionPost  implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(product, type, amount, createdDate, client, holder, signatory);
+    return Objects.hash(product, type, amount, client, holder, signatory);
   }
 
   @Override
@@ -264,7 +237,6 @@ public class TransactionPost  implements Serializable {
     sb.append("    product: ").append(toIndentedString(product)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
-    sb.append("    createdDate: ").append(toIndentedString(createdDate)).append("\n");
     sb.append("    client: ").append(toIndentedString(client)).append("\n");
     sb.append("    holder: ").append(toIndentedString(holder)).append("\n");
     sb.append("    signatory: ").append(toIndentedString(signatory)).append("\n");

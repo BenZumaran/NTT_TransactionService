@@ -6,29 +6,28 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.math.BigDecimal;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.io.Serializable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Product
+ * ClientNullable
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class Product  implements Serializable {
+public class ClientNullable  implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @JsonProperty("id")
   private String id;
 
   /**
-   * Type of product
+   * Type of Client
    */
   public enum TypeEnum {
-    ACCOUNT("account"),
+    PERSONAL("personal"),
     
-    CREDIT("credit");
+    BUSINESS("business");
 
     private String value;
 
@@ -60,16 +59,10 @@ public class Product  implements Serializable {
   @JsonProperty("type")
   private TypeEnum type;
 
-  @JsonProperty("number")
-  private JsonNullable<String> number = JsonNullable.undefined();
+  @JsonProperty("document")
+  private String document;
 
-  @JsonProperty("balance")
-  private BigDecimal balance;
-
-  @JsonProperty("limit")
-  private BigDecimal limit;
-
-  public Product id(String id) {
+  public ClientNullable id(String id) {
     this.id = id;
     return this;
   }
@@ -89,16 +82,16 @@ public class Product  implements Serializable {
     this.id = id;
   }
 
-  public Product type(TypeEnum type) {
+  public ClientNullable type(TypeEnum type) {
     this.type = type;
     return this;
   }
 
   /**
-   * Type of product
+   * Type of Client
    * @return type
   */
-  @ApiModelProperty(value = "Type of product")
+  @ApiModelProperty(value = "Type of Client")
 
 
   public TypeEnum getType() {
@@ -109,66 +102,24 @@ public class Product  implements Serializable {
     this.type = type;
   }
 
-  public Product number(String number) {
-    this.number = JsonNullable.of(number);
+  public ClientNullable document(String document) {
+    this.document = document;
     return this;
   }
 
   /**
-   * Number of products if corresponds
-   * @return number
+   * Document number (8, 9, or 11 digits)
+   * @return document
   */
-  @ApiModelProperty(value = "Number of products if corresponds")
+  @ApiModelProperty(value = "Document number (8, 9, or 11 digits)")
 
-
-  public JsonNullable<String> getNumber() {
-    return number;
+@Pattern(regexp="^\\d{8,11}$") 
+  public String getDocument() {
+    return document;
   }
 
-  public void setNumber(JsonNullable<String> number) {
-    this.number = number;
-  }
-
-  public Product balance(BigDecimal balance) {
-    this.balance = balance;
-    return this;
-  }
-
-  /**
-   * Product Balance
-   * @return balance
-  */
-  @ApiModelProperty(value = "Product Balance")
-
-  @Valid
-
-  public BigDecimal getBalance() {
-    return balance;
-  }
-
-  public void setBalance(BigDecimal balance) {
-    this.balance = balance;
-  }
-
-  public Product limit(BigDecimal limit) {
-    this.limit = limit;
-    return this;
-  }
-
-  /**
-   * Limit for a Credit Type Product
-   * @return limit
-  */
-  @ApiModelProperty(value = "Limit for a Credit Type Product")
-
-  @Valid
-
-  public BigDecimal getLimit() {
-    return limit;
-  }
-
-  public void setLimit(BigDecimal limit) {
-    this.limit = limit;
+  public void setDocument(String document) {
+    this.document = document;
   }
 
 
@@ -180,29 +131,25 @@ public class Product  implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Product product = (Product) o;
-    return Objects.equals(this.id, product.id) &&
-        Objects.equals(this.type, product.type) &&
-        Objects.equals(this.number, product.number) &&
-        Objects.equals(this.balance, product.balance) &&
-        Objects.equals(this.limit, product.limit);
+    ClientNullable clientNullable = (ClientNullable) o;
+    return Objects.equals(this.id, clientNullable.id) &&
+        Objects.equals(this.type, clientNullable.type) &&
+        Objects.equals(this.document, clientNullable.document);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type, number, balance, limit);
+    return Objects.hash(id, type, document);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Product {\n");
+    sb.append("class ClientNullable {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    number: ").append(toIndentedString(number)).append("\n");
-    sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
-    sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
+    sb.append("    document: ").append(toIndentedString(document)).append("\n");
     sb.append("}");
     return sb.toString();
   }

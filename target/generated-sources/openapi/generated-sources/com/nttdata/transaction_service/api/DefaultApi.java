@@ -33,11 +33,11 @@ public interface DefaultApi {
     }
 
     /**
-     * GET /transactions : Get all transactions
+     * GET /transactions : Get List of all transactions
      *
      * @return List of transactions (status code 200)
      */
-    @ApiOperation(value = "Get all transactions", nickname = "transactionsGet", notes = "", response = TransactionGet.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "Get List of all transactions", nickname = "transactionsGet", notes = "", response = TransactionGet.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "List of transactions", response = TransactionGet.class, responseContainer = "List") })
     @GetMapping(
@@ -48,7 +48,7 @@ public interface DefaultApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"number\" : 0, \"product\" : { \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }";
+                    String exampleString = "{ \"number\" : 0, \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -96,7 +96,7 @@ public interface DefaultApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"number\" : 0, \"product\" : { \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }";
+                    String exampleString = "{ \"number\" : 0, \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -108,39 +108,58 @@ public interface DefaultApi {
 
 
     /**
-     * PUT /transactions/{id} : Update a transaction
+     * POST /transactions : Create a new transaction
      *
-     * @param id  (required)
-     * @param transactionPut  (required)
-     * @return Transaction updated (status code 200)
+     * @param transactionPost  (required)
+     * @return Transaction Created (status code 201)
      */
-    @ApiOperation(value = "Update a transaction", nickname = "transactionsIdPut", notes = "", tags={  })
+    @ApiOperation(value = "Create a new transaction", nickname = "transactionsPost", notes = "", response = TransactionGet.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Transaction updated") })
-    @PutMapping(
-        value = "/transactions/{id}",
+        @ApiResponse(code = 201, message = "Transaction Created", response = TransactionGet.class) })
+    @PostMapping(
+        value = "/transactions",
+        produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Void> transactionsIdPut(@ApiParam(value = "",required=true) @PathVariable("id") String id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody TransactionPut transactionPut) {
+    default ResponseEntity<TransactionGet> transactionsPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody TransactionPost transactionPost) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"number\" : 0, \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
 
 
     /**
-     * POST /transactions : Create a new transaction
+     * PUT /transactions : Update a transaction
      *
-     * @param transactionPost  (required)
-     * @return Transaction created (status code 201)
+     * @param transactionPut  (required)
+     * @return Transaction updated (status code 200)
      */
-    @ApiOperation(value = "Create a new transaction", nickname = "transactionsPost", notes = "", tags={  })
+    @ApiOperation(value = "Update a transaction", nickname = "transactionsPut", notes = "", response = TransactionGet.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 201, message = "Transaction created") })
-    @PostMapping(
+        @ApiResponse(code = 200, message = "Transaction updated", response = TransactionGet.class) })
+    @PutMapping(
         value = "/transactions",
+        produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Void> transactionsPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody TransactionPost transactionPost) {
+    default ResponseEntity<TransactionGet> transactionsPut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody TransactionPut transactionPut) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"number\" : 0, \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

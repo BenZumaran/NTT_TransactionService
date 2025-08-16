@@ -8,6 +8,7 @@ public class Product {
     @Id
     private String _id;
     private String type;
+    private String number;
     private double balance;
     private double limit;
 }

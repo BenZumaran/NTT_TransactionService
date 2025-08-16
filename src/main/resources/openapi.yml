@@ -10,7 +10,7 @@ servers:
 paths:
   /transactions:
     get:
-      summary: Get all transactions
+      summary: Get List of all transactions
       responses:
         '200':
           description: List of transactions
@@ -30,7 +30,26 @@ paths:
               $ref: '#/components/schemas/TransactionPost'
       responses:
         '201':
-          description: Transaction created
+          description: Transaction Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionGet'
+    put:
+      summary: Update a transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionPut'
+      responses:
+        '200':
+          description: Transaction updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionGet'
   /transactions/{id}:
     get:
       summary: Get a transaction by ID
@@ -49,23 +68,6 @@ paths:
                 $ref: '#/components/schemas/TransactionGet'
         '404':
           description: Transaction not found
-    put:
-      summary: Update a transaction
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransactionPut'
-      responses:
-        '200':
-          description: Transaction updated
     delete:
       summary: Delete a transaction
       parameters:
@@ -114,7 +116,17 @@ components:
       type: object
       properties:
         product:
-          $ref: '#/components/schemas/Product'
+          type: object
+          properties:
+            id:
+              type: string
+              format: string
+              description: Unique ID
+            type:
+              type: string
+              format: string
+              enum: [account, credit]
+              description: Type of product
         type:
           type: string
           enum: [deposit, withdrawal, payment, purchase, charge]
@@ -122,12 +134,13 @@ components:
         amount:
           type: number
           description: Amount to change according transaction type
-        createdDate:
-          type: string
-          format: date-time
-          description: Transaction date
         client:
-          $ref: '#/components/schemas/Client'
+          type: object
+          properties:
+            id:
+              type: string
+              format: string
+              description: Client ID
         holder:
           $ref: '#/components/schemas/Person'
         signatory:
@@ -141,16 +154,18 @@ components:
           format: string
           description: Transaction unique id
         product:
-          $ref: '#/components/schemas/Product'
+          $ref: '#/components/schemas/ProductNullable'
         type:
           type: string
+          nullable: true
           enum: [deposit, withdrawal, payment, purchase, charge]
           description: Type of transaction
         amount:
+          nullable: true
           type: number
           description: Amount to change according transaction type
         client:
-          $ref: '#/components/schemas/Client'
+          $ref: '#/components/schemas/ClientNullable'
         holder:
           $ref: '#/components/schemas/Person'
         signatory:
@@ -162,6 +177,35 @@ components:
           type: string
           format: string
           description: Unique ID
+        type:
+          type: string
+          format: string
+          enum: [account, credit]
+          description: Type of product
+        number:
+          type: string
+          format: string
+          description: Number of products if corresponds
+          nullable: true
+        balance:
+          type: number
+          description: Product Balance
+        limit:
+          type: number
+          description: Limit for a Credit Type Product
+    ProductNullable:
+      type: object
+      nullable: true
+      properties:
+        id:
+          type: string
+          format: string
+          description: Unique ID
+        number:
+          type: string
+          format: string
+          description: Number of products if corresponds
+          nullable: true
         type:
           type: string
           format: string
@@ -187,7 +231,23 @@ components:
           type: string
           pattern: '^\d{8,11}$'
           description: Document number (8, 9, or 11 digits)
+    ClientNullable:
+      type: object
+      nullable: true
+      properties:
+        id:
+          type: string
+          description: Unique ID
+        type:
+          type: string
+          enum: [personal, business]
+          description: Type of Client
+        document:
+          type: string
+          pattern: '^\d{8,11}$'
+          description: Document number (8, 9, or 11 digits)
     Person:
+      nullable: true
       type: object
       properties:
         document:

@@ -13,14 +13,17 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Product
+ * ProductNullable
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class Product  implements Serializable {
+public class ProductNullable  implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @JsonProperty("id")
   private String id;
+
+  @JsonProperty("number")
+  private JsonNullable<String> number = JsonNullable.undefined();
 
   /**
    * Type of product
@@ -60,16 +63,13 @@ public class Product  implements Serializable {
   @JsonProperty("type")
   private TypeEnum type;
 
-  @JsonProperty("number")
-  private JsonNullable<String> number = JsonNullable.undefined();
-
   @JsonProperty("balance")
   private BigDecimal balance;
 
   @JsonProperty("limit")
   private BigDecimal limit;
 
-  public Product id(String id) {
+  public ProductNullable id(String id) {
     this.id = id;
     return this;
   }
@@ -89,27 +89,7 @@ public class Product  implements Serializable {
     this.id = id;
   }
 
-  public Product type(TypeEnum type) {
-    this.type = type;
-    return this;
-  }
-
-  /**
-   * Type of product
-   * @return type
-  */
-  @ApiModelProperty(value = "Type of product")
-
-
-  public TypeEnum getType() {
-    return type;
-  }
-
-  public void setType(TypeEnum type) {
-    this.type = type;
-  }
-
-  public Product number(String number) {
+  public ProductNullable number(String number) {
     this.number = JsonNullable.of(number);
     return this;
   }
@@ -129,7 +109,27 @@ public class Product  implements Serializable {
     this.number = number;
   }
 
-  public Product balance(BigDecimal balance) {
+  public ProductNullable type(TypeEnum type) {
+    this.type = type;
+    return this;
+  }
+
+  /**
+   * Type of product
+   * @return type
+  */
+  @ApiModelProperty(value = "Type of product")
+
+
+  public TypeEnum getType() {
+    return type;
+  }
+
+  public void setType(TypeEnum type) {
+    this.type = type;
+  }
+
+  public ProductNullable balance(BigDecimal balance) {
     this.balance = balance;
     return this;
   }
@@ -150,7 +150,7 @@ public class Product  implements Serializable {
     this.balance = balance;
   }
 
-  public Product limit(BigDecimal limit) {
+  public ProductNullable limit(BigDecimal limit) {
     this.limit = limit;
     return this;
   }
@@ -180,27 +180,27 @@ public class Product  implements Serializable {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Product product = (Product) o;
-    return Objects.equals(this.id, product.id) &&
-        Objects.equals(this.type, product.type) &&
-        Objects.equals(this.number, product.number) &&
-        Objects.equals(this.balance, product.balance) &&
-        Objects.equals(this.limit, product.limit);
+    ProductNullable productNullable = (ProductNullable) o;
+    return Objects.equals(this.id, productNullable.id) &&
+        Objects.equals(this.number, productNullable.number) &&
+        Objects.equals(this.type, productNullable.type) &&
+        Objects.equals(this.balance, productNullable.balance) &&
+        Objects.equals(this.limit, productNullable.limit);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, type, number, balance, limit);
+    return Objects.hash(id, number, type, balance, limit);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Product {\n");
+    sb.append("class ProductNullable {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    number: ").append(toIndentedString(number)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    balance: ").append(toIndentedString(balance)).append("\n");
     sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
     sb.append("}");

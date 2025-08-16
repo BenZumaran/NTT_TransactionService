@@ -87,10 +87,10 @@ public class TransactionGet  implements Serializable {
   private Client client;
 
   @JsonProperty("holder")
-  private Person holder;
+  private JsonNullable<Person> holder = JsonNullable.undefined();
 
   @JsonProperty("signatory")
-  private Person signatory;
+  private JsonNullable<Person> signatory = JsonNullable.undefined();
 
   public TransactionGet id(String id) {
     this.id = id;
@@ -237,7 +237,7 @@ public class TransactionGet  implements Serializable {
   }
 
   public TransactionGet holder(Person holder) {
-    this.holder = holder;
+    this.holder = JsonNullable.of(holder);
     return this;
   }
 
@@ -249,16 +249,16 @@ public class TransactionGet  implements Serializable {
 
   @Valid
 
-  public Person getHolder() {
+  public JsonNullable<Person> getHolder() {
     return holder;
   }
 
-  public void setHolder(Person holder) {
+  public void setHolder(JsonNullable<Person> holder) {
     this.holder = holder;
   }
 
   public TransactionGet signatory(Person signatory) {
-    this.signatory = signatory;
+    this.signatory = JsonNullable.of(signatory);
     return this;
   }
 
@@ -270,11 +270,11 @@ public class TransactionGet  implements Serializable {
 
   @Valid
 
-  public Person getSignatory() {
+  public JsonNullable<Person> getSignatory() {
     return signatory;
   }
 
-  public void setSignatory(Person signatory) {
+  public void setSignatory(JsonNullable<Person> signatory) {
     this.signatory = signatory;
   }
 

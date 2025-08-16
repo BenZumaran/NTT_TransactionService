@@ -1,10 +1,15 @@
+.openapi-generator-ignore
 README.md
 generated-sources/com/nttdata/transaction_service/api/ApiUtil.java
 generated-sources/com/nttdata/transaction_service/api/DefaultApi.java
 generated-sources/com/nttdata/transaction_service/model/Client.java
+generated-sources/com/nttdata/transaction_service/model/ClientNullable.java
 generated-sources/com/nttdata/transaction_service/model/Person.java
 generated-sources/com/nttdata/transaction_service/model/Product.java
+generated-sources/com/nttdata/transaction_service/model/ProductNullable.java
 generated-sources/com/nttdata/transaction_service/model/TransactionGet.java
 generated-sources/com/nttdata/transaction_service/model/TransactionPost.java
+generated-sources/com/nttdata/transaction_service/model/TransactionPostClient.java
+generated-sources/com/nttdata/transaction_service/model/TransactionPostProduct.java
 generated-sources/com/nttdata/transaction_service/model/TransactionPut.java
 pom.xml

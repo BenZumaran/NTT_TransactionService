@@ -137,8 +137,10 @@
                                 <library>spring-boot</library>
                                 <useTags>true</useTags>
                                 <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <notNullJacksonAnnotation>true</notNullJacksonAnnotation>
                                 <useSwaggerAnnotations>false</useSwaggerAnnotations>
                                 <serializableModel>true</serializableModel>
+                                <useOptional>true</useOptional>
                             </configOptions>
                         </configuration>
                     </execution>
