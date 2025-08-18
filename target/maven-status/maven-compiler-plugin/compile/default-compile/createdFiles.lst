@@ -1,5 +1,4 @@
 com\nttdata\transaction_service\model\entity\Client.class
-com\nttdata\transaction_service\model\ClientNullable$TypeEnum.class
 com\nttdata\transaction_service\model\TransactionPut.class
 com\nttdata\transaction_service\api\DefaultApi.class
 com\nttdata\transaction_service\model\entity\Product.class
@@ -13,18 +12,16 @@ com\nttdata\transaction_service\model\TransactionPostProduct$TypeEnum.class
 com\nttdata\transaction_service\business\TransactionMapper.class
 com\nttdata\transaction_service\model\entity\Transaction.class
 com\nttdata\transaction_service\model\Client.class
-com\nttdata\transaction_service\model\ProductNullable.class
 com\nttdata\transaction_service\model\TransactionPut$TypeEnum.class
 com\nttdata\transaction_service\TransactionServiceApplication.class
 com\nttdata\transaction_service\business\TransactionService.class
 com\nttdata\transaction_service\model\Client$TypeEnum.class
-com\nttdata\transaction_service\model\ClientNullable.class
 com\nttdata\transaction_service\business\TransactionServiceImp.class
 com\nttdata\transaction_service\model\Person.class
 com\nttdata\transaction_service\model\Product.class
 com\nttdata\transaction_service\model\entity\Person.class
+com\nttdata\transaction_service\model\TransactionGetClientBalance.class
 com\nttdata\transaction_service\repository\TransactionRepository.class
 com\nttdata\transaction_service\model\TransactionPost$TypeEnum.class
 com\nttdata\transaction_service\model\TransactionPostProduct.class
-com\nttdata\transaction_service\model\ProductNullable$TypeEnum.class
 com\nttdata\transaction_service\api\ApiUtil.class

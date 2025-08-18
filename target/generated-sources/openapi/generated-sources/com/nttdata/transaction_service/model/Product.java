@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import org.openapitools.jackson.nullable.JsonNullable;
 import java.io.Serializable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -61,7 +60,7 @@ public class Product  implements Serializable {
   private TypeEnum type;
 
   @JsonProperty("number")
-  private JsonNullable<String> number = JsonNullable.undefined();
+  private String number = null;
 
   @JsonProperty("balance")
   private BigDecimal balance;
@@ -110,7 +109,7 @@ public class Product  implements Serializable {
   }
 
   public Product number(String number) {
-    this.number = JsonNullable.of(number);
+    this.number = number;
     return this;
   }
 
@@ -121,11 +120,11 @@ public class Product  implements Serializable {
   @ApiModelProperty(value = "Number of products if corresponds")
 
 
-  public JsonNullable<String> getNumber() {
+  public String getNumber() {
     return number;
   }
 
-  public void setNumber(JsonNullable<String> number) {
+  public void setNumber(String number) {
     this.number = number;
   }
 
