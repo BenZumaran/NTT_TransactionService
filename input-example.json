@@ -1,0 +1,19 @@
+{
+  "number": 2,
+  "product": {
+    "id": "6338e4fa41055a506748c1a6",
+    "type": "account",
+    "balance": 3201.92,
+    "limit": 3624.79
+  },
+  "type": "deposit",
+  "amount": 150.48,
+  "createdDate": "2016-03-03T13:00:00.000+00:00",
+  "client": {
+    "id": "83622676a8183f3f3c10ae45",
+    "type": "personal",
+    "document": "770272727"
+  },
+  "holder": null,
+  "signatory": null
+}

@@ -3,12 +3,15 @@ package com.nttdata.transaction_service.controller;
 import com.nttdata.transaction_service.business.TransactionService;
 import com.nttdata.transaction_service.business.TransactionServiceImp;
 import com.nttdata.transaction_service.model.TransactionGet;
+import com.nttdata.transaction_service.model.TransactionGetClientBalance;
 import com.nttdata.transaction_service.model.TransactionPost;
 import com.nttdata.transaction_service.model.TransactionPut;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,7 +26,7 @@ public class TransactionController {
             value = "",
             produces = { "application/json" }
     )
-    public ResponseEntity<List<TransactionGet>> transactionsGet(){
+    public Flux<TransactionGet> transactionsGet(){
         return service.transactionsGet();
     }
 
@@ -31,7 +34,7 @@ public class TransactionController {
             value = "/{id}",
             produces = { "application/json" }
     )
-    public ResponseEntity<TransactionGet> transactionsIdGet(@ApiParam(value = "",required=true) @PathVariable("id") String id){
+    public Mono<TransactionGet> transactionsIdGet(@ApiParam(value = "",required=true) @PathVariable("id") String id){
         return service.transactionsIdGet(id);
     }
 
@@ -39,7 +42,7 @@ public class TransactionController {
             value = "",
             consumes = { "application/json" }
     )
-    public ResponseEntity<TransactionGet> transactionsPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody TransactionPost transactionPost){
+    public Mono<TransactionGet> transactionsPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody TransactionPost transactionPost){
         return service.transactionsPost(transactionPost);
     }
 
@@ -48,7 +51,7 @@ public class TransactionController {
             produces = { "application/json" },
             consumes = { "application/json" }
     )
-    public ResponseEntity<TransactionGet> transactionsPut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody TransactionPut transactionPut){
+    public Mono<TransactionGet> transactionsPut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody TransactionPut transactionPut){
         return service.transactionsPut(transactionPut);
     }
 
@@ -56,10 +59,18 @@ public class TransactionController {
     @DeleteMapping(
             value = "/{id}"
     )
-    public ResponseEntity<Void> transactionsIdDelete(@ApiParam(value = "",required=true) @PathVariable("id") String id){
+    public Mono<String> transactionsIdDelete(@ApiParam(value = "",required=true) @PathVariable("id") String id){
         return service.transactionsIdDelete(id);
     }
-
+/*
+    @GetMapping(
+            value = "/transactions/{type}/client/{id}",
+            produces = { "application/json" }
+    )
+    public Mono<TransactionGetClientBalance> transactionsTypeClientIdGet(@ApiParam(value = "",required=true, allowableValues = "\"account\", \"credit\"") @PathVariable("type") String type, @ApiParam(value = "",required=true) @PathVariable("id") String id){
+        return null;
+    }
+*/
 }
 
 

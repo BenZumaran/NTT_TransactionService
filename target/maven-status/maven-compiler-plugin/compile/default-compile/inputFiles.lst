@@ -6,6 +6,7 @@ C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\api\ApiUtil.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\model\Client.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\controller\TransactionController.java
+C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\model\TransactionGetClientBalance.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\business\TransactionService.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\model\TransactionPost.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\model\TransactionPostClient.java
@@ -13,10 +14,8 @@ C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\model\TransactionGet.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\business\TransactionMapper.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\api\DefaultApi.java
-C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\model\ClientNullable.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\model\TransactionPostProduct.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\repository\TransactionRepository.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\model\Product.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\model\entity\Client.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\business\TransactionServiceImp.java
-C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\generated-sources\com\nttdata\transaction_service\model\ProductNullable.java

@@ -10,7 +10,6 @@ import com.nttdata.transaction_service.model.TransactionPostProduct;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import org.openapitools.jackson.nullable.JsonNullable;
 import java.io.Serializable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -76,10 +75,10 @@ public class TransactionPost  implements Serializable {
   private TransactionPostClient client;
 
   @JsonProperty("holder")
-  private JsonNullable<Person> holder = JsonNullable.undefined();
+  private Person holder = null;
 
   @JsonProperty("signatory")
-  private JsonNullable<Person> signatory = JsonNullable.undefined();
+  private Person signatory = null;
 
   public TransactionPost product(TransactionPostProduct product) {
     this.product = product;
@@ -165,7 +164,7 @@ public class TransactionPost  implements Serializable {
   }
 
   public TransactionPost holder(Person holder) {
-    this.holder = JsonNullable.of(holder);
+    this.holder = holder;
     return this;
   }
 
@@ -177,16 +176,16 @@ public class TransactionPost  implements Serializable {
 
   @Valid
 
-  public JsonNullable<Person> getHolder() {
+  public Person getHolder() {
     return holder;
   }
 
-  public void setHolder(JsonNullable<Person> holder) {
+  public void setHolder(Person holder) {
     this.holder = holder;
   }
 
   public TransactionPost signatory(Person signatory) {
-    this.signatory = JsonNullable.of(signatory);
+    this.signatory = signatory;
     return this;
   }
 
@@ -198,11 +197,11 @@ public class TransactionPost  implements Serializable {
 
   @Valid
 
-  public JsonNullable<Person> getSignatory() {
+  public Person getSignatory() {
     return signatory;
   }
 
-  public void setSignatory(JsonNullable<Person> signatory) {
+  public void setSignatory(Person signatory) {
     this.signatory = signatory;
   }
 

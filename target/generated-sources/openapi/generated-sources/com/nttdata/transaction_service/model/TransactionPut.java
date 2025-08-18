@@ -4,13 +4,12 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.nttdata.transaction_service.model.ClientNullable;
+import com.nttdata.transaction_service.model.Client;
 import com.nttdata.transaction_service.model.Person;
-import com.nttdata.transaction_service.model.ProductNullable;
+import com.nttdata.transaction_service.model.Product;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import org.openapitools.jackson.nullable.JsonNullable;
 import java.io.Serializable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -26,7 +25,7 @@ public class TransactionPut  implements Serializable {
   private String id;
 
   @JsonProperty("product")
-  private JsonNullable<ProductNullable> product = JsonNullable.undefined();
+  private Product product;
 
   /**
    * Type of transaction
@@ -65,24 +64,24 @@ public class TransactionPut  implements Serializable {
           return b;
         }
       }
-      return null;
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
   }
 
   @JsonProperty("type")
-  private JsonNullable<TypeEnum> type = JsonNullable.undefined();
+  private TypeEnum type;
 
   @JsonProperty("amount")
-  private JsonNullable<BigDecimal> amount = JsonNullable.undefined();
+  private BigDecimal amount;
 
   @JsonProperty("client")
-  private JsonNullable<ClientNullable> client = JsonNullable.undefined();
+  private Client client;
 
   @JsonProperty("holder")
-  private JsonNullable<Person> holder = JsonNullable.undefined();
+  private Person holder = null;
 
   @JsonProperty("signatory")
-  private JsonNullable<Person> signatory = JsonNullable.undefined();
+  private Person signatory = null;
 
   public TransactionPut id(String id) {
     this.id = id;
@@ -104,8 +103,8 @@ public class TransactionPut  implements Serializable {
     this.id = id;
   }
 
-  public TransactionPut product(ProductNullable product) {
-    this.product = JsonNullable.of(product);
+  public TransactionPut product(Product product) {
+    this.product = product;
     return this;
   }
 
@@ -117,16 +116,16 @@ public class TransactionPut  implements Serializable {
 
   @Valid
 
-  public JsonNullable<ProductNullable> getProduct() {
+  public Product getProduct() {
     return product;
   }
 
-  public void setProduct(JsonNullable<ProductNullable> product) {
+  public void setProduct(Product product) {
     this.product = product;
   }
 
   public TransactionPut type(TypeEnum type) {
-    this.type = JsonNullable.of(type);
+    this.type = type;
     return this;
   }
 
@@ -137,16 +136,16 @@ public class TransactionPut  implements Serializable {
   @ApiModelProperty(value = "Type of transaction")
 
 
-  public JsonNullable<TypeEnum> getType() {
+  public TypeEnum getType() {
     return type;
   }
 
-  public void setType(JsonNullable<TypeEnum> type) {
+  public void setType(TypeEnum type) {
     this.type = type;
   }
 
   public TransactionPut amount(BigDecimal amount) {
-    this.amount = JsonNullable.of(amount);
+    this.amount = amount;
     return this;
   }
 
@@ -158,16 +157,16 @@ public class TransactionPut  implements Serializable {
 
   @Valid
 
-  public JsonNullable<BigDecimal> getAmount() {
+  public BigDecimal getAmount() {
     return amount;
   }
 
-  public void setAmount(JsonNullable<BigDecimal> amount) {
+  public void setAmount(BigDecimal amount) {
     this.amount = amount;
   }
 
-  public TransactionPut client(ClientNullable client) {
-    this.client = JsonNullable.of(client);
+  public TransactionPut client(Client client) {
+    this.client = client;
     return this;
   }
 
@@ -179,16 +178,16 @@ public class TransactionPut  implements Serializable {
 
   @Valid
 
-  public JsonNullable<ClientNullable> getClient() {
+  public Client getClient() {
     return client;
   }
 
-  public void setClient(JsonNullable<ClientNullable> client) {
+  public void setClient(Client client) {
     this.client = client;
   }
 
   public TransactionPut holder(Person holder) {
-    this.holder = JsonNullable.of(holder);
+    this.holder = holder;
     return this;
   }
 
@@ -200,16 +199,16 @@ public class TransactionPut  implements Serializable {
 
   @Valid
 
-  public JsonNullable<Person> getHolder() {
+  public Person getHolder() {
     return holder;
   }
 
-  public void setHolder(JsonNullable<Person> holder) {
+  public void setHolder(Person holder) {
     this.holder = holder;
   }
 
   public TransactionPut signatory(Person signatory) {
-    this.signatory = JsonNullable.of(signatory);
+    this.signatory = signatory;
     return this;
   }
 
@@ -221,11 +220,11 @@ public class TransactionPut  implements Serializable {
 
   @Valid
 
-  public JsonNullable<Person> getSignatory() {
+  public Person getSignatory() {
     return signatory;
   }
 
-  public void setSignatory(JsonNullable<Person> signatory) {
+  public void setSignatory(Person signatory) {
     this.signatory = signatory;
   }
 

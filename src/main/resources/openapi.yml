@@ -36,7 +36,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/TransactionGet'
     put:
-      summary: Update a transaction
+      summary: Update a transaction (Fields except id are optionals)
       requestBody:
         required: true
         content:
@@ -51,6 +51,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/TransactionGet'
   /transactions/{id}:
+    delete:
+      summary: Delete a transaction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Transaction deleted
     get:
       summary: Get a transaction by ID
       parameters:
@@ -68,17 +79,31 @@ paths:
                 $ref: '#/components/schemas/TransactionGet'
         '404':
           description: Transaction not found
-    delete:
-      summary: Delete a transaction
+
+  /transactions/{type}/client/{id}:
+    get:
+      summary: Get Transactions and Products Balance by Client
       parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [account, credit]
+
         - name: id
           in: path
           required: true
           schema:
             type: string
+
       responses:
-        '204':
-          description: Transaction deleted
+        '200':
+          description: Transaction updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionGetClientBalance'
 
 components:
   schemas:
@@ -154,22 +179,32 @@ components:
           format: string
           description: Transaction unique id
         product:
-          $ref: '#/components/schemas/ProductNullable'
+          $ref: '#/components/schemas/Product'
         type:
           type: string
-          nullable: true
           enum: [deposit, withdrawal, payment, purchase, charge]
           description: Type of transaction
         amount:
-          nullable: true
           type: number
           description: Amount to change according transaction type
         client:
-          $ref: '#/components/schemas/ClientNullable'
+          $ref: '#/components/schemas/Client'
         holder:
           $ref: '#/components/schemas/Person'
         signatory:
           $ref: '#/components/schemas/Person'
+    TransactionGetClientBalance:
+      type: object
+      properties:
+        product:
+          $ref: '#/components/schemas/Product'
+        transactions:
+          type: array
+          description: Transactions relative to product
+          items:
+            $ref: '#/components/schemas/TransactionGet'
+
+
     Product:
       type: object
       properties:
@@ -180,7 +215,7 @@ components:
         type:
           type: string
           format: string
-          enum: [account, credit]
+          enum: [account , credit]
           description: Type of product
         number:
           type: string
@@ -193,47 +228,9 @@ components:
         limit:
           type: number
           description: Limit for a Credit Type Product
-    ProductNullable:
-      type: object
-      nullable: true
-      properties:
-        id:
-          type: string
-          format: string
-          description: Unique ID
-        number:
-          type: string
-          format: string
-          description: Number of products if corresponds
-          nullable: true
-        type:
-          type: string
-          format: string
-          enum: [account, credit]
-          description: Type of product
-        balance:
-          type: number
-          description: Product Balance
-        limit:
-          type: number
-          description: Limit for a Credit Type Product
+
     Client:
       type: object
-      properties:
-        id:
-          type: string
-          description: Unique ID
-        type:
-          type: string
-          enum: [personal, business]
-          description: Type of Client
-        document:
-          type: string
-          pattern: '^\d{8,11}$'
-          description: Document number (8, 9, or 11 digits)
-    ClientNullable:
-      type: object
-      nullable: true
       properties:
         id:
           type: string
