@@ -80,26 +80,18 @@ paths:
         '404':
           description: Transaction not found
 
-  /transactions/{type}/client/{id}:
+  /transactions/product/{id}:
     get:
-      summary: Get Transactions and Products Balance by Client
+      summary: Get Transactions and Products Balance by Client's Product
       parameters:
-        - name: type
-          in: path
-          required: true
-          schema:
-            type: string
-            enum: [account, credit]
-
         - name: id
           in: path
           required: true
           schema:
             type: string
-
       responses:
         '200':
-          description: Transaction updated
+          description: Product information found
           content:
             application/json:
               schema:
@@ -121,7 +113,7 @@ components:
           $ref: '#/components/schemas/Product'
         type:
           type: string
-          enum: [deposit, withdrawal, payment, purchase, charge]
+          enum: [deposit, withdrawal, payment, purchase, charge, create]
           description: Type of transaction
         amount:
           type: number
@@ -150,11 +142,11 @@ components:
             type:
               type: string
               format: string
-              enum: [account, credit]
+              enum: [savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card]
               description: Type of product
         type:
           type: string
-          enum: [deposit, withdrawal, payment, purchase, charge]
+          enum: [deposit, withdrawal, payment, purchase, charge, create]
           description: Type of transaction
         amount:
           type: number
@@ -166,6 +158,10 @@ components:
               type: string
               format: string
               description: Client ID
+            type:
+              type: string
+              enum: [personal, business]
+              description: Type of Client
         holder:
           $ref: '#/components/schemas/Person'
         signatory:
@@ -215,7 +211,7 @@ components:
         type:
           type: string
           format: string
-          enum: [account , credit]
+          enum: [savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card]
           description: Type of product
         number:
           type: string

@@ -4,7 +4,7 @@
     <module name="transaction_service" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.nttdata.transaction_service.*" />
+        <option name="PATTERN" value="com.nttdata.transaction_service.business.TransactionExternalOp" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
