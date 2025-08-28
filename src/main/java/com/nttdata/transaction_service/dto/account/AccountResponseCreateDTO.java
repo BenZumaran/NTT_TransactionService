@@ -17,10 +17,10 @@ public class AccountResponseCreateDTO {
     private String holderDocument;
     private String[] authorizedSigners;
     private String accountType;
-    private double balance = 0.0;
-    private double interestRate = 9.0;
-    private int monthlyMovementLimit = -1;
-    private double maintenanceFee = 0;
+    private double balance;
+    private double interestRate;
+    private int monthlyMovementLimit;
+    private double maintenanceFee;
     private int allowedDayOfMonth;
     private LocalDate creationDate = LocalDate.now();
     private boolean active = true;

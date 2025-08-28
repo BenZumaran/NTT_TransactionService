@@ -96,6 +96,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionGetClientBalance'
+  /transactions/{type}/product/{id}:
+    get:
+      summary: Get Transactions and Products Balance by Client's Product
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionGet'
 
 components:
   schemas:
@@ -109,12 +142,12 @@ components:
         number:
           type: integer
           description: Transaction number
-        product:
+        sender:
+          $ref: '#/components/schemas/Product'
+        receiver:
           $ref: '#/components/schemas/Product'
         type:
-          type: string
-          enum: [deposit, withdrawal, payment, purchase, charge, create]
-          description: Type of transaction
+          $ref: '#/components/schemas/TransactionType'
         amount:
           type: number
           description: Amount to change according transaction type
@@ -122,8 +155,6 @@ components:
           type: string
           format: date-time
           description: Transaction date
-        client:
-          $ref: '#/components/schemas/Client'
         holder:
           $ref: '#/components/schemas/Person'
         signatory:
@@ -132,36 +163,15 @@ components:
     TransactionPost:
       type: object
       properties:
-        product:
-          type: object
-          properties:
-            id:
-              type: string
-              format: string
-              description: Unique ID
-            type:
-              type: string
-              format: string
-              enum: [savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card]
-              description: Type of product
+        sender:
+          $ref: '#/components/schemas/Product'
+        receiver:
+          $ref: '#/components/schemas/Product'
         type:
-          type: string
-          enum: [deposit, withdrawal, payment, purchase, charge, create]
-          description: Type of transaction
+          $ref: '#/components/schemas/TransactionType'
         amount:
           type: number
           description: Amount to change according transaction type
-        client:
-          type: object
-          properties:
-            id:
-              type: string
-              format: string
-              description: Client ID
-            type:
-              type: string
-              enum: [personal, business]
-              description: Type of Client
         holder:
           $ref: '#/components/schemas/Person'
         signatory:
@@ -174,17 +184,15 @@ components:
           type: string
           format: string
           description: Transaction unique id
-        product:
+        sender:
+          $ref: '#/components/schemas/Product'
+        receiver:
           $ref: '#/components/schemas/Product'
         type:
-          type: string
-          enum: [deposit, withdrawal, payment, purchase, charge]
-          description: Type of transaction
+          $ref: '#/components/schemas/TransactionType'
         amount:
           type: number
           description: Amount to change according transaction type
-        client:
-          $ref: '#/components/schemas/Client'
         holder:
           $ref: '#/components/schemas/Person'
         signatory:
@@ -201,6 +209,7 @@ components:
             $ref: '#/components/schemas/TransactionGet'
 
 
+
     Product:
       type: object
       properties:
@@ -208,11 +217,9 @@ components:
           type: string
           format: string
           description: Unique ID
+          nullable: true
         type:
-          type: string
-          format: string
-          enum: [savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card]
-          description: Type of product
+          $ref: '#/components/schemas/ProductType'
         number:
           type: string
           format: string
@@ -221,35 +228,38 @@ components:
         balance:
           type: number
           description: Product Balance
+          nullable: true
         limit:
           type: number
           description: Limit for a Credit Type Product
-
-    Client:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique ID
-        type:
-          type: string
-          enum: [personal, business]
-          description: Type of Client
-        document:
-          type: string
-          pattern: '^\d{8,11}$'
-          description: Document number (8, 9, or 11 digits)
+          nullable: true
     Person:
       nullable: true
       type: object
       properties:
+        id:
+          type: string
+          description: Unique Holder Identifier
+          nullable: true
         document:
           type: string
           pattern: '^\d{8,11}$'
           description: Document number (8, 9, or 11 digits)
+        type:
+          type: string
+          format: string
+          enum: [personal,personal_vip,business,business_vip]
+          nullable: true
         fullName:
           type: string
           description: Full responsible name
-        signature:
-          type: string
-          description: URL to signature image
+          nullable: true
+    ProductType:
+      type: string
+      format: string
+      enum: [savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card]
+      description: Type of product
+    TransactionType:
+      type: string
+      enum: [deposit, withdrawal, payment, purchase, charge, create, transfer]
+      description: Type of transaction

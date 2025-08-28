@@ -5,8 +5,9 @@ import lombok.Data;
 
 @Data
 public class PersonEntity {
+    private String id;
     private String document;
+    private String type;
     private String fullName;
-    private String signature;
 
 }

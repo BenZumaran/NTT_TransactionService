@@ -24,7 +24,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-24T19:57:01.660543300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-27T20:13:55.820311800-05:00[America/Lima]")
 @Validated
 @Api(value = "transactions", description = "the transactions API")
 public interface TransactionsApi {
@@ -140,6 +140,27 @@ public interface TransactionsApi {
     )
     default Mono<ResponseEntity<TransactionGet>> transactionsPut(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Mono<TransactionPut> transactionPut, @ApiIgnore final ServerWebExchange exchange) {
         return getDelegate().transactionsPut(transactionPut, exchange);
+    }
+
+
+    /**
+     * GET /transactions/{type}/product/{id} : Get Transactions and Products Balance by Client&#39;s Product
+     *
+     * @param id  (required)
+     * @param type  (required)
+     * @param from  (required)
+     * @param to  (required)
+     * @return List of transactions (status code 200)
+     */
+    @ApiOperation(value = "Get Transactions and Products Balance by Client's Product", nickname = "transactionsTypeProductIdGet", notes = "", response = TransactionGet.class, responseContainer = "List", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "List of transactions", response = TransactionGet.class, responseContainer = "List") })
+    @GetMapping(
+        value = "/transactions/{type}/product/{id}",
+        produces = { "application/json" }
+    )
+    default Mono<ResponseEntity<Flux<TransactionGet>>> transactionsTypeProductIdGet(@ApiParam(value = "",required=true) @PathVariable("id") String id,@ApiParam(value = "",required=true) @PathVariable("type") String type,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "from", required = true) String from,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "to", required = true) String to, @ApiIgnore final ServerWebExchange exchange) {
+        return getDelegate().transactionsTypeProductIdGet(id, type, from, to, exchange);
     }
 
 }

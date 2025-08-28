@@ -1,6 +1,7 @@
 package com.nttdata.transaction_service.mapper;
 
 import com.nttdata.transaction_service.model.Product;
+import com.nttdata.transaction_service.model.ProductType;
 import com.nttdata.transaction_service.model.entity.ProductEntity;
 
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ public class ProductMapper {
         Product product = new Product();
         product.setId(productEntity.getId());
         if (productEntity.getType() != null)
-            product.setType(Product.TypeEnum.valueOf(productEntity.getType().toUpperCase()));
+            product.setType(ProductType.fromValue(productEntity.getType()));
         if (productEntity.getNumber() != null)
             product.setNumber(productEntity.getNumber());
         if (productEntity.getBalance() > -1)
@@ -27,7 +28,7 @@ public class ProductMapper {
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(product.getId());
         if (product.getType() != null)
-            productEntity.setType(product.getType().getValue());
+            productEntity.setType(productEntity.getType());
         if (product.getNumber() != null)
             productEntity.setNumber(product.getNumber());
         if (product.getBalance() != null)

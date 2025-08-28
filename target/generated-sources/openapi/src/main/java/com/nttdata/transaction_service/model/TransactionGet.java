@@ -3,10 +3,9 @@ package com.nttdata.transaction_service.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.nttdata.transaction_service.model.Client;
 import com.nttdata.transaction_service.model.Person;
 import com.nttdata.transaction_service.model.Product;
+import com.nttdata.transaction_service.model.TransactionType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
@@ -17,7 +16,7 @@ import javax.validation.constraints.*;
 /**
  * TransactionGet
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-24T19:57:01.660543300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-27T20:13:55.820311800-05:00[America/Lima]")
 public class TransactionGet   {
   @JsonProperty("id")
   private String id;
@@ -25,54 +24,14 @@ public class TransactionGet   {
   @JsonProperty("number")
   private Integer number;
 
-  @JsonProperty("product")
-  private Product product;
+  @JsonProperty("sender")
+  private Product sender;
 
-  /**
-   * Type of transaction
-   */
-  public enum TypeEnum {
-    DEPOSIT("deposit"),
-    
-    WITHDRAWAL("withdrawal"),
-    
-    PAYMENT("payment"),
-    
-    PURCHASE("purchase"),
-    
-    CHARGE("charge"),
-    
-    CREATE("create");
-
-    private String value;
-
-    TypeEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static TypeEnum fromValue(String value) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
+  @JsonProperty("receiver")
+  private Product receiver;
 
   @JsonProperty("type")
-  private TypeEnum type;
+  private TransactionType type;
 
   @JsonProperty("amount")
   private BigDecimal amount;
@@ -80,9 +39,6 @@ public class TransactionGet   {
   @JsonProperty("createdDate")
   @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime createdDate;
-
-  @JsonProperty("client")
-  private Client client;
 
   @JsonProperty("holder")
   private Person holder = null;
@@ -130,44 +86,66 @@ public class TransactionGet   {
     this.number = number;
   }
 
-  public TransactionGet product(Product product) {
-    this.product = product;
+  public TransactionGet sender(Product sender) {
+    this.sender = sender;
     return this;
   }
 
   /**
-   * Get product
-   * @return product
+   * Get sender
+   * @return sender
   */
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public Product getProduct() {
-    return product;
+  public Product getSender() {
+    return sender;
   }
 
-  public void setProduct(Product product) {
-    this.product = product;
+  public void setSender(Product sender) {
+    this.sender = sender;
   }
 
-  public TransactionGet type(TypeEnum type) {
+  public TransactionGet receiver(Product receiver) {
+    this.receiver = receiver;
+    return this;
+  }
+
+  /**
+   * Get receiver
+   * @return receiver
+  */
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Product getReceiver() {
+    return receiver;
+  }
+
+  public void setReceiver(Product receiver) {
+    this.receiver = receiver;
+  }
+
+  public TransactionGet type(TransactionType type) {
     this.type = type;
     return this;
   }
 
   /**
-   * Type of transaction
+   * Get type
    * @return type
   */
-  @ApiModelProperty(value = "Type of transaction")
+  @ApiModelProperty(value = "")
 
+  @Valid
 
-  public TypeEnum getType() {
+  public TransactionType getType() {
     return type;
   }
 
-  public void setType(TypeEnum type) {
+  public void setType(TransactionType type) {
     this.type = type;
   }
 
@@ -211,27 +189,6 @@ public class TransactionGet   {
 
   public void setCreatedDate(OffsetDateTime createdDate) {
     this.createdDate = createdDate;
-  }
-
-  public TransactionGet client(Client client) {
-    this.client = client;
-    return this;
-  }
-
-  /**
-   * Get client
-   * @return client
-  */
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Client getClient() {
-    return client;
-  }
-
-  public void setClient(Client client) {
-    this.client = client;
   }
 
   public TransactionGet holder(Person holder) {
@@ -288,18 +245,18 @@ public class TransactionGet   {
     TransactionGet transactionGet = (TransactionGet) o;
     return Objects.equals(this.id, transactionGet.id) &&
         Objects.equals(this.number, transactionGet.number) &&
-        Objects.equals(this.product, transactionGet.product) &&
+        Objects.equals(this.sender, transactionGet.sender) &&
+        Objects.equals(this.receiver, transactionGet.receiver) &&
         Objects.equals(this.type, transactionGet.type) &&
         Objects.equals(this.amount, transactionGet.amount) &&
         Objects.equals(this.createdDate, transactionGet.createdDate) &&
-        Objects.equals(this.client, transactionGet.client) &&
         Objects.equals(this.holder, transactionGet.holder) &&
         Objects.equals(this.signatory, transactionGet.signatory);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, number, product, type, amount, createdDate, client, holder, signatory);
+    return Objects.hash(id, number, sender, receiver, type, amount, createdDate, holder, signatory);
   }
 
   @Override
@@ -309,11 +266,11 @@ public class TransactionGet   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    number: ").append(toIndentedString(number)).append("\n");
-    sb.append("    product: ").append(toIndentedString(product)).append("\n");
+    sb.append("    sender: ").append(toIndentedString(sender)).append("\n");
+    sb.append("    receiver: ").append(toIndentedString(receiver)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
     sb.append("    createdDate: ").append(toIndentedString(createdDate)).append("\n");
-    sb.append("    client: ").append(toIndentedString(client)).append("\n");
     sb.append("    holder: ").append(toIndentedString(holder)).append("\n");
     sb.append("    signatory: ").append(toIndentedString(signatory)).append("\n");
     sb.append("}");

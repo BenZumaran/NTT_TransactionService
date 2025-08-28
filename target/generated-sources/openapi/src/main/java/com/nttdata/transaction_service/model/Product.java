@@ -3,7 +3,7 @@ package com.nttdata.transaction_service.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.nttdata.transaction_service.model.ProductType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
@@ -13,65 +13,22 @@ import javax.validation.constraints.*;
 /**
  * Product
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-24T19:57:01.660543300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-27T20:13:55.820311800-05:00[America/Lima]")
 public class Product   {
   @JsonProperty("id")
-  private String id;
-
-  /**
-   * Type of product
-   */
-  public enum TypeEnum {
-    SAVINGS_ACCOUNT("savings_account"),
-    
-    CHECKING_ACCOUNT("checking_account"),
-    
-    FIXED_TERM_ACCOUNT("fixed_term_account"),
-    
-    PERSONAL_CREDIT("personal_credit"),
-    
-    BUSINESS_CREDIT("business_credit"),
-    
-    CREDIT_CARD("credit_card");
-
-    private String value;
-
-    TypeEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static TypeEnum fromValue(String value) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
+  private String id = null;
 
   @JsonProperty("type")
-  private TypeEnum type;
+  private ProductType type;
 
   @JsonProperty("number")
   private String number = null;
 
   @JsonProperty("balance")
-  private BigDecimal balance;
+  private BigDecimal balance = null;
 
   @JsonProperty("limit")
-  private BigDecimal limit;
+  private BigDecimal limit = null;
 
   public Product id(String id) {
     this.id = id;
@@ -93,23 +50,24 @@ public class Product   {
     this.id = id;
   }
 
-  public Product type(TypeEnum type) {
+  public Product type(ProductType type) {
     this.type = type;
     return this;
   }
 
   /**
-   * Type of product
+   * Get type
    * @return type
   */
-  @ApiModelProperty(value = "Type of product")
+  @ApiModelProperty(value = "")
 
+  @Valid
 
-  public TypeEnum getType() {
+  public ProductType getType() {
     return type;
   }
 
-  public void setType(TypeEnum type) {
+  public void setType(ProductType type) {
     this.type = type;
   }
 

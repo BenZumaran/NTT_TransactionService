@@ -16,9 +16,9 @@ public class Transaction {
     @Id
     private String id;
     private int number;
-    private ProductEntity product;
+    private ProductEntity sender;
+    private ProductEntity receiver;
     private String type;
-    private ClientEntity client;
     private double amount;
     private LocalDateTime createdDate;
     private PersonEntity holder;

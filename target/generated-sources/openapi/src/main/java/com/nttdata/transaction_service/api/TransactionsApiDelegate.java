@@ -23,7 +23,7 @@ import java.util.Optional;
  * A delegate to be called by the {@link TransactionsApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-24T19:57:01.660543300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-27T20:13:55.820311800-05:00[America/Lima]")
 public interface TransactionsApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -41,7 +41,7 @@ public interface TransactionsApiDelegate {
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
             if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"number\" : 0, \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"savings_account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }";
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }
@@ -79,7 +79,7 @@ public interface TransactionsApiDelegate {
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
             if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"number\" : 0, \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"savings_account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }";
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }
@@ -101,7 +101,7 @@ public interface TransactionsApiDelegate {
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
             if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"number\" : 0, \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"savings_account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }";
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }
@@ -123,7 +123,7 @@ public interface TransactionsApiDelegate {
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
             if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"savings_account\" }, \"transactions\" : [ { \"number\" : 0, \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"savings_account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }, { \"number\" : 0, \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"savings_account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" } ] }";
+                String exampleString = "{ \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"transactions\" : [ { \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }, { \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } } ] }";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }
@@ -145,7 +145,35 @@ public interface TransactionsApiDelegate {
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
             if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"number\" : 0, \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\", \"type\" : \"savings_account\" }, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"client\" : { \"document\" : \"document\", \"id\" : \"id\", \"type\" : \"personal\" }, \"holder\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"id\" : \"id\", \"signatory\" : { \"signature\" : \"signature\", \"document\" : \"document\", \"fullName\" : \"fullName\" }, \"type\" : \"deposit\" }";
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
+                result = ApiUtil.getExampleResponse(exchange, exampleString);
+                break;
+            }
+        }
+        return result.then(Mono.empty());
+
+    }
+
+    /**
+     * GET /transactions/{type}/product/{id} : Get Transactions and Products Balance by Client&#39;s Product
+     *
+     * @param id  (required)
+     * @param type  (required)
+     * @param from  (required)
+     * @param to  (required)
+     * @return List of transactions (status code 200)
+     * @see TransactionsApi#transactionsTypeProductIdGet
+     */
+    default Mono<ResponseEntity<Flux<TransactionGet>>> transactionsTypeProductIdGet(String id,
+        String type,
+        String from,
+        String to,
+        ServerWebExchange exchange) {
+        Mono<Void> result = Mono.empty();
+        exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
+        for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
+            if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }

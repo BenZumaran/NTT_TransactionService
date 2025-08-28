@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
 /**
  * TransactionGetClientBalance
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-24T19:57:01.660543300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-27T20:13:55.820311800-05:00[America/Lima]")
 public class TransactionGetClientBalance   {
   @JsonProperty("product")
   private Product product;

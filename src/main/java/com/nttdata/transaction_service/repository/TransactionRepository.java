@@ -7,7 +7,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface TransactionRepository extends ReactiveMongoRepository<Transaction, String> {
-    Flux<Transaction> findByProductIdOrderByCreatedDate(String clientId);
+    Flux<Transaction> findBySenderIdOrderByCreatedDate(String senderId);
     Mono<NumberProjection> findTopNumberByOrderByNumberDesc();
+    Flux<Transaction> findByTypeAndSenderId(String type, String senderId);
 }
 

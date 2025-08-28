@@ -3,10 +3,9 @@ package com.nttdata.transaction_service.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.nttdata.transaction_service.model.Person;
-import com.nttdata.transaction_service.model.TransactionPostClient;
-import com.nttdata.transaction_service.model.TransactionPostProduct;
+import com.nttdata.transaction_service.model.Product;
+import com.nttdata.transaction_service.model.TransactionType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
@@ -16,62 +15,19 @@ import javax.validation.constraints.*;
 /**
  * TransactionPost
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-24T19:57:01.660543300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-27T20:13:55.820311800-05:00[America/Lima]")
 public class TransactionPost   {
-  @JsonProperty("product")
-  private TransactionPostProduct product;
+  @JsonProperty("sender")
+  private Product sender;
 
-  /**
-   * Type of transaction
-   */
-  public enum TypeEnum {
-    DEPOSIT("deposit"),
-    
-    WITHDRAWAL("withdrawal"),
-    
-    PAYMENT("payment"),
-    
-    PURCHASE("purchase"),
-    
-    CHARGE("charge"),
-    
-    CREATE("create");
-
-    private String value;
-
-    TypeEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static TypeEnum fromValue(String value) {
-      for (TypeEnum b : TypeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
+  @JsonProperty("receiver")
+  private Product receiver;
 
   @JsonProperty("type")
-  private TypeEnum type;
+  private TransactionType type;
 
   @JsonProperty("amount")
   private BigDecimal amount;
-
-  @JsonProperty("client")
-  private TransactionPostClient client;
 
   @JsonProperty("holder")
   private Person holder = null;
@@ -79,44 +35,66 @@ public class TransactionPost   {
   @JsonProperty("signatory")
   private Person signatory = null;
 
-  public TransactionPost product(TransactionPostProduct product) {
-    this.product = product;
+  public TransactionPost sender(Product sender) {
+    this.sender = sender;
     return this;
   }
 
   /**
-   * Get product
-   * @return product
+   * Get sender
+   * @return sender
   */
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public TransactionPostProduct getProduct() {
-    return product;
+  public Product getSender() {
+    return sender;
   }
 
-  public void setProduct(TransactionPostProduct product) {
-    this.product = product;
+  public void setSender(Product sender) {
+    this.sender = sender;
   }
 
-  public TransactionPost type(TypeEnum type) {
+  public TransactionPost receiver(Product receiver) {
+    this.receiver = receiver;
+    return this;
+  }
+
+  /**
+   * Get receiver
+   * @return receiver
+  */
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Product getReceiver() {
+    return receiver;
+  }
+
+  public void setReceiver(Product receiver) {
+    this.receiver = receiver;
+  }
+
+  public TransactionPost type(TransactionType type) {
     this.type = type;
     return this;
   }
 
   /**
-   * Type of transaction
+   * Get type
    * @return type
   */
-  @ApiModelProperty(value = "Type of transaction")
+  @ApiModelProperty(value = "")
 
+  @Valid
 
-  public TypeEnum getType() {
+  public TransactionType getType() {
     return type;
   }
 
-  public void setType(TypeEnum type) {
+  public void setType(TransactionType type) {
     this.type = type;
   }
 
@@ -139,27 +117,6 @@ public class TransactionPost   {
 
   public void setAmount(BigDecimal amount) {
     this.amount = amount;
-  }
-
-  public TransactionPost client(TransactionPostClient client) {
-    this.client = client;
-    return this;
-  }
-
-  /**
-   * Get client
-   * @return client
-  */
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public TransactionPostClient getClient() {
-    return client;
-  }
-
-  public void setClient(TransactionPostClient client) {
-    this.client = client;
   }
 
   public TransactionPost holder(Person holder) {
@@ -214,17 +171,17 @@ public class TransactionPost   {
       return false;
     }
     TransactionPost transactionPost = (TransactionPost) o;
-    return Objects.equals(this.product, transactionPost.product) &&
+    return Objects.equals(this.sender, transactionPost.sender) &&
+        Objects.equals(this.receiver, transactionPost.receiver) &&
         Objects.equals(this.type, transactionPost.type) &&
         Objects.equals(this.amount, transactionPost.amount) &&
-        Objects.equals(this.client, transactionPost.client) &&
         Objects.equals(this.holder, transactionPost.holder) &&
         Objects.equals(this.signatory, transactionPost.signatory);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(product, type, amount, client, holder, signatory);
+    return Objects.hash(sender, receiver, type, amount, holder, signatory);
   }
 
   @Override
@@ -232,10 +189,10 @@ public class TransactionPost   {
     StringBuilder sb = new StringBuilder();
     sb.append("class TransactionPost {\n");
     
-    sb.append("    product: ").append(toIndentedString(product)).append("\n");
+    sb.append("    sender: ").append(toIndentedString(sender)).append("\n");
+    sb.append("    receiver: ").append(toIndentedString(receiver)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
-    sb.append("    client: ").append(toIndentedString(client)).append("\n");
     sb.append("    holder: ").append(toIndentedString(holder)).append("\n");
     sb.append("    signatory: ").append(toIndentedString(signatory)).append("\n");
     sb.append("}");

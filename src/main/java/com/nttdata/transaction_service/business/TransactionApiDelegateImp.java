@@ -3,7 +3,7 @@ package com.nttdata.transaction_service.business;
 import com.nttdata.transaction_service.api.TransactionsApiDelegate;
 import com.nttdata.transaction_service.business.account.AccountService;
 import com.nttdata.transaction_service.business.credit.CreditService;
-import com.nttdata.transaction_service.dto.credit.CreditResponseDTO;
+import com.nttdata.transaction_service.dto.NumberProjection;
 import com.nttdata.transaction_service.mapper.AccountMapper;
 import com.nttdata.transaction_service.mapper.CreditMapper;
 import com.nttdata.transaction_service.mapper.TransactionMapper;
@@ -12,7 +12,7 @@ import com.nttdata.transaction_service.model.TransactionGetClientBalance;
 import com.nttdata.transaction_service.model.TransactionPost;
 import com.nttdata.transaction_service.model.TransactionPut;
 import com.nttdata.transaction_service.repository.TransactionRepository;
-import org.apache.http.client.methods.HttpPatch;
+import com.nttdata.transaction_service.util.TransactionNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,6 +80,7 @@ public class TransactionApiDelegateImp implements TransactionsApiDelegate {
             //Search in DB
             return repository.findById(id)
                     //Map response to TransactionGet to respond
+                    .switchIfEmpty(Mono.error(new TransactionNotFoundException(id)))
                     .map(TransactionMapper::transactionToTransactionGet)
                     //Map to ResponseEntity for final return
                     .map(transactionGet ->
@@ -87,7 +88,14 @@ public class TransactionApiDelegateImp implements TransactionsApiDelegate {
                     //Log success
                     .doOnSuccess(nonusing -> log.info("Transaction with id {} was found.",id))
                     //Log error
-                    .doOnError(nonusing -> log.error("Error at found transaction --> transactionsIdGet"));
+                    .onErrorResume( TransactionNotFoundException.class,error-> {
+                        log.error(error.getMessage());
+                        return Mono.just(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                    }).onErrorResume(error-> {
+                        log.error("Error: {} --> transactionsIdGet",error.getMessage());
+
+                        return Mono.just(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+                    });
         } catch (Exception ex){
             Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement ->
                     log.error(stackTraceElement.toString()));
@@ -98,157 +106,19 @@ public class TransactionApiDelegateImp implements TransactionsApiDelegate {
 
     @Override
     public Mono<ResponseEntity<TransactionGet>> transactionsPost(Mono<TransactionPost> transactionPostMono, ServerWebExchange exchange) {
-
-        return transactionPostMono.flatMap(transactionPost -> {
-            //Validar si es create
-            if (transactionPost.getType().getValue().equals("create")){
-                if (
-                        transactionPost.getProduct().getType().getValue().equals("savings_account") ||
-                                transactionPost.getProduct().getType().getValue().equals("checking_account") ||
-                                transactionPost.getProduct().getType().getValue().equals("fixed_term_account")
-                ){
-                    //Transform TransactionPost to AccountResponseCreateDTO
-                    //Call account to save AccountGetCreateDTO
-                    return accountService.fetchInsertAccount(AccountMapper.transactionPostToAcoountResponseCreateDTO(transactionPost))
-                    //Transform response AccountResponseCreateDTO, TransactionPost to Transaction
-                            .map(accountResponseCreateDTO ->
-                                    AccountMapper.accountResponseCreateDtoTransactionPostToTransaction(
-                                            accountResponseCreateDTO,transactionPost
-                                    ))
-                    //Finding last number to asign
-                            .zipWhen(transaction -> repository.findTopNumberByOrderByNumberDesc())
-                    //Setting last number to transaction
-                            .map(tuple2 -> {
-                                tuple2.getT1().setNumber(tuple2.getT2().getNumber()+1);
-                                return  tuple2.getT1();
-                            });
-                }
-                if (
-                        transactionPost.getProduct().getType().getValue().equals("personal_credit") ||
-                                transactionPost.getProduct().getType().getValue().equals("business_credit") ||
-                                transactionPost.getProduct().getType().getValue().equals("credit_card")
-                ){
-                    //Transform TransactionPost to CreditCreateDTO
-                    //Call credit Create
-                    return creditService.fetchInsertCredit(CreditMapper.transactionPostToCreditCreateDto(transactionPost))
-                    //Transform response CreditResponseDTO and TransactionPost to Transaction
-                            .map(creditResponseDTO ->
-                                    CreditMapper.creditResponseDtoTransactionPostToTransaction(
-                                            creditResponseDTO,transactionPost
-                                    ))
-                            //Finding last number to asign
-                            .zipWhen(transaction -> repository.findTopNumberByOrderByNumberDesc())
-                            //Setting last number to transaction
-                            .map(tuple2 -> {
-                                tuple2.getT1().setNumber(tuple2.getT2().getNumber()+1);
-                                return  tuple2.getT1();
-                            });
-                }
-            }
-            else {
-                switch (transactionPost.getType().getValue()){
-                    case "deposit":
-                        //Call to account with TransactionPost.product.id
-                        return accountService.fetchGetAccountById(transactionPost.getProduct().getId())
-                        //Update response (+) AccountGetCreateDTO.balance with TransactionPost.amount
-                                .map(accountResponseCreateDTO -> AccountMapper
-                                        .depositAccountResponseCreateDtoWithTransactionPost(
-                                                accountResponseCreateDTO, transactionPost
-                                        ))
-                        //Call account to save AccountGetCreateDTO
-                                .flatMap(accountResponseCreateDTO -> accountService.fetchUpdateAccount(accountResponseCreateDTO))
-                        //Transform response AccountGetCreateDTO to Transaction
-                                .map(accountResponseCreateDTO -> AccountMapper.accountResponseCreateDtoTransactionPostToTransaction(
-                                        accountResponseCreateDTO, transactionPost
-                                ))
-                                //Finding last number to asign
-                                .zipWhen(transaction -> repository.findTopNumberByOrderByNumberDesc())
-                                //Setting last number to transaction
-                                .map(tuple2 -> {
-                                    tuple2.getT1().setNumber(tuple2.getT2().getNumber()+1);
-                                    return  tuple2.getT1();
-                                });
-                    case "payment":
-                        //Transform TransactionPost to CreditPayment
-                        //Call credit payment
-                        return creditService.fetchApplyPaymentToCredit(
-                                CreditMapper.transactionPostToCreditPaymentDto(transactionPost),
-                                transactionPost.getProduct().getId()
-                        //Transform response CreditUpdateResponseDTO and TransactionPost to Transaction
-                        ).map(creditUpdateResponseDTO -> CreditMapper
-                                .creditUpdateResponseDtoTransactionPostToTransaction(
-                                        creditUpdateResponseDTO, transactionPost
-                                ))
-                        //Finding last number to asign
-                        .zipWhen(transaction -> repository.findTopNumberByOrderByNumberDesc())
-                        //Setting last number to transaction
-                        .map(tuple2 -> {
-                            tuple2.getT1().setNumber(tuple2.getT2().getNumber()+1);
-                            return  tuple2.getT1();
-                        });
-                    case "withdrawal":
-                    case "purchase":
-                    case "charge":
-                        if (
-                                transactionPost.getProduct().getType().getValue().equals("savings_account") ||
-                                        transactionPost.getProduct().getType().getValue().equals("checking_account") ||
-                                        transactionPost.getProduct().getType().getValue().equals("fixed_term_account")
-                        ){
-                            //Call to account with TransactionPost.product.id
-                            return accountService.fetchGetAccountById(transactionPost.getProduct().getId())
-                            //Update response (-) AccountGetCreateDTO.balance with TransactionPost.amount
-                                    .map(accountResponseCreateDTO -> AccountMapper
-                                            .withdrawalAccountResponseCreateDtoWithTransactionPost(
-                                                    accountResponseCreateDTO, transactionPost
-                                            ))
-                                    //Call account to save AccountGetCreateDTO
-                                    .flatMap(accountResponseCreateDTO -> accountService.fetchUpdateAccount(accountResponseCreateDTO))
-                                    //Transform response AccountGetCreateDTO to Transaction
-                                    .map(accountResponseCreateDTO -> AccountMapper.accountResponseCreateDtoTransactionPostToTransaction(
-                                            accountResponseCreateDTO, transactionPost
-                                    ))
-                                    //Finding last number to asign
-                                    .zipWhen(transaction -> repository.findTopNumberByOrderByNumberDesc())
-                                    //Setting last number to transaction
-                                    .map(tuple2 -> {
-                                        tuple2.getT1().setNumber(tuple2.getT2().getNumber()+1);
-                                        return  tuple2.getT1();
-                                    });
-                        }
-                        if (
-                                transactionPost.getProduct().getType().getValue().equals("personal_credit") ||
-                                        transactionPost.getProduct().getType().getValue().equals("business_credit") ||
-                                        transactionPost.getProduct().getType().getValue().equals("credit_card")
-                        ){
-                            //Call credit payment
-                            return creditService.fetchApplyChargeToCredit(
-                            //Transform TransactionPost to CreditCharge
-                                    CreditMapper.transactionPostToCreditCharge(transactionPost),
-                                    transactionPost.getProduct().getId()
-                                    //Transform response CreditUpdateResponseDTO and TransactionPost to Transaction
-                            ).map(creditUpdateResponseDTO -> CreditMapper
-                                    .creditUpdateResponseDtoTransactionPostToTransaction(
-                                            creditUpdateResponseDTO, transactionPost
-                                    ))
-                            //Finding last number to asign
-                            .zipWhen(transaction -> repository.findTopNumberByOrderByNumberDesc())
-                            //Setting last number to transaction
-                            .map(tuple2 -> {
-                                tuple2.getT1().setNumber(tuple2.getT2().getNumber()+1);
-                                return  tuple2.getT1();
-                            });
-                        }
-                }
-            }
-            return Mono.error(new Error("Transaction Type not Found. Valid Types: [ deposit, withdrawal, payment, purchase, charge, create ]"));
-        })
-                .flatMap(repository::save).map(TransactionMapper::transactionToTransactionGet)
-                .map(transactionGet -> new ResponseEntity<>(transactionGet,HttpStatus.OK))
-                .onErrorResume(error->{
-                    log.error(error.getMessage());
-                    return Mono.just(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
-                });
-
+        return transactionPostMono.zipWhen(transactionPost -> repository.findTopNumberByOrderByNumberDesc()
+                    .map(NumberProjection::getNumber)
+                    .switchIfEmpty(Mono.just(0)))
+                .map(TransactionMapper::transactionPostToTransaction)
+                .flatMap(repository::save)
+                .map(TransactionMapper::transactionToTransactionGet)
+                .map(transactionGet -> new ResponseEntity<>(transactionGet,HttpStatus.CREATED))
+                .doOnSuccess(transactionGetResponseEntity ->
+                        log.info("Transaction was inserted id: {}",
+                                transactionGetResponseEntity.getBody().getId()))
+                //Log error
+                .onErrorReturn(new ResponseEntity<>(HttpStatus.BAD_REQUEST))
+                .doOnError(errorMessage -> log.error("Error: {} --> transactionsPost",errorMessage.getMessage()));
     }
 
     //To Update specific Transaction
@@ -278,20 +148,20 @@ public class TransactionApiDelegateImp implements TransactionsApiDelegate {
 
     @Override
     public Mono<ResponseEntity<TransactionGetClientBalance>> transactionsProductIdGet(String id, ServerWebExchange exchange){
-        return repository.findByProductIdOrderByCreatedDate(id)
+        return repository.findBySenderIdOrderByCreatedDate(id)
                 .map(TransactionMapper::transactionToTransactionGet)
                 .collectList()
                 .zipWhen(transactionGets -> {
-                    switch (transactionGets.get(0).getProduct().getType().getValue()){
+                    switch (transactionGets.get(0).getSender().getType().getValue()){
                         case "savings_account":
                         case "checking_account":
                         case "fixed_term_account":
-                            return accountService.fetchGetAccountById(transactionGets.get(0).getProduct().getId())
+                            return accountService.fetchGetAccountById(transactionGets.get(0).getSender().getId())
                                     .map(AccountMapper::accountResponseCreateDtoToProduct);
                         case "personal_credit":
                         case"business_credit":
                         case  "credit_card":
-                            return creditService.fetchGetCreditById(transactionGets.get(0).getProduct().getId())
+                            return creditService.fetchGetCreditById(transactionGets.get(0).getSender().getId())
                                     .map(CreditMapper::creditResponseDtoToProduct);
                     }
                     return Mono.error(new Error("Transaction Product Type not Found. Valid Types: [ savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card "));
@@ -302,6 +172,18 @@ public class TransactionApiDelegateImp implements TransactionsApiDelegate {
                     log.error("Error at find information for Product with id {} --> transactionsProductIdGet",id);
                     return Mono.just(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
                 });
+    }
+
+    @Override
+    public Mono<ResponseEntity<Flux<TransactionGet>>> transactionsTypeProductIdGet(String id,
+                                                                                    String type,
+                                                                                    String from,
+                                                                                    String to,
+                                                                                    ServerWebExchange exchange){
+        repository.findByTypeAndSenderId(type,id)
+                .doOnNext(System.out::println)
+                .subscribe();
+        return null;
     }
 
 }

@@ -2,12 +2,11 @@ src/main/java/com/nttdata/transaction_service/api/ApiUtil.java
 src/main/java/com/nttdata/transaction_service/api/TransactionsApi.java
 src/main/java/com/nttdata/transaction_service/api/TransactionsApiController.java
 src/main/java/com/nttdata/transaction_service/api/TransactionsApiDelegate.java
-src/main/java/com/nttdata/transaction_service/model/Client.java
 src/main/java/com/nttdata/transaction_service/model/Person.java
 src/main/java/com/nttdata/transaction_service/model/Product.java
+src/main/java/com/nttdata/transaction_service/model/ProductType.java
 src/main/java/com/nttdata/transaction_service/model/TransactionGet.java
 src/main/java/com/nttdata/transaction_service/model/TransactionGetClientBalance.java
 src/main/java/com/nttdata/transaction_service/model/TransactionPost.java
-src/main/java/com/nttdata/transaction_service/model/TransactionPostClient.java
-src/main/java/com/nttdata/transaction_service/model/TransactionPostProduct.java
 src/main/java/com/nttdata/transaction_service/model/TransactionPut.java
+src/main/java/com/nttdata/transaction_service/model/TransactionType.java

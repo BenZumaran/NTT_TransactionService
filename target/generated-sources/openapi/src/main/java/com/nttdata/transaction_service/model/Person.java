@@ -3,6 +3,7 @@ package com.nttdata.transaction_service.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.Valid;
@@ -11,16 +12,78 @@ import javax.validation.constraints.*;
 /**
  * Person
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-24T19:57:01.660543300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-27T20:13:55.820311800-05:00[America/Lima]")
 public class Person   {
+  @JsonProperty("id")
+  private String id = null;
+
   @JsonProperty("document")
   private String document;
 
-  @JsonProperty("fullName")
-  private String fullName;
+  /**
+   * Gets or Sets type
+   */
+  public enum TypeEnum {
+    PERSONAL("personal"),
+    
+    PERSONAL_VIP("personal_vip"),
+    
+    BUSINESS("business"),
+    
+    BUSINESS_VIP("business_vip");
 
-  @JsonProperty("signature")
-  private String signature;
+    private String value;
+
+    TypeEnum(String value) {
+      this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static TypeEnum fromValue(String value) {
+      for (TypeEnum b : TypeEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      return null;
+    }
+  }
+
+  @JsonProperty("type")
+  private TypeEnum type = null;
+
+  @JsonProperty("fullName")
+  private String fullName = null;
+
+  public Person id(String id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Unique Holder Identifier
+   * @return id
+  */
+  @ApiModelProperty(value = "Unique Holder Identifier")
+
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
 
   public Person document(String document) {
     this.document = document;
@@ -40,6 +103,26 @@ public class Person   {
 
   public void setDocument(String document) {
     this.document = document;
+  }
+
+  public Person type(TypeEnum type) {
+    this.type = type;
+    return this;
+  }
+
+  /**
+   * Get type
+   * @return type
+  */
+  @ApiModelProperty(value = "")
+
+
+  public TypeEnum getType() {
+    return type;
+  }
+
+  public void setType(TypeEnum type) {
+    this.type = type;
   }
 
   public Person fullName(String fullName) {
@@ -62,26 +145,6 @@ public class Person   {
     this.fullName = fullName;
   }
 
-  public Person signature(String signature) {
-    this.signature = signature;
-    return this;
-  }
-
-  /**
-   * URL to signature image
-   * @return signature
-  */
-  @ApiModelProperty(value = "URL to signature image")
-
-
-  public String getSignature() {
-    return signature;
-  }
-
-  public void setSignature(String signature) {
-    this.signature = signature;
-  }
-
 
   @Override
   public boolean equals(Object o) {
@@ -92,14 +155,15 @@ public class Person   {
       return false;
     }
     Person person = (Person) o;
-    return Objects.equals(this.document, person.document) &&
-        Objects.equals(this.fullName, person.fullName) &&
-        Objects.equals(this.signature, person.signature);
+    return Objects.equals(this.id, person.id) &&
+        Objects.equals(this.document, person.document) &&
+        Objects.equals(this.type, person.type) &&
+        Objects.equals(this.fullName, person.fullName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(document, fullName, signature);
+    return Objects.hash(id, document, type, fullName);
   }
 
   @Override
@@ -107,9 +171,10 @@ public class Person   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Person {\n");
     
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    document: ").append(toIndentedString(document)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    fullName: ").append(toIndentedString(fullName)).append("\n");
-    sb.append("    signature: ").append(toIndentedString(signature)).append("\n");
     sb.append("}");
     return sb.toString();
   }
