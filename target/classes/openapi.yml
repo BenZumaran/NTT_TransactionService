@@ -15,7 +15,7 @@ paths:
         '200':
           description: List of transactions
           content:
-            application/json:
+            application/stream+json:
               schema:
                 type: array
                 items:
@@ -96,9 +96,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TransactionGetClientBalance'
+  /transactions/client/{document}:
+    get:
+      summary: Get Transactions Between Dates by Client's document
+      parameters:
+        - name: document
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionGet'
+
   /transactions/{type}/product/{id}:
     get:
-      summary: Get Transactions and Products Balance by Client's Product
+      summary: Get Transactions Between Dates by Client's document
       parameters:
         - name: id
           in: path
@@ -129,6 +158,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TransactionGet'
+
+
 
 components:
   schemas:
@@ -207,8 +238,6 @@ components:
           description: Transactions relative to product
           items:
             $ref: '#/components/schemas/TransactionGet'
-
-
 
     Product:
       type: object

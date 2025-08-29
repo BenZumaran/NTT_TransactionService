@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.mapper</a> &gt; <span class="el_source">TransactionMapper.java</span></div><h1>TransactionMapper.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.mapper;
+
+import com.nttdata.transaction_service.model.*;
+import com.nttdata.transaction_service.model.entity.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import reactor.util.function.Tuple2;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Arrays;
+import java.util.List;
+
+<span class="nc" id="L15">public class TransactionMapper {</span>
+
+<span class="nc" id="L17">    private static final Logger log = LoggerFactory.getLogger(TransactionMapper.class);</span>
+
+    // Converts Transaction to TransactionGet
+    public static TransactionGet transactionToTransactionGet(Transaction transaction) throws Error {
+
+<span class="nc" id="L22">            TransactionGet transactionGet = new TransactionGet();</span>
+<span class="nc" id="L23">            transactionGet.setId(transaction.getId());</span>
+<span class="nc" id="L24">            transactionGet.setNumber(transaction.getNumber());</span>
+<span class="nc" id="L25">            transactionGet.setSender(ProductMapper.productEntityToProduct(transaction.getSender()));</span>
+<span class="nc" id="L26">            transactionGet.setAmount(BigDecimal.valueOf(transaction.getAmount()));</span>
+<span class="nc bnc" id="L27" title="All 2 branches missed.">            if (transaction.getReceiver() != null) {</span>
+<span class="nc" id="L28">                transactionGet.setReceiver(ProductMapper.productEntityToProduct(transaction.getReceiver()));</span>
+            }
+<span class="nc bnc" id="L30" title="All 2 branches missed.">            if (transaction.getType() != null) {</span>
+<span class="nc" id="L31">                transactionGet.setType(TransactionType.fromValue(transaction.getType()));</span>
+            }
+<span class="nc bnc" id="L33" title="All 2 branches missed.">            if (transaction.getCreatedDate() != null) {</span>
+<span class="nc" id="L34">                transactionGet.setCreatedDate(transaction.getCreatedDate().atZone(ZoneId.systemDefault()).toOffsetDateTime());</span>
+            }
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            if (transaction.getHolder() != null) {</span>
+<span class="nc" id="L37">                transactionGet.setHolder(</span>
+<span class="nc" id="L38">                        PersonMapper.personEntityToPerson(transaction.getHolder()));</span>
+            }
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            if (transaction.getSignatory() != null) {</span>
+<span class="nc" id="L41">                transactionGet.setSignatory(</span>
+<span class="nc" id="L42">                        PersonMapper.personEntityToPerson(transaction.getSignatory()));</span>
+            }
+<span class="nc" id="L44">            return transactionGet;</span>
+    }
+    //Converts TransactionPut to Transaction
+    public static Transaction transactionPutAndTransactionPreviousToTransaction(Tuple2&lt;TransactionPut,Transaction&gt; transactionPutTransactionTuple2) {
+        try{
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            if (transactionPutTransactionTuple2.getT1().getSender() != null)</span>
+<span class="nc" id="L51">                transactionPutTransactionTuple2.getT2().setSender(</span>
+<span class="nc" id="L52">                        ProductMapper.productToProductEntity(</span>
+<span class="nc" id="L53">                                transactionPutTransactionTuple2.getT1().getSender()</span>
+                        ));
+
+<span class="nc bnc" id="L56" title="All 2 branches missed.">            if (transactionPutTransactionTuple2.getT1().getReceiver() != null)</span>
+<span class="nc" id="L57">                transactionPutTransactionTuple2.getT2().setReceiver(</span>
+<span class="nc" id="L58">                        ProductMapper.productToProductEntity(</span>
+<span class="nc" id="L59">                                transactionPutTransactionTuple2.getT1().getReceiver()</span>
+                        ));
+
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (transactionPutTransactionTuple2.getT1().getType() != null)</span>
+<span class="nc" id="L63">                transactionPutTransactionTuple2.getT2().setType(</span>
+<span class="nc" id="L64">                        transactionPutTransactionTuple2.getT1().getType().getValue());</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (transactionPutTransactionTuple2.getT1().getAmount() != null)</span>
+<span class="nc" id="L67">                transactionPutTransactionTuple2.getT2().setAmount(</span>
+<span class="nc" id="L68">                        transactionPutTransactionTuple2.getT1().getAmount().doubleValue()</span>
+                );
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            if (transactionPutTransactionTuple2.getT1().getHolder() != null)</span>
+<span class="nc" id="L72">                transactionPutTransactionTuple2.getT2().setHolder(</span>
+<span class="nc" id="L73">                        PersonMapper.personToPersonEntity(</span>
+<span class="nc" id="L74">                                transactionPutTransactionTuple2.getT1().getHolder()</span>
+                        ));
+
+<span class="nc bnc" id="L77" title="All 2 branches missed.">            if (transactionPutTransactionTuple2.getT1().getSignatory() != null)</span>
+<span class="nc" id="L78">                transactionPutTransactionTuple2.getT2().setSignatory(</span>
+<span class="nc" id="L79">                        PersonMapper.personToPersonEntity(</span>
+<span class="nc" id="L80">                                transactionPutTransactionTuple2.getT1().getSignatory()</span>
+                        ));
+
+<span class="nc" id="L83">            return  transactionPutTransactionTuple2.getT2();</span>
+<span class="nc" id="L84">        } catch (Exception ex) {</span>
+<span class="nc" id="L85">            log.error(ex.getMessage());</span>
+<span class="nc" id="L86">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="nc" id="L87">                    log.error(stackTraceElement.toString()));</span>
+<span class="nc" id="L88">            return null;</span>
+        }
+
+    }
+
+    // Converts TransactionPost to Transaction
+    public static TransactionGetClientBalance productAndTransactionGetListToTransactionGetClientBalance(
+            Tuple2&lt;List&lt;TransactionGet&gt;,Product&gt; tuple2
+    ){
+<span class="nc" id="L97">        TransactionGetClientBalance transactionGetClientBalance = new TransactionGetClientBalance();</span>
+<span class="nc" id="L98">        transactionGetClientBalance.setProduct(tuple2.getT2());</span>
+<span class="nc" id="L99">        transactionGetClientBalance.setTransactions(tuple2.getT1());</span>
+<span class="nc" id="L100">        return  transactionGetClientBalance;</span>
+    }
+
+    public static Transaction transactionPostToTransaction(Tuple2&lt;TransactionPost,Integer&gt; tuple2){
+        try{
+<span class="nc bnc" id="L105" title="All 4 branches missed.">            if (tuple2.getT1().getHolder() != null &amp;&amp; tuple2.getT1().getSignatory() != null)</span>
+<span class="nc" id="L106">                throw new Exception(&quot;Transaction must have at least one Signatory or Holder&quot;);</span>
+<span class="nc" id="L107">            Transaction transaction = new Transaction();</span>
+<span class="nc" id="L108">            transaction.setNumber(tuple2.getT2()+1);</span>
+<span class="nc" id="L109">            transaction.setSender(ProductMapper.productToProductEntity(tuple2.getT1().getSender()));</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">            if (tuple2.getT1().getReceiver() != null)</span>
+<span class="nc" id="L111">                transaction.setReceiver(ProductMapper.productToProductEntity(tuple2.getT1().getReceiver()));</span>
+
+<span class="nc" id="L113">            transaction.setType(tuple2.getT1().getType().getValue());</span>
+<span class="nc" id="L114">            transaction.setCreatedDate(LocalDateTime.now());</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">            if(tuple2.getT1().getHolder() != null)</span>
+<span class="nc" id="L116">                transaction.setHolder(PersonMapper.personToPersonEntity(tuple2.getT1().getHolder()));</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            if(tuple2.getT1().getSignatory() != null)</span>
+<span class="nc" id="L118">                transaction.setSignatory(PersonMapper.personToPersonEntity(tuple2.getT1().getSignatory()));</span>
+<span class="nc" id="L119">            transaction.setAmount(tuple2.getT1().getAmount().doubleValue());</span>
+
+
+
+<span class="nc" id="L123">            return transaction;</span>
+<span class="nc" id="L124">        }  catch (Exception ex) {</span>
+<span class="nc" id="L125">            log.error(ex.getMessage());</span>
+<span class="nc" id="L126">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="nc" id="L127">                    log.error(stackTraceElement.toString()));</span>
+<span class="nc" id="L128">            return null;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

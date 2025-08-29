@@ -37,3 +37,4 @@ com\nttdata\transaction_service\dto\credit\CreditResponseDTO.class
 com\nttdata\transaction_service\api\ApiUtil.class
 com\nttdata\transaction_service\business\account\AccountServiceImp.class
 com\nttdata\transaction_service\mapper\PersonMapper.class
+com\nttdata\transaction_service\util\TransactionNotFoundException.class

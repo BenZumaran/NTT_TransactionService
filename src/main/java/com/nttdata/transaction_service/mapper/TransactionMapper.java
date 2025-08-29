@@ -23,13 +23,13 @@ public class TransactionMapper {
             transactionGet.setId(transaction.getId());
             transactionGet.setNumber(transaction.getNumber());
             transactionGet.setSender(ProductMapper.productEntityToProduct(transaction.getSender()));
+            transactionGet.setAmount(BigDecimal.valueOf(transaction.getAmount()));
             if (transaction.getReceiver() != null) {
                 transactionGet.setReceiver(ProductMapper.productEntityToProduct(transaction.getReceiver()));
             }
             if (transaction.getType() != null) {
                 transactionGet.setType(TransactionType.fromValue(transaction.getType()));
             }
-            transactionGet.setAmount(BigDecimal.valueOf(transaction.getAmount()));
             if (transaction.getCreatedDate() != null) {
                 transactionGet.setCreatedDate(transaction.getCreatedDate().atZone(ZoneId.systemDefault()).toOffsetDateTime());
             }
@@ -105,7 +105,7 @@ public class TransactionMapper {
             if (tuple2.getT1().getHolder() != null && tuple2.getT1().getSignatory() != null)
                 throw new Exception("Transaction must have at least one Signatory or Holder");
             Transaction transaction = new Transaction();
-            transaction.setNumber(tuple2.getT2());
+            transaction.setNumber(tuple2.getT2()+1);
             transaction.setSender(ProductMapper.productToProductEntity(tuple2.getT1().getSender()));
             if (tuple2.getT1().getReceiver() != null)
                 transaction.setReceiver(ProductMapper.productToProductEntity(tuple2.getT1().getReceiver()));

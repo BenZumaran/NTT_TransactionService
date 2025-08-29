@@ -9,6 +9,7 @@ C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\target\generated-sources\openapi\src\main\java\com\nttdata\transaction_service\model\TransactionGet.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\mapper\AccountMapper.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\dto\NumberProjection.java
+C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\util\TransactionNotFoundException.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\model\entity\Transaction.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\dto\credit\CreditResponseDTO.java
 C:\Users\benja\Documents\NTT Data Proyects\transaction_service\src\main\java\com\nttdata\transaction_service\business\account\AccountServiceImp.java

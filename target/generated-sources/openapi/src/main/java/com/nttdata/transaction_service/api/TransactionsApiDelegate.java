@@ -23,11 +23,37 @@ import java.util.Optional;
  * A delegate to be called by the {@link TransactionsApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-27T20:13:55.820311800-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-29T17:52:57.098615300-05:00[America/Lima]")
 public interface TransactionsApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
+    }
+
+    /**
+     * GET /transactions/client/{document} : Get Transactions Between Dates by Client&#39;s document
+     *
+     * @param document  (required)
+     * @param from  (required)
+     * @param to  (required)
+     * @return List of transactions (status code 200)
+     * @see TransactionsApi#transactionsClientDocumentGet
+     */
+    default Mono<ResponseEntity<Flux<TransactionGet>>> transactionsClientDocumentGet(String document,
+        String from,
+        String to,
+        ServerWebExchange exchange) {
+        Mono<Void> result = Mono.empty();
+        exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
+        for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
+            if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
+                result = ApiUtil.getExampleResponse(exchange, exampleString);
+                break;
+            }
+        }
+        return result.then(Mono.empty());
+
     }
 
     /**
@@ -40,8 +66,8 @@ public interface TransactionsApiDelegate {
         Mono<Void> result = Mono.empty();
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
-            if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
+            if (mediaType.isCompatibleWith(MediaType.valueOf(""))) {
+                String exampleString = "";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }
@@ -155,7 +181,7 @@ public interface TransactionsApiDelegate {
     }
 
     /**
-     * GET /transactions/{type}/product/{id} : Get Transactions and Products Balance by Client&#39;s Product
+     * GET /transactions/{type}/product/{id} : Get Transactions Between Dates by Client&#39;s document
      *
      * @param id  (required)
      * @param type  (required)
