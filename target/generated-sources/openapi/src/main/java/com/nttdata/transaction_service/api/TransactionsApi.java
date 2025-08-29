@@ -24,7 +24,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-27T20:13:55.820311800-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-29T17:52:57.098615300-05:00[America/Lima]")
 @Validated
 @Api(value = "transactions", description = "the transactions API")
 public interface TransactionsApi {
@@ -32,6 +32,26 @@ public interface TransactionsApi {
     default TransactionsApiDelegate getDelegate() {
         return new TransactionsApiDelegate() {};
     }
+
+    /**
+     * GET /transactions/client/{document} : Get Transactions Between Dates by Client&#39;s document
+     *
+     * @param document  (required)
+     * @param from  (required)
+     * @param to  (required)
+     * @return List of transactions (status code 200)
+     */
+    @ApiOperation(value = "Get Transactions Between Dates by Client's document", nickname = "transactionsClientDocumentGet", notes = "", response = TransactionGet.class, responseContainer = "List", tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "List of transactions", response = TransactionGet.class, responseContainer = "List") })
+    @GetMapping(
+        value = "/transactions/client/{document}",
+        produces = { "application/json" }
+    )
+    default Mono<ResponseEntity<Flux<TransactionGet>>> transactionsClientDocumentGet(@ApiParam(value = "",required=true) @PathVariable("document") String document,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "from", required = true) String from,@NotNull @ApiParam(value = "", required = true) @Valid @RequestParam(value = "to", required = true) String to, @ApiIgnore final ServerWebExchange exchange) {
+        return getDelegate().transactionsClientDocumentGet(document, from, to, exchange);
+    }
+
 
     /**
      * GET /transactions : Get List of all transactions
@@ -43,7 +63,7 @@ public interface TransactionsApi {
         @ApiResponse(code = 200, message = "List of transactions", response = TransactionGet.class, responseContainer = "List") })
     @GetMapping(
         value = "/transactions",
-        produces = { "application/json" }
+        produces = { "application/stream+json" }
     )
     default Mono<ResponseEntity<Flux<TransactionGet>>> transactionsGet(@ApiIgnore final ServerWebExchange exchange) {
         return getDelegate().transactionsGet(exchange);
@@ -144,7 +164,7 @@ public interface TransactionsApi {
 
 
     /**
-     * GET /transactions/{type}/product/{id} : Get Transactions and Products Balance by Client&#39;s Product
+     * GET /transactions/{type}/product/{id} : Get Transactions Between Dates by Client&#39;s document
      *
      * @param id  (required)
      * @param type  (required)
@@ -152,7 +172,7 @@ public interface TransactionsApi {
      * @param to  (required)
      * @return List of transactions (status code 200)
      */
-    @ApiOperation(value = "Get Transactions and Products Balance by Client's Product", nickname = "transactionsTypeProductIdGet", notes = "", response = TransactionGet.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "Get Transactions Between Dates by Client's document", nickname = "transactionsTypeProductIdGet", notes = "", response = TransactionGet.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "List of transactions", response = TransactionGet.class, responseContainer = "List") })
     @GetMapping(

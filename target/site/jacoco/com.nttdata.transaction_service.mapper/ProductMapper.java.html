@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.mapper</a> &gt; <span class="el_source">ProductMapper.java</span></div><h1>ProductMapper.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.mapper;
+
+import com.nttdata.transaction_service.model.Product;
+import com.nttdata.transaction_service.model.ProductType;
+import com.nttdata.transaction_service.model.entity.ProductEntity;
+
+import java.math.BigDecimal;
+
+<span class="nc" id="L9">public class ProductMapper {</span>
+
+    // Validate and Converts ProductEntity to Product
+    public static Product productEntityToProduct(ProductEntity productEntity) {
+<span class="nc" id="L13">        Product product = new Product();</span>
+<span class="nc" id="L14">        product.setId(productEntity.getId());</span>
+<span class="nc bnc" id="L15" title="All 2 branches missed.">        if (productEntity.getType() != null)</span>
+<span class="nc" id="L16">            product.setType(ProductType.fromValue(productEntity.getType()));</span>
+<span class="nc bnc" id="L17" title="All 2 branches missed.">        if (productEntity.getNumber() != null)</span>
+<span class="nc" id="L18">            product.setNumber(productEntity.getNumber());</span>
+<span class="nc bnc" id="L19" title="All 2 branches missed.">        if (productEntity.getBalance() &gt; -1)</span>
+<span class="nc" id="L20">            product.setBalance(BigDecimal.valueOf(productEntity.getBalance()));</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        if(productEntity.getLimit() &gt; -1)</span>
+<span class="nc" id="L22">            product.setLimit(BigDecimal.valueOf(productEntity.getLimit()));</span>
+<span class="nc" id="L23">        return product;</span>
+    }
+
+    // Validate Converts Product to ProductEntity
+    public static ProductEntity productToProductEntity(Product product) {
+<span class="nc" id="L28">        ProductEntity productEntity = new ProductEntity();</span>
+<span class="nc" id="L29">        productEntity.setId(product.getId());</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (product.getType() != null)</span>
+<span class="nc" id="L31">            productEntity.setType(product.getType().getValue());</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (product.getNumber() != null)</span>
+<span class="nc" id="L33">            productEntity.setNumber(product.getNumber());</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (product.getBalance() != null)</span>
+<span class="nc" id="L35">            productEntity.setBalance(product.getBalance().doubleValue());</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if(product.getLimit() != null)</span>
+<span class="nc" id="L37">            productEntity.setLimit(product.getLimit().doubleValue());</span>
+<span class="nc" id="L38">        return productEntity;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

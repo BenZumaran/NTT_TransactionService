@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CreditMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.mapper</a> &gt; <span class="el_source">CreditMapper.java</span></div><h1>CreditMapper.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.mapper;
+
+import com.nttdata.transaction_service.dto.credit.*;
+import com.nttdata.transaction_service.model.Product;
+import com.nttdata.transaction_service.model.ProductType;
+import com.nttdata.transaction_service.model.TransactionPost;
+import com.nttdata.transaction_service.model.entity.ProductEntity;
+import com.nttdata.transaction_service.model.entity.Transaction;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+<span class="nc" id="L14">public class CreditMapper {</span>
+
+
+    public static Product creditResponseDtoToProduct(CreditResponseDTO creditResponseDTO){
+<span class="nc" id="L18">        Product product = new Product();</span>
+<span class="nc" id="L19">        product.setId(creditResponseDTO.getId());</span>
+<span class="nc" id="L20">        product.setBalance(BigDecimal.valueOf(creditResponseDTO.getBalance()));</span>
+<span class="nc bnc" id="L21" title="All 4 branches missed.">        switch (creditResponseDTO.getType()){</span>
+            //PERSONAL, BUSINESS, CREDIT_CARD
+            //personal_credit, business_credit, credit_card
+            case &quot;PERSONAL&quot;:
+<span class="nc" id="L25">                product.setType(ProductType.fromValue(&quot;personal_credit&quot;));</span>
+<span class="nc" id="L26">                break;</span>
+            case &quot;BUSINESS&quot;:
+<span class="nc" id="L28">                product.setType(ProductType.fromValue(&quot;business_credit&quot;));</span>
+<span class="nc" id="L29">                break;</span>
+            case &quot;CREDIT_CARD&quot;:
+<span class="nc" id="L31">                product.setType(ProductType.fromValue(&quot;credit_card&quot;));</span>
+<span class="nc" id="L32">                break;</span>
+            default:
+<span class="nc" id="L34">                throw  new IllegalArgumentException(&quot;No credit product type &quot; + creditResponseDTO.getType()</span>
+                        + &quot;valid types: [ personal_credit, business_credit, credit_card ]&quot;);
+        }
+<span class="nc" id="L37">        product.setLimit(BigDecimal.valueOf(creditResponseDTO.getLimit()));</span>
+<span class="nc" id="L38">        return product;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

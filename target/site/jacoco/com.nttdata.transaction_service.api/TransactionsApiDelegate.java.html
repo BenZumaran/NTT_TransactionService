@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionsApiDelegate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.api</a> &gt; <span class="el_source">TransactionsApiDelegate.java</span></div><h1>TransactionsApiDelegate.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.api;
+
+import com.nttdata.transaction_service.model.TransactionGet;
+import com.nttdata.transaction_service.model.TransactionGetClientBalance;
+import com.nttdata.transaction_service.model.TransactionPost;
+import com.nttdata.transaction_service.model.TransactionPut;
+import io.swagger.annotations.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import org.springframework.http.codec.multipart.Part;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+/**
+ * A delegate to be called by the {@link TransactionsApiController}}.
+ * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
+ */
+@javax.annotation.Generated(value = &quot;org.openapitools.codegen.languages.SpringCodegen&quot;, date = &quot;2025-08-29T17:52:57.098615300-05:00[America/Lima]&quot;)
+public interface TransactionsApiDelegate {
+
+    default Optional&lt;NativeWebRequest&gt; getRequest() {
+<span class="nc" id="L30">        return Optional.empty();</span>
+    }
+
+    /**
+     * GET /transactions/client/{document} : Get Transactions Between Dates by Client&amp;#39;s document
+     *
+     * @param document  (required)
+     * @param from  (required)
+     * @param to  (required)
+     * @return List of transactions (status code 200)
+     * @see TransactionsApi#transactionsClientDocumentGet
+     */
+    default Mono&lt;ResponseEntity&lt;Flux&lt;TransactionGet&gt;&gt;&gt; transactionsClientDocumentGet(String document,
+        String from,
+        String to,
+        ServerWebExchange exchange) {
+<span class="nc" id="L46">        Mono&lt;Void&gt; result = Mono.empty();</span>
+<span class="nc" id="L47">        exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">            if (mediaType.isCompatibleWith(MediaType.valueOf(&quot;application/json&quot;))) {</span>
+<span class="nc" id="L50">                String exampleString = &quot;{ \&quot;number\&quot; : 0, \&quot;amount\&quot; : 5.962133916683182, \&quot;createdDate\&quot; : \&quot;2000-01-23T04:56:07.000+00:00\&quot;, \&quot;receiver\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;sender\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;holder\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; }, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;signatory\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; } }&quot;;</span>
+<span class="nc" id="L51">                result = ApiUtil.getExampleResponse(exchange, exampleString);</span>
+<span class="nc" id="L52">                break;</span>
+            }
+<span class="nc" id="L54">        }</span>
+<span class="nc" id="L55">        return result.then(Mono.empty());</span>
+
+    }
+
+    /**
+     * GET /transactions : Get List of all transactions
+     *
+     * @return List of transactions (status code 200)
+     * @see TransactionsApi#transactionsGet
+     */
+    default Mono&lt;ResponseEntity&lt;Flux&lt;TransactionGet&gt;&gt;&gt; transactionsGet(ServerWebExchange exchange) {
+<span class="nc" id="L66">        Mono&lt;Void&gt; result = Mono.empty();</span>
+<span class="nc" id="L67">        exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            if (mediaType.isCompatibleWith(MediaType.valueOf(&quot;&quot;))) {</span>
+<span class="nc" id="L70">                String exampleString = &quot;&quot;;</span>
+<span class="nc" id="L71">                result = ApiUtil.getExampleResponse(exchange, exampleString);</span>
+<span class="nc" id="L72">                break;</span>
+            }
+<span class="nc" id="L74">        }</span>
+<span class="nc" id="L75">        return result.then(Mono.empty());</span>
+
+    }
+
+    /**
+     * DELETE /transactions/{id} : Delete a transaction
+     *
+     * @param id  (required)
+     * @return Transaction deleted (status code 204)
+     * @see TransactionsApi#transactionsIdDelete
+     */
+    default Mono&lt;ResponseEntity&lt;Void&gt;&gt; transactionsIdDelete(String id,
+        ServerWebExchange exchange) {
+<span class="nc" id="L88">        Mono&lt;Void&gt; result = Mono.empty();</span>
+<span class="nc" id="L89">        exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);</span>
+<span class="nc" id="L90">        return result.then(Mono.empty());</span>
+
+    }
+
+    /**
+     * GET /transactions/{id} : Get a transaction by ID
+     *
+     * @param id  (required)
+     * @return A single transaction (status code 200)
+     *         or Transaction not found (status code 404)
+     * @see TransactionsApi#transactionsIdGet
+     */
+    default Mono&lt;ResponseEntity&lt;TransactionGet&gt;&gt; transactionsIdGet(String id,
+        ServerWebExchange exchange) {
+<span class="nc" id="L104">        Mono&lt;Void&gt; result = Mono.empty();</span>
+<span class="nc" id="L105">        exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">            if (mediaType.isCompatibleWith(MediaType.valueOf(&quot;application/json&quot;))) {</span>
+<span class="nc" id="L108">                String exampleString = &quot;{ \&quot;number\&quot; : 0, \&quot;amount\&quot; : 5.962133916683182, \&quot;createdDate\&quot; : \&quot;2000-01-23T04:56:07.000+00:00\&quot;, \&quot;receiver\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;sender\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;holder\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; }, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;signatory\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; } }&quot;;</span>
+<span class="nc" id="L109">                result = ApiUtil.getExampleResponse(exchange, exampleString);</span>
+<span class="nc" id="L110">                break;</span>
+            }
+<span class="nc" id="L112">        }</span>
+<span class="nc" id="L113">        return result.then(Mono.empty());</span>
+
+    }
+
+    /**
+     * POST /transactions : Create a new transaction
+     *
+     * @param transactionPost  (required)
+     * @return Transaction Created (status code 201)
+     * @see TransactionsApi#transactionsPost
+     */
+    default Mono&lt;ResponseEntity&lt;TransactionGet&gt;&gt; transactionsPost(Mono&lt;TransactionPost&gt; transactionPost,
+        ServerWebExchange exchange) {
+<span class="nc" id="L126">        Mono&lt;Void&gt; result = Mono.empty();</span>
+<span class="nc" id="L127">        exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            if (mediaType.isCompatibleWith(MediaType.valueOf(&quot;application/json&quot;))) {</span>
+<span class="nc" id="L130">                String exampleString = &quot;{ \&quot;number\&quot; : 0, \&quot;amount\&quot; : 5.962133916683182, \&quot;createdDate\&quot; : \&quot;2000-01-23T04:56:07.000+00:00\&quot;, \&quot;receiver\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;sender\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;holder\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; }, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;signatory\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; } }&quot;;</span>
+<span class="nc" id="L131">                result = ApiUtil.getExampleResponse(exchange, exampleString);</span>
+<span class="nc" id="L132">                break;</span>
+            }
+<span class="nc" id="L134">        }</span>
+<span class="nc" id="L135">        return result.then(Mono.empty());</span>
+
+    }
+
+    /**
+     * GET /transactions/product/{id} : Get Transactions and Products Balance by Client&amp;#39;s Product
+     *
+     * @param id  (required)
+     * @return Product information found (status code 200)
+     * @see TransactionsApi#transactionsProductIdGet
+     */
+    default Mono&lt;ResponseEntity&lt;TransactionGetClientBalance&gt;&gt; transactionsProductIdGet(String id,
+        ServerWebExchange exchange) {
+<span class="nc" id="L148">        Mono&lt;Void&gt; result = Mono.empty();</span>
+<span class="nc" id="L149">        exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">        for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">            if (mediaType.isCompatibleWith(MediaType.valueOf(&quot;application/json&quot;))) {</span>
+<span class="nc" id="L152">                String exampleString = &quot;{ \&quot;product\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;transactions\&quot; : [ { \&quot;number\&quot; : 0, \&quot;amount\&quot; : 5.962133916683182, \&quot;createdDate\&quot; : \&quot;2000-01-23T04:56:07.000+00:00\&quot;, \&quot;receiver\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;sender\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;holder\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; }, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;signatory\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; } }, { \&quot;number\&quot; : 0, \&quot;amount\&quot; : 5.962133916683182, \&quot;createdDate\&quot; : \&quot;2000-01-23T04:56:07.000+00:00\&quot;, \&quot;receiver\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;sender\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;holder\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; }, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;signatory\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; } } ] }&quot;;</span>
+<span class="nc" id="L153">                result = ApiUtil.getExampleResponse(exchange, exampleString);</span>
+<span class="nc" id="L154">                break;</span>
+            }
+<span class="nc" id="L156">        }</span>
+<span class="nc" id="L157">        return result.then(Mono.empty());</span>
+
+    }
+
+    /**
+     * PUT /transactions : Update a transaction (Fields except id are optionals)
+     *
+     * @param transactionPut  (required)
+     * @return Transaction updated (status code 200)
+     * @see TransactionsApi#transactionsPut
+     */
+    default Mono&lt;ResponseEntity&lt;TransactionGet&gt;&gt; transactionsPut(Mono&lt;TransactionPut&gt; transactionPut,
+        ServerWebExchange exchange) {
+<span class="nc" id="L170">        Mono&lt;Void&gt; result = Mono.empty();</span>
+<span class="nc" id="L171">        exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">            if (mediaType.isCompatibleWith(MediaType.valueOf(&quot;application/json&quot;))) {</span>
+<span class="nc" id="L174">                String exampleString = &quot;{ \&quot;number\&quot; : 0, \&quot;amount\&quot; : 5.962133916683182, \&quot;createdDate\&quot; : \&quot;2000-01-23T04:56:07.000+00:00\&quot;, \&quot;receiver\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;sender\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;holder\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; }, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;signatory\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; } }&quot;;</span>
+<span class="nc" id="L175">                result = ApiUtil.getExampleResponse(exchange, exampleString);</span>
+<span class="nc" id="L176">                break;</span>
+            }
+<span class="nc" id="L178">        }</span>
+<span class="nc" id="L179">        return result.then(Mono.empty());</span>
+
+    }
+
+    /**
+     * GET /transactions/{type}/product/{id} : Get Transactions Between Dates by Client&amp;#39;s document
+     *
+     * @param id  (required)
+     * @param type  (required)
+     * @param from  (required)
+     * @param to  (required)
+     * @return List of transactions (status code 200)
+     * @see TransactionsApi#transactionsTypeProductIdGet
+     */
+    default Mono&lt;ResponseEntity&lt;Flux&lt;TransactionGet&gt;&gt;&gt; transactionsTypeProductIdGet(String id,
+        String type,
+        String from,
+        String to,
+        ServerWebExchange exchange) {
+<span class="nc" id="L198">        Mono&lt;Void&gt; result = Mono.empty();</span>
+<span class="nc" id="L199">        exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">            if (mediaType.isCompatibleWith(MediaType.valueOf(&quot;application/json&quot;))) {</span>
+<span class="nc" id="L202">                String exampleString = &quot;{ \&quot;number\&quot; : 0, \&quot;amount\&quot; : 5.962133916683182, \&quot;createdDate\&quot; : \&quot;2000-01-23T04:56:07.000+00:00\&quot;, \&quot;receiver\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;sender\&quot; : { \&quot;number\&quot; : \&quot;number\&quot;, \&quot;balance\&quot; : 6.027456183070403, \&quot;limit\&quot; : 1.4658129805029452, \&quot;id\&quot; : \&quot;id\&quot; }, \&quot;holder\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; }, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;signatory\&quot; : { \&quot;document\&quot; : \&quot;document\&quot;, \&quot;fullName\&quot; : \&quot;fullName\&quot;, \&quot;id\&quot; : \&quot;id\&quot;, \&quot;type\&quot; : \&quot;personal\&quot; } }&quot;;</span>
+<span class="nc" id="L203">                result = ApiUtil.getExampleResponse(exchange, exampleString);</span>
+<span class="nc" id="L204">                break;</span>
+            }
+<span class="nc" id="L206">        }</span>
+<span class="nc" id="L207">        return result.then(Mono.empty());</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionApiDelegateImp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.business</a> &gt; <span class="el_source">TransactionApiDelegateImp.java</span></div><h1>TransactionApiDelegateImp.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.business;
+
+import com.nttdata.transaction_service.api.TransactionsApiDelegate;
+import com.nttdata.transaction_service.business.account.AccountService;
+import com.nttdata.transaction_service.business.credit.CreditService;
+import com.nttdata.transaction_service.dto.NumberProjection;
+import com.nttdata.transaction_service.mapper.AccountMapper;
+import com.nttdata.transaction_service.mapper.CreditMapper;
+import com.nttdata.transaction_service.mapper.TransactionMapper;
+import com.nttdata.transaction_service.model.TransactionGet;
+import com.nttdata.transaction_service.model.TransactionGetClientBalance;
+import com.nttdata.transaction_service.model.TransactionPost;
+import com.nttdata.transaction_service.model.TransactionPut;
+import com.nttdata.transaction_service.repository.TransactionRepository;
+import com.nttdata.transaction_service.util.TransactionNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
+@Service
+<span class="fc" id="L31">public class TransactionApiDelegateImp implements TransactionsApiDelegate {</span>
+
+    @Autowired
+    TransactionRepository repository;
+
+    @Autowired
+    AccountService accountService;
+
+    @Autowired
+    CreditService creditService;
+
+<span class="fc" id="L42">    private static final Logger log = LoggerFactory.getLogger(TransactionApiDelegateImp.class);</span>
+
+    @Override
+    public Mono&lt;ResponseEntity&lt;Flux&lt;TransactionGet&gt;&gt;&gt; transactionsGet(ServerWebExchange exchange) {
+        try {
+<span class="nc" id="L47">            return Mono.just(new ResponseEntity&lt;&gt;(repository.findAll()</span>
+<span class="nc" id="L48">                            .map(TransactionMapper::transactionToTransactionGet), HttpStatus.OK))</span>
+<span class="nc" id="L49">                    .doOnSuccess(nonusing -&gt; log.info(&quot;Transactions found.&quot;))</span>
+<span class="nc" id="L50">                    .doOnError(nonusing2 -&gt; log.error(&quot;Error at found transactions --&gt; transactionsGet&quot;));</span>
+
+<span class="nc" id="L52">        } catch (Exception ex) {</span>
+<span class="nc" id="L53">            log.error(ex.getMessage());</span>
+<span class="nc" id="L54">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="nc" id="L55">                    log.error(stackTraceElement.toString()));</span>
+<span class="nc" id="L56">            return Mono.just(new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR));</span>
+        }
+
+    }
+
+    @Override
+    public Mono&lt;ResponseEntity&lt;Void&gt;&gt; transactionsIdDelete(String id, ServerWebExchange exchange) {
+        try {
+<span class="nc" id="L64">            return repository.deleteById(id)</span>
+<span class="nc" id="L65">                    .doOnSuccess(nonusing2 -&gt; log.info(&quot;Transaction with id {} was deleted.&quot;, id))</span>
+<span class="nc" id="L66">                    .doOnError(nonusing3 -&gt; log.error(&quot;Error at delete transaction --&gt; transactionsIdDelete.&quot;))</span>
+<span class="nc" id="L67">                    .map(nonusing -&gt; new ResponseEntity&lt;&gt;(HttpStatus.OK));</span>
+<span class="nc" id="L68">        } catch (Exception ex) {</span>
+<span class="nc" id="L69">            log.error(ex.getMessage());</span>
+<span class="nc" id="L70">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="nc" id="L71">                    log.error(stackTraceElement.toString()));</span>
+<span class="nc" id="L72">            return Mono.just(new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR));</span>
+
+        }
+    }
+
+    //To Get specific Transaction by ID
+    @Override
+    public Mono&lt;ResponseEntity&lt;TransactionGet&gt;&gt; transactionsIdGet(String id, ServerWebExchange exchange) {
+        try {
+            //Search in DB
+<span class="nc" id="L82">            return repository.findById(id)</span>
+                    //Map response to TransactionGet to respond
+<span class="nc" id="L84">                    .switchIfEmpty(Mono.error(new TransactionNotFoundException(id)))</span>
+<span class="nc" id="L85">                    .map(TransactionMapper::transactionToTransactionGet)</span>
+                    //Map to ResponseEntity for final return
+<span class="nc" id="L87">                    .map(transactionGet -&gt;</span>
+<span class="nc" id="L88">                            new ResponseEntity&lt;&gt;(transactionGet, HttpStatus.OK))</span>
+                    //Log success
+<span class="nc" id="L90">                    .doOnSuccess(nonusing -&gt; log.info(&quot;Transaction with id {} was found.&quot;, id))</span>
+                    //Log error
+<span class="nc" id="L92">                    .onErrorResume(TransactionNotFoundException.class, error -&gt; {</span>
+<span class="nc" id="L93">                        log.error(error.getMessage());</span>
+<span class="nc" id="L94">                        return Mono.just(new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND));</span>
+<span class="nc" id="L95">                    }).onErrorResume(error -&gt; {</span>
+<span class="nc" id="L96">                        log.error(&quot;Error: {} --&gt; transactionsIdGet&quot;, error.getMessage());</span>
+
+<span class="nc" id="L98">                        return Mono.just(new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR));</span>
+                    });
+<span class="nc" id="L100">        } catch (Exception ex) {</span>
+<span class="nc" id="L101">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="nc" id="L102">                    log.error(stackTraceElement.toString()));</span>
+<span class="nc" id="L103">            return Mono.just(new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR));</span>
+        }
+
+    }
+
+    @Override
+    public Mono&lt;ResponseEntity&lt;TransactionGet&gt;&gt; transactionsPost(Mono&lt;TransactionPost&gt; transactionPostMono, ServerWebExchange exchange) {
+<span class="nc" id="L110">        return transactionPostMono.zipWhen(transactionPost -&gt; repository.findTopNumberByOrderByNumberDesc()</span>
+<span class="nc" id="L111">                        .map(NumberProjection::getNumber)</span>
+<span class="nc" id="L112">                        .switchIfEmpty(Mono.just(0)))</span>
+<span class="nc" id="L113">                .map(TransactionMapper::transactionPostToTransaction)</span>
+<span class="nc" id="L114">                .flatMap(repository::save)</span>
+<span class="nc" id="L115">                .map(TransactionMapper::transactionToTransactionGet)</span>
+<span class="nc" id="L116">                .map(transactionGet -&gt; new ResponseEntity&lt;&gt;(transactionGet, HttpStatus.CREATED))</span>
+<span class="nc" id="L117">                .doOnSuccess(transactionGetResponseEntity -&gt;</span>
+<span class="nc" id="L118">                        log.info(&quot;Transaction was inserted id: {}&quot;,</span>
+<span class="nc" id="L119">                                transactionGetResponseEntity.getBody().getId()))</span>
+                //Log error
+<span class="nc" id="L121">                .onErrorReturn(new ResponseEntity&lt;&gt;(HttpStatus.BAD_REQUEST))</span>
+<span class="nc" id="L122">                .doOnError(errorMessage -&gt; log.error(&quot;Error: {} --&gt; transactionsPost&quot;, errorMessage.getMessage()));</span>
+    }
+
+    //To Update specific Transaction
+    @Override
+    public Mono&lt;ResponseEntity&lt;TransactionGet&gt;&gt; transactionsPut(Mono&lt;TransactionPut&gt; transactionPutMono, ServerWebExchange exchange) {
+        try {
+            //Zip When to Search with repository by TransactionPut's ID
+<span class="nc" id="L130">            return transactionPutMono.zipWhen(transactionPut -&gt; repository.findById(transactionPut.getId()))</span>
+                    //Valid only changes sent in TransactionPut
+<span class="nc" id="L132">                    .map(TransactionMapper::transactionPutAndTransactionPreviousToTransaction)</span>
+                    //Save the response to DB
+<span class="nc" id="L134">                    .flatMap(transaction -&gt; repository.save(transaction))</span>
+                    //Map to TransactionGet for response purposes
+<span class="nc" id="L136">                    .map(TransactionMapper::transactionToTransactionGet)</span>
+                    //Map to ResponseEntity to return final response
+<span class="nc" id="L138">                    .map(transactionGet -&gt; new ResponseEntity&lt;&gt;(transactionGet, HttpStatus.OK))</span>
+                    //Log success of update
+<span class="nc" id="L140">                    .doOnSuccess(nonusing -&gt; log.info(&quot;Transaction with was updated.&quot;))</span>
+                    //Log error
+<span class="nc" id="L142">                    .doOnError(nonusing2 -&gt; log.error(&quot;Error at update transaction --&gt; transactionsPut&quot;));</span>
+<span class="nc" id="L143">        } catch (Exception ex) {</span>
+<span class="nc" id="L144">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="nc" id="L145">                    log.error(stackTraceElement.toString()));</span>
+<span class="nc" id="L146">            return Mono.just(new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR));</span>
+        }
+    }
+
+    @Override
+    public Mono&lt;ResponseEntity&lt;TransactionGetClientBalance&gt;&gt; transactionsProductIdGet(String id, ServerWebExchange exchange) {
+<span class="nc" id="L152">        return repository.findBySenderIdOrderByCreatedDate(id)</span>
+<span class="nc" id="L153">                .map(TransactionMapper::transactionToTransactionGet)</span>
+<span class="nc" id="L154">                .collectList()</span>
+<span class="nc" id="L155">                .zipWhen(transactionGets -&gt; {</span>
+<span class="nc bnc" id="L156" title="All 3 branches missed.">                    switch (transactionGets.get(0).getSender().getType().getValue()) {</span>
+                        case &quot;savings_account&quot;:
+                        case &quot;checking_account&quot;:
+                        case &quot;fixed_term_account&quot;:
+<span class="nc" id="L160">                            return accountService.fetchGetAccountById(transactionGets.get(0).getSender().getId())</span>
+<span class="nc" id="L161">                                    .map(AccountMapper::accountResponseCreateDtoToProduct);</span>
+                        case &quot;personal_credit&quot;:
+                        case &quot;business_credit&quot;:
+                        case &quot;credit_card&quot;:
+<span class="nc" id="L165">                            return creditService.fetchGetCreditById(transactionGets.get(0).getSender().getId())</span>
+<span class="nc" id="L166">                                    .map(CreditMapper::creditResponseDtoToProduct);</span>
+                    }
+<span class="nc" id="L168">                    return Mono.error(new Error(&quot;Transaction Product Type not Found. Valid Types: [ savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card &quot;));</span>
+<span class="nc" id="L169">                }).map(TransactionMapper::productAndTransactionGetListToTransactionGetClientBalance)</span>
+<span class="nc" id="L170">                .map(transactionGetClientBalance -&gt; new ResponseEntity&lt;&gt;(transactionGetClientBalance, HttpStatus.OK))</span>
+<span class="nc" id="L171">                .doOnSuccess(nousing -&gt; log.info(&quot;Information for product with id {} find.&quot;, id))</span>
+<span class="nc" id="L172">                .onErrorResume(error -&gt; {</span>
+<span class="nc" id="L173">                    log.error(&quot;Error at find information for Product with id {} --&gt; transactionsProductIdGet&quot;, id);</span>
+<span class="nc" id="L174">                    return Mono.just(new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR));</span>
+                });
+    }
+
+    @Override
+    public Mono&lt;ResponseEntity&lt;Flux&lt;TransactionGet&gt;&gt;&gt; transactionsClientDocumentGet(String document,
+                                                                                    String from,
+                                                                                    String to,
+                                                                                    ServerWebExchange exchange) {
+<span class="nc" id="L183">        return Mono.just(new ResponseEntity&lt;&gt;(repository.findByHolderDocumentAndCreatedDateBetween(document, LocalDateTime.parse(from), LocalDateTime.parse(to))</span>
+<span class="nc" id="L184">                .map(TransactionMapper::transactionToTransactionGet)</span>
+<span class="nc" id="L185">                .onErrorResume(error -&gt; {</span>
+<span class="nc" id="L186">                    log.error(&quot;Error at find Transactions for client with document {} --&gt; transactionsClientDocumentGet&quot;, document);</span>
+<span class="nc" id="L187">                    return Flux.empty();</span>
+                })
+<span class="nc" id="L189">                .doOnComplete(() -&gt; log.info(&quot;Transactions for client with document {} find.&quot;, document))</span>
+                , HttpStatus.OK));
+    }
+
+    @Override
+    public Mono&lt;ResponseEntity&lt;Flux&lt;TransactionGet&gt;&gt;&gt; transactionsTypeProductIdGet(String id,
+                                                                                   String type,
+                                                                                   String from,
+                                                                                   String to,
+                                                                                   ServerWebExchange exchange) {
+
+<span class="nc" id="L200">        return Mono.just(new ResponseEntity&lt;&gt;(repository.findByTypeAndSenderIdAndCreatedDateBetween(type, id, LocalDateTime.parse(from), LocalDateTime.parse(to))</span>
+<span class="nc" id="L201">                .map(TransactionMapper::transactionToTransactionGet)</span>
+<span class="nc" id="L202">                .onErrorResume(error -&gt; {</span>
+<span class="nc" id="L203">                    log.error(&quot;Error at find Transactions for product with id {} --&gt; transactionsTypeProductIdGet&quot;, id);</span>
+<span class="nc" id="L204">                    return Flux.empty();</span>
+                })
+<span class="nc" id="L206">                .doOnComplete(() -&gt; log.info(&quot;Transactions for product with id {} find.&quot;, id))</span>
+                , HttpStatus.OK));
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

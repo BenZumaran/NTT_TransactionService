@@ -28,7 +28,7 @@ public class ProductMapper {
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(product.getId());
         if (product.getType() != null)
-            productEntity.setType(productEntity.getType());
+            productEntity.setType(product.getType().getValue());
         if (product.getNumber() != null)
             productEntity.setNumber(product.getNumber());
         if (product.getBalance() != null)
