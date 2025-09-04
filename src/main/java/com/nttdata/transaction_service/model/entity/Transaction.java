@@ -1,16 +1,14 @@
 package com.nttdata.transaction_service.model.entity;
 
-import com.nttdata.transaction_service.model.TransactionGet;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 
 @Data
+@Builder
 @Document(collection = "transactions")
 public class Transaction {
     @Id
@@ -23,5 +21,6 @@ public class Transaction {
     private LocalDateTime createdDate;
     private PersonEntity holder;
     private PersonEntity signatory;
+    private CardEntity card;
 
 }

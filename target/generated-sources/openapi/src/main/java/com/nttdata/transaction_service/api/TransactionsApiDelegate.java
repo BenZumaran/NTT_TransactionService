@@ -1,7 +1,6 @@
 package com.nttdata.transaction_service.api;
 
 import com.nttdata.transaction_service.model.TransactionGet;
-import com.nttdata.transaction_service.model.TransactionGetClientBalance;
 import com.nttdata.transaction_service.model.TransactionPost;
 import com.nttdata.transaction_service.model.TransactionPut;
 import io.swagger.annotations.*;
@@ -23,7 +22,7 @@ import java.util.Optional;
  * A delegate to be called by the {@link TransactionsApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-29T17:52:57.098615300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-04T01:24:52.394066600-05:00[America/Lima]")
 public interface TransactionsApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -47,7 +46,7 @@ public interface TransactionsApiDelegate {
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
             if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"card\" : { \"cardType\" : \"DEBIT\", \"id\" : \"id\", \"isVirtual\" : true, \"creationDate\" : \"2000-01-23T04:56:07.000+00:00\", \"brand\" : \"VISA\", \"cardNumber\" : \"cardNumber\", \"status\" : \"active\" } }";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }
@@ -105,7 +104,7 @@ public interface TransactionsApiDelegate {
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
             if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"card\" : { \"cardType\" : \"DEBIT\", \"id\" : \"id\", \"isVirtual\" : true, \"creationDate\" : \"2000-01-23T04:56:07.000+00:00\", \"brand\" : \"VISA\", \"cardNumber\" : \"cardNumber\", \"status\" : \"active\" } }";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }
@@ -127,7 +126,7 @@ public interface TransactionsApiDelegate {
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
             if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"card\" : { \"cardType\" : \"DEBIT\", \"id\" : \"id\", \"isVirtual\" : true, \"creationDate\" : \"2000-01-23T04:56:07.000+00:00\", \"brand\" : \"VISA\", \"cardNumber\" : \"cardNumber\", \"status\" : \"active\" } }";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }
@@ -143,13 +142,13 @@ public interface TransactionsApiDelegate {
      * @return Product information found (status code 200)
      * @see TransactionsApi#transactionsProductIdGet
      */
-    default Mono<ResponseEntity<TransactionGetClientBalance>> transactionsProductIdGet(String id,
+    default Mono<ResponseEntity<Flux<TransactionGet>>> transactionsProductIdGet(String id,
         ServerWebExchange exchange) {
         Mono<Void> result = Mono.empty();
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
-            if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"product\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"transactions\" : [ { \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }, { \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } } ] }";
+            if (mediaType.isCompatibleWith(MediaType.valueOf(""))) {
+                String exampleString = "";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }
@@ -171,7 +170,7 @@ public interface TransactionsApiDelegate {
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
             if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"card\" : { \"cardType\" : \"DEBIT\", \"id\" : \"id\", \"isVirtual\" : true, \"creationDate\" : \"2000-01-23T04:56:07.000+00:00\", \"brand\" : \"VISA\", \"cardNumber\" : \"cardNumber\", \"status\" : \"active\" } }";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }
@@ -199,7 +198,7 @@ public interface TransactionsApiDelegate {
         exchange.getResponse().setStatusCode(HttpStatus.NOT_IMPLEMENTED);
         for (MediaType mediaType : exchange.getRequest().getHeaders().getAccept()) {
             if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" } }";
+                String exampleString = "{ \"number\" : 0, \"amount\" : 5.962133916683182, \"createdDate\" : \"2000-01-23T04:56:07.000+00:00\", \"receiver\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"sender\" : { \"number\" : \"number\", \"balance\" : 6.027456183070403, \"limit\" : 1.4658129805029452, \"id\" : \"id\" }, \"holder\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"id\" : \"id\", \"signatory\" : { \"document\" : \"document\", \"fullName\" : \"fullName\", \"id\" : \"id\", \"type\" : \"personal\" }, \"card\" : { \"cardType\" : \"DEBIT\", \"id\" : \"id\", \"isVirtual\" : true, \"creationDate\" : \"2000-01-23T04:56:07.000+00:00\", \"brand\" : \"VISA\", \"cardNumber\" : \"cardNumber\", \"status\" : \"active\" } }";
                 result = ApiUtil.getExampleResponse(exchange, exampleString);
                 break;
             }

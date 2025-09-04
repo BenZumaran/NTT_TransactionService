@@ -93,9 +93,11 @@ paths:
         '200':
           description: Product information found
           content:
-            application/json:
+            application/stream+json:
               schema:
-                $ref: '#/components/schemas/TransactionGetClientBalance'
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionGet'
   /transactions/client/{document}:
     get:
       summary: Get Transactions Between Dates by Client's document
@@ -190,6 +192,9 @@ components:
           $ref: '#/components/schemas/Person'
         signatory:
           $ref: '#/components/schemas/Person'
+        card:
+          $ref: '#/components/schemas/Card'
+
 
     TransactionPost:
       type: object
@@ -207,6 +212,8 @@ components:
           $ref: '#/components/schemas/Person'
         signatory:
           $ref: '#/components/schemas/Person'
+        card:
+          $ref: '#/components/schemas/Card'
 
     TransactionPut:
       type: object
@@ -228,16 +235,8 @@ components:
           $ref: '#/components/schemas/Person'
         signatory:
           $ref: '#/components/schemas/Person'
-    TransactionGetClientBalance:
-      type: object
-      properties:
-        product:
-          $ref: '#/components/schemas/Product'
-        transactions:
-          type: array
-          description: Transactions relative to product
-          items:
-            $ref: '#/components/schemas/TransactionGet'
+        card:
+          $ref: '#/components/schemas/Card'
 
     Product:
       type: object
@@ -277,7 +276,7 @@ components:
         type:
           type: string
           format: string
-          enum: [personal,personal_vip,business,business_vip]
+          enum: [ personal,personal_vip,business,business_vip ]
           nullable: true
         fullName:
           type: string
@@ -286,9 +285,44 @@ components:
     ProductType:
       type: string
       format: string
-      enum: [savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card]
+      enum: [ savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card ]
       description: Type of product
     TransactionType:
       type: string
-      enum: [deposit, withdrawal, payment, purchase, charge, create, transfer]
+      enum: [ deposit, withdrawal, payment, purchase, charge, create, transfer ]
       description: Type of transaction
+    Card:
+      nullable: true
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique card ID
+        cardType:
+          type: string
+          enum: [ DEBIT, CREDIT ]
+          description: Type of card
+          nullable: true
+        brand:
+          type: string
+          enum: [ VISA, MASTERCARD, AMEX, OTHER ]
+          description: Card brand
+          nullable: true
+        cardNumber:
+          type: string
+          description: Card number
+          nullable: true
+        status:
+          type: string
+          enum: [ active, blocked, expired, cancelled ]
+          description: Operational status of the card
+          nullable: true
+        isVirtual:
+          type: boolean
+          description: Indicates if the card is virtual
+          nullable: true
+        creationDate:
+          type: string
+          format: date-time
+          description: Fecha de creación
+          nullable: true

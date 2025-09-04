@@ -3,6 +3,7 @@ package com.nttdata.transaction_service.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.nttdata.transaction_service.model.Card;
 import com.nttdata.transaction_service.model.Person;
 import com.nttdata.transaction_service.model.Product;
 import com.nttdata.transaction_service.model.TransactionType;
@@ -16,7 +17,7 @@ import javax.validation.constraints.*;
 /**
  * TransactionGet
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-29T17:52:57.098615300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-04T01:24:52.394066600-05:00[America/Lima]")
 public class TransactionGet   {
   @JsonProperty("id")
   private String id;
@@ -45,6 +46,9 @@ public class TransactionGet   {
 
   @JsonProperty("signatory")
   private Person signatory = null;
+
+  @JsonProperty("card")
+  private Card card = null;
 
   public TransactionGet id(String id) {
     this.id = id;
@@ -233,6 +237,27 @@ public class TransactionGet   {
     this.signatory = signatory;
   }
 
+  public TransactionGet card(Card card) {
+    this.card = card;
+    return this;
+  }
+
+  /**
+   * Get card
+   * @return card
+  */
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Card getCard() {
+    return card;
+  }
+
+  public void setCard(Card card) {
+    this.card = card;
+  }
+
 
   @Override
   public boolean equals(Object o) {
@@ -251,12 +276,13 @@ public class TransactionGet   {
         Objects.equals(this.amount, transactionGet.amount) &&
         Objects.equals(this.createdDate, transactionGet.createdDate) &&
         Objects.equals(this.holder, transactionGet.holder) &&
-        Objects.equals(this.signatory, transactionGet.signatory);
+        Objects.equals(this.signatory, transactionGet.signatory) &&
+        Objects.equals(this.card, transactionGet.card);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, number, sender, receiver, type, amount, createdDate, holder, signatory);
+    return Objects.hash(id, number, sender, receiver, type, amount, createdDate, holder, signatory, card);
   }
 
   @Override
@@ -273,6 +299,7 @@ public class TransactionGet   {
     sb.append("    createdDate: ").append(toIndentedString(createdDate)).append("\n");
     sb.append("    holder: ").append(toIndentedString(holder)).append("\n");
     sb.append("    signatory: ").append(toIndentedString(signatory)).append("\n");
+    sb.append("    card: ").append(toIndentedString(card)).append("\n");
     sb.append("}");
     return sb.toString();
   }

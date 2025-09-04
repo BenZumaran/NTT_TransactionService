@@ -1,43 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.mapper</a> &gt; <span class="el_source">ProductMapper.java</span></div><h1>ProductMapper.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.mapper;
 
+import com.nttdata.transaction_service.dto.account.AccountResponseCreateDTO;
+import com.nttdata.transaction_service.dto.credit.CreditResponseDTO;
 import com.nttdata.transaction_service.model.Product;
 import com.nttdata.transaction_service.model.ProductType;
 import com.nttdata.transaction_service.model.entity.ProductEntity;
 
 import java.math.BigDecimal;
 
-<span class="nc" id="L9">public class ProductMapper {</span>
+<span class="nc" id="L11">public class ProductMapper {</span>
 
     // Validate and Converts ProductEntity to Product
     public static Product productEntityToProduct(ProductEntity productEntity) {
-<span class="nc" id="L13">        Product product = new Product();</span>
-<span class="nc" id="L14">        product.setId(productEntity.getId());</span>
-<span class="nc bnc" id="L15" title="All 2 branches missed.">        if (productEntity.getType() != null)</span>
-<span class="nc" id="L16">            product.setType(ProductType.fromValue(productEntity.getType()));</span>
-<span class="nc bnc" id="L17" title="All 2 branches missed.">        if (productEntity.getNumber() != null)</span>
-<span class="nc" id="L18">            product.setNumber(productEntity.getNumber());</span>
-<span class="nc bnc" id="L19" title="All 2 branches missed.">        if (productEntity.getBalance() &gt; -1)</span>
-<span class="nc" id="L20">            product.setBalance(BigDecimal.valueOf(productEntity.getBalance()));</span>
-<span class="nc bnc" id="L21" title="All 2 branches missed.">        if(productEntity.getLimit() &gt; -1)</span>
-<span class="nc" id="L22">            product.setLimit(BigDecimal.valueOf(productEntity.getLimit()));</span>
-<span class="nc" id="L23">        return product;</span>
+<span class="fc" id="L15">        Product product = new Product();</span>
+<span class="fc" id="L16">        product.setId(productEntity.getId());</span>
+<span class="pc bpc" id="L17" title="1 of 2 branches missed.">        if (productEntity.getType() != null)</span>
+<span class="fc" id="L18">            product.setType(ProductType.fromValue(productEntity.getType()));</span>
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        if (productEntity.getNumber() != null)</span>
+<span class="fc" id="L20">            product.setNumber(productEntity.getNumber());</span>
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if (productEntity.getBalance() &gt; -1)</span>
+<span class="fc" id="L22">            product.setBalance(BigDecimal.valueOf(productEntity.getBalance()));</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (productEntity.getLimit() &gt; -1)</span>
+<span class="fc" id="L24">            product.setLimit(BigDecimal.valueOf(productEntity.getLimit()));</span>
+<span class="fc" id="L25">        return product;</span>
     }
 
     // Validate Converts Product to ProductEntity
     public static ProductEntity productToProductEntity(Product product) {
-<span class="nc" id="L28">        ProductEntity productEntity = new ProductEntity();</span>
-<span class="nc" id="L29">        productEntity.setId(product.getId());</span>
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (product.getType() != null)</span>
-<span class="nc" id="L31">            productEntity.setType(product.getType().getValue());</span>
-<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (product.getNumber() != null)</span>
-<span class="nc" id="L33">            productEntity.setNumber(product.getNumber());</span>
-<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (product.getBalance() != null)</span>
-<span class="nc" id="L35">            productEntity.setBalance(product.getBalance().doubleValue());</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">        if(product.getLimit() != null)</span>
-<span class="nc" id="L37">            productEntity.setLimit(product.getLimit().doubleValue());</span>
-<span class="nc" id="L38">        return productEntity;</span>
+<span class="fc" id="L30">        ProductEntity productEntity = ProductEntity.builder().build();</span>
+<span class="fc" id="L31">        productEntity.setId(product.getId());</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        if (product.getType() != null)</span>
+<span class="fc" id="L33">            productEntity.setType(product.getType().getValue());</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (product.getNumber() != null)</span>
+<span class="fc" id="L35">            productEntity.setNumber(product.getNumber());</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (product.getBalance() != null)</span>
+<span class="fc" id="L37">            productEntity.setBalance(product.getBalance().doubleValue());</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (product.getLimit() != null)</span>
+<span class="fc" id="L39">            productEntity.setLimit(product.getLimit().doubleValue());</span>
+<span class="fc" id="L40">        return productEntity;</span>
+    }
+
+    public static ProductEntity accountResponseDtoToProductEntity(AccountResponseCreateDTO accountResponseCreateDTO) {
+<span class="nc" id="L44">        ProductEntity productEntity = ProductEntity.builder().build();</span>
+<span class="nc" id="L45">        productEntity.setId(accountResponseCreateDTO.getId());</span>
+<span class="nc" id="L46">        productEntity.setNumber(accountResponseCreateDTO.getAccountNumber());</span>
+<span class="nc" id="L47">        productEntity.setBalance(accountResponseCreateDTO.getBalance());</span>
+        //savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card
+        //SAVINGS, CHECKING, FIXED_TERM
+<span class="nc bnc" id="L50" title="All 4 branches missed.">        switch (accountResponseCreateDTO.getAccountType()) {</span>
+            case &quot;SAVINGS&quot;:
+<span class="nc" id="L52">                productEntity.setType(&quot;savings_account&quot;);</span>
+<span class="nc" id="L53">                break;</span>
+            case &quot;CHECKING&quot;:
+<span class="nc" id="L55">                productEntity.setType(&quot;checking_account&quot;);</span>
+<span class="nc" id="L56">                break;</span>
+            case &quot;FIXED_TERM&quot;:
+<span class="nc" id="L58">                productEntity.setType(&quot;fixed_term_account&quot;);</span>
+                break;
+        }
+<span class="nc" id="L61">        return productEntity;</span>
+    }
+
+
+    public static ProductEntity creditResponseDtoToProductEntity(CreditResponseDTO creditResponseDTO) {
+<span class="nc" id="L66">        ProductEntity productEntity = ProductEntity.builder().build();</span>
+<span class="nc" id="L67">        productEntity.setId(creditResponseDTO.getId());</span>
+<span class="nc" id="L68">        productEntity.setLimit(creditResponseDTO.getLimit());</span>
+<span class="nc" id="L69">        productEntity.setBalance(creditResponseDTO.getBalance());</span>
+        //personal_credit, business_credit, credit_card
+        //PERSONAL, BUSINESS, CREDIT_CARD
+<span class="nc bnc" id="L72" title="All 4 branches missed.">        switch (creditResponseDTO.getType()) {</span>
+            case &quot;PERSONAL&quot;:
+<span class="nc" id="L74">                productEntity.setType(&quot;personal_credit&quot;);</span>
+<span class="nc" id="L75">                break;</span>
+            case &quot;BUSINESS&quot;:
+<span class="nc" id="L77">                productEntity.setType(&quot;business_credit&quot;);</span>
+<span class="nc" id="L78">                break;</span>
+            case &quot;CREDIT_CARD&quot;:
+<span class="nc" id="L80">                productEntity.setType(&quot;credit_card&quot;);</span>
+                break;
+        }
+<span class="nc" id="L83">        return productEntity;</span>
     }
 
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

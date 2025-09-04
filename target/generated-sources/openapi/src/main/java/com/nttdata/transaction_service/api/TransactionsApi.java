@@ -6,7 +6,6 @@
 package com.nttdata.transaction_service.api;
 
 import com.nttdata.transaction_service.model.TransactionGet;
-import com.nttdata.transaction_service.model.TransactionGetClientBalance;
 import com.nttdata.transaction_service.model.TransactionPost;
 import com.nttdata.transaction_service.model.TransactionPut;
 import io.swagger.annotations.*;
@@ -24,7 +23,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-29T17:52:57.098615300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-04T01:24:52.394066600-05:00[America/Lima]")
 @Validated
 @Api(value = "transactions", description = "the transactions API")
 public interface TransactionsApi {
@@ -132,14 +131,14 @@ public interface TransactionsApi {
      * @param id  (required)
      * @return Product information found (status code 200)
      */
-    @ApiOperation(value = "Get Transactions and Products Balance by Client's Product", nickname = "transactionsProductIdGet", notes = "", response = TransactionGetClientBalance.class, tags={  })
+    @ApiOperation(value = "Get Transactions and Products Balance by Client's Product", nickname = "transactionsProductIdGet", notes = "", response = TransactionGet.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Product information found", response = TransactionGetClientBalance.class) })
+        @ApiResponse(code = 200, message = "Product information found", response = TransactionGet.class, responseContainer = "List") })
     @GetMapping(
         value = "/transactions/product/{id}",
-        produces = { "application/json" }
+        produces = { "application/stream+json" }
     )
-    default Mono<ResponseEntity<TransactionGetClientBalance>> transactionsProductIdGet(@ApiParam(value = "",required=true) @PathVariable("id") String id, @ApiIgnore final ServerWebExchange exchange) {
+    default Mono<ResponseEntity<Flux<TransactionGet>>> transactionsProductIdGet(@ApiParam(value = "",required=true) @PathVariable("id") String id, @ApiIgnore final ServerWebExchange exchange) {
         return getDelegate().transactionsProductIdGet(id, exchange);
     }
 

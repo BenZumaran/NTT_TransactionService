@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TransactionServiceImp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.service.transaction</a> &gt; <span class="el_source">TransactionServiceImp.java</span></div><h1>TransactionServiceImp.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.service.transaction;
+
+import com.nttdata.transaction_service.dto.NumberProjection;
+import com.nttdata.transaction_service.mapper.TransactionMapper;
+import com.nttdata.transaction_service.model.TransactionGet;
+import com.nttdata.transaction_service.model.TransactionPost;
+import com.nttdata.transaction_service.model.TransactionPut;
+import com.nttdata.transaction_service.repository.TransactionRepository;
+import com.nttdata.transaction_service.service.account.AccountService;
+import com.nttdata.transaction_service.service.client.ClientService;
+import com.nttdata.transaction_service.service.credit.CreditService;
+import com.nttdata.transaction_service.util.TransactionNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
+<span class="fc" id="L22">@Slf4j</span>
+@Service
+<span class="fc" id="L24">public class TransactionServiceImp implements TransactionService {</span>
+
+
+    @Autowired
+    TransactionRepository repository;
+    @Autowired
+    AccountService accountService;
+    @Autowired
+    CreditService creditService;
+    @Autowired
+    ClientService clientService;
+
+    @Override
+    public Flux&lt;TransactionGet&gt; getTransactions() {
+        try {
+<span class="fc" id="L39">            return repository.findAll()</span>
+<span class="fc" id="L40">                    .map(TransactionMapper::transactionToTransactionGet)</span>
+<span class="fc" id="L41">                    .switchIfEmpty(Flux.error(new TransactionNotFoundException()))</span>
+<span class="fc" id="L42">                    .doOnComplete(() -&gt; log.info(&quot;Transactions found.&quot;))</span>
+<span class="fc" id="L43">                    .doOnError(error -&gt; log.error(&quot;Error: {} --&gt; getTransactions&quot;, error.getMessage()));</span>
+<span class="fc" id="L44">        } catch (Exception ex) {</span>
+<span class="fc" id="L45">            log.error(ex.getMessage());</span>
+<span class="fc" id="L46">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="fc" id="L47">                    log.error(stackTraceElement.toString()));</span>
+<span class="fc" id="L48">            return Flux.empty();</span>
+        }
+    }
+
+    @Override
+    public Mono&lt;Void&gt; deleteTransactionById(String id) {
+        try {
+<span class="fc" id="L55">            return repository.deleteById(id)</span>
+<span class="fc" id="L56">                    .doOnSuccess(nonusing2 -&gt; log.info(&quot;Transaction with id {} was deleted.&quot;, id))</span>
+<span class="pc" id="L57">                    .doOnError(nonusing3 -&gt; log.error(&quot;Error at delete transaction --&gt; deleteTransactionById.&quot;));</span>
+<span class="fc" id="L58">        } catch (Exception ex) {</span>
+<span class="fc" id="L59">            log.error(ex.getMessage());</span>
+<span class="fc" id="L60">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="fc" id="L61">                    log.error(stackTraceElement.toString()));</span>
+<span class="fc" id="L62">            return Mono.empty();</span>
+        }
+    }
+
+    @Override
+    public Mono&lt;TransactionGet&gt; getTransactionById(String id) {
+        try {
+            //Search in DB
+<span class="fc" id="L70">            return repository.findById(id)</span>
+                    //Map response to TransactionGet to respond
+<span class="fc" id="L72">                    .switchIfEmpty(Mono.error(new TransactionNotFoundException(id)))</span>
+<span class="fc" id="L73">                    .map(TransactionMapper::transactionToTransactionGet)</span>
+                    //Log success
+<span class="fc" id="L75">                    .doOnSuccess(nonusing -&gt; log.info(&quot;Transaction with id {} was found.&quot;, id))</span>
+<span class="fc" id="L76">                    .doOnError(error -&gt;</span>
+<span class="fc" id="L77">                            log.error(&quot;Error: {} --&gt; getTransactionById&quot;, error.getMessage()));</span>
+<span class="fc" id="L78">        } catch (Exception ex) {</span>
+<span class="fc" id="L79">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="fc" id="L80">                    log.error(stackTraceElement.toString()));</span>
+<span class="fc" id="L81">            return Mono.empty();</span>
+        }
+    }
+
+    @Override
+    public Mono&lt;TransactionGet&gt; insertTransaction(Mono&lt;TransactionPost&gt; transactionPostMono) {
+        try {
+<span class="fc" id="L88">            return transactionPostMono.zipWhen(transactionPost -&gt; repository</span>
+<span class="fc" id="L89">                            .findTopNumberByOrderByNumberDesc()</span>
+<span class="fc" id="L90">                            .map(NumberProjection::getNumber)</span>
+<span class="fc" id="L91">                            .switchIfEmpty(Mono.just(0)))</span>
+<span class="fc" id="L92">                    .map(TransactionMapper::transactionPostToTransaction)</span>
+<span class="fc" id="L93">                    .zipWhen(transaction -&gt; {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">                        if (transaction.getHolder() != null)</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">                            if (transaction.getHolder().getId() != null)</span>
+<span class="fc" id="L96">                                return clientService.fetchGetClientById(transaction.getHolder().getId());</span>
+                            else
+<span class="fc" id="L98">                                return clientService.fetchGetClientByDocument(transaction.getHolder().getDocument());</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">                        else if (transaction.getSignatory().getId() != null)</span>
+<span class="fc" id="L100">                            return clientService.fetchGetClientById(transaction.getSignatory().getId());</span>
+                        else
+<span class="fc" id="L102">                            return clientService.fetchGetClientByDocument(transaction.getSignatory().getDocument());</span>
+                    })
+<span class="fc" id="L104">                    .map(TransactionMapper::updatePersonsFromTransactionAndClientResponseDTO)</span>
+<span class="fc" id="L105">                    .flatMap(repository::save)</span>
+<span class="fc" id="L106">                    .map(TransactionMapper::transactionToTransactionGet)</span>
+<span class="fc" id="L107">                    .doOnSuccess(transactionGetResponseEntity -&gt;</span>
+<span class="fc" id="L108">                            log.info(&quot;Transaction was inserted id: {}&quot;,</span>
+<span class="fc" id="L109">                                    transactionGetResponseEntity.getId()))</span>
+                    //Log error
+<span class="fc" id="L111">                    .doOnError(error -&gt;</span>
+<span class="fc" id="L112">                            log.error(&quot;Error: {} --&gt; insertTransaction&quot;, error.getMessage()));</span>
+<span class="nc" id="L113">        } catch (Exception ex) {</span>
+<span class="nc" id="L114">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="nc" id="L115">                    log.error(stackTraceElement.toString()));</span>
+<span class="nc" id="L116">            return Mono.empty();</span>
+        }
+    }
+
+
+    @Override
+    public Mono&lt;TransactionGet&gt; updateTransaction(Mono&lt;TransactionPut&gt; transactionPutMono) {
+        try {
+            //Zip When to Search with repository by TransactionPut's ID
+<span class="fc" id="L125">            return transactionPutMono.zipWhen(</span>
+<span class="fc" id="L126">                            transactionPut -&gt; repository</span>
+<span class="fc" id="L127">                                    .findById(transactionPut.getId())</span>
+<span class="fc" id="L128">                                    .switchIfEmpty(Mono.error(</span>
+<span class="fc" id="L129">                                            new TransactionNotFoundException(transactionPut.getId()</span>
+                                            ))))
+                    //Valid only changes sent in TransactionPut
+<span class="fc" id="L132">                    .map(TransactionMapper::transactionPutAndTransactionPreviousToTransaction)</span>
+                    //Save the response to DB
+<span class="fc" id="L134">                    .flatMap(transaction -&gt; repository.save(transaction))</span>
+                    //Map to TransactionGet for response purposes
+<span class="fc" id="L136">                    .map(TransactionMapper::transactionToTransactionGet)</span>
+                    //Log success of update
+<span class="fc" id="L138">                    .doOnSuccess(nonusing -&gt; log.info(&quot;Transaction with was updated.&quot;))</span>
+                    //Log error
+<span class="fc" id="L140">                    .doOnError(nonusing2 -&gt; log.error(&quot;Error at update transaction --&gt; updateTransaction&quot;));</span>
+<span class="nc" id="L141">        } catch (Exception ex) {</span>
+<span class="nc" id="L142">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="nc" id="L143">                    log.error(stackTraceElement.toString()));</span>
+<span class="nc" id="L144">            return Mono.empty();</span>
+        }
+    }
+
+    @Override
+    public Flux&lt;TransactionGet&gt; getTransactionsByProductId(String id) {
+        try {
+<span class="fc" id="L151">            return repository.findBySenderIdOrderByCreatedDate(id)</span>
+<span class="fc" id="L152">                    .map(TransactionMapper::transactionToTransactionGet)</span>
+<span class="fc" id="L153">                    .switchIfEmpty(Flux.error(new TransactionNotFoundException()))</span>
+<span class="fc" id="L154">                    .doOnComplete(() -&gt; log.info(&quot;Information for product with id {} find.&quot;, id))</span>
+<span class="fc" id="L155">                    .doOnError(error -&gt; log.error(&quot;Error: {} --&gt; getTransactionsByProductId&quot;, error.getMessage()));</span>
+
+<span class="fc" id="L157">        } catch (Exception ex) {</span>
+<span class="fc" id="L158">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="fc" id="L159">                    log.error(stackTraceElement.toString()));</span>
+<span class="fc" id="L160">            return Flux.empty();</span>
+        }
+    }
+
+    @Override
+    public Flux&lt;TransactionGet&gt; getTransactionsByClientDocument(String document, String from, String to) {
+        try {
+<span class="fc" id="L167">            return repository.findByHolderDocumentAndCreatedDateBetween(document, LocalDateTime.parse(from), LocalDateTime.parse(to))</span>
+<span class="fc" id="L168">                    .map(TransactionMapper::transactionToTransactionGet)</span>
+<span class="fc" id="L169">                    .switchIfEmpty(Flux.error(new TransactionNotFoundException()))</span>
+<span class="fc" id="L170">                    .doOnComplete(() -&gt; log.info(&quot;Transactions for client with document {} find.&quot;, document))</span>
+<span class="fc" id="L171">                    .doOnError(error -&gt; log.error(&quot;Error: {} --&gt; getTransactionsByClientDocument&quot;, error.getMessage()));</span>
+<span class="fc" id="L172">        } catch (Exception ex) {</span>
+<span class="fc" id="L173">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="fc" id="L174">                    log.error(stackTraceElement.toString()));</span>
+<span class="fc" id="L175">            return Flux.empty();</span>
+        }
+    }
+
+    @Override
+    public Flux&lt;TransactionGet&gt; getTransactionsByTypeAndProductIdBetweenDates(String id, String type, String from, String to) {
+
+        try {
+<span class="fc" id="L183">            return repository.findByTypeAndSenderIdAndCreatedDateBetween(type, id, LocalDateTime.parse(from), LocalDateTime.parse(to))</span>
+<span class="fc" id="L184">                    .map(TransactionMapper::transactionToTransactionGet)</span>
+<span class="fc" id="L185">                    .switchIfEmpty(Flux.error(new TransactionNotFoundException()))</span>
+<span class="fc" id="L186">                    .doOnComplete(() -&gt; log.info(&quot;Transactions for product with id {} find.&quot;, id))</span>
+<span class="fc" id="L187">                    .doOnError(error -&gt; log.error(&quot;Error: {} --&gt; getTransactionsByTypeAndProductIdBetweenDates&quot;, error.getMessage()));</span>
+<span class="fc" id="L188">        } catch (Exception ex) {</span>
+<span class="fc" id="L189">            Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement -&gt;</span>
+<span class="fc" id="L190">                    log.error(stackTraceElement.toString()));</span>
+<span class="fc" id="L191">            return Flux.empty();</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,8 +1,9 @@
 package com.nttdata.transaction_service.model.entity;
 
-import com.nttdata.transaction_service.model.Person;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 public class PersonEntity {
     private String id;
