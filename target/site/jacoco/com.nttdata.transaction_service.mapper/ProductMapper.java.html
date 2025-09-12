@@ -1,43 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProductMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.mapper</a> &gt; <span class="el_source">ProductMapper.java</span></div><h1>ProductMapper.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.mapper;
 
+import com.nttdata.transaction_service.dto.account.AccountResponseCreateDTO;
+import com.nttdata.transaction_service.dto.credit.CreditResponseDTO;
+import com.nttdata.transaction_service.dto.transaction.TransactionProductDTO;
 import com.nttdata.transaction_service.model.Product;
 import com.nttdata.transaction_service.model.ProductType;
 import com.nttdata.transaction_service.model.entity.ProductEntity;
 
 import java.math.BigDecimal;
 
-<span class="nc" id="L9">public class ProductMapper {</span>
+<span class="nc" id="L12">public class ProductMapper {</span>
 
     // Validate and Converts ProductEntity to Product
-    public static Product productEntityToProduct(ProductEntity productEntity) {
-<span class="nc" id="L13">        Product product = new Product();</span>
-<span class="nc" id="L14">        product.setId(productEntity.getId());</span>
-<span class="nc bnc" id="L15" title="All 2 branches missed.">        if (productEntity.getType() != null)</span>
-<span class="nc" id="L16">            product.setType(ProductType.fromValue(productEntity.getType()));</span>
-<span class="nc bnc" id="L17" title="All 2 branches missed.">        if (productEntity.getNumber() != null)</span>
-<span class="nc" id="L18">            product.setNumber(productEntity.getNumber());</span>
-<span class="nc bnc" id="L19" title="All 2 branches missed.">        if (productEntity.getBalance() &gt; -1)</span>
-<span class="nc" id="L20">            product.setBalance(BigDecimal.valueOf(productEntity.getBalance()));</span>
-<span class="nc bnc" id="L21" title="All 2 branches missed.">        if(productEntity.getLimit() &gt; -1)</span>
-<span class="nc" id="L22">            product.setLimit(BigDecimal.valueOf(productEntity.getLimit()));</span>
-<span class="nc" id="L23">        return product;</span>
+    public static Product productEntityToProduct(ProductEntity productEntity) throws IllegalArgumentException {
+<span class="fc" id="L16">        Product product = new Product();</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        if (productEntity.getId() == null)</span>
+<span class="fc" id="L18">            throw new IllegalArgumentException(&quot;Product should have id&quot;);</span>
+<span class="fc" id="L19">        product.setId(productEntity.getId());</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        if (productEntity.getType() != null)</span>
+<span class="fc" id="L21">            product.setType(ProductType.fromValue(productEntity.getType()));</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (productEntity.getNumber() != null)</span>
+<span class="fc" id="L23">            product.setNumber(productEntity.getNumber());</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (productEntity.getBalance() &gt; 0)</span>
+<span class="fc" id="L25">            product.setBalance(BigDecimal.valueOf(productEntity.getBalance()));</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (productEntity.getLimit() &gt; 0)</span>
+<span class="fc" id="L27">            product.setLimit(BigDecimal.valueOf(productEntity.getLimit()));</span>
+<span class="fc" id="L28">        return product;</span>
     }
 
     // Validate Converts Product to ProductEntity
     public static ProductEntity productToProductEntity(Product product) {
-<span class="nc" id="L28">        ProductEntity productEntity = new ProductEntity();</span>
-<span class="nc" id="L29">        productEntity.setId(product.getId());</span>
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (product.getType() != null)</span>
-<span class="nc" id="L31">            productEntity.setType(product.getType().getValue());</span>
-<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (product.getNumber() != null)</span>
-<span class="nc" id="L33">            productEntity.setNumber(product.getNumber());</span>
-<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (product.getBalance() != null)</span>
-<span class="nc" id="L35">            productEntity.setBalance(product.getBalance().doubleValue());</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">        if(product.getLimit() != null)</span>
-<span class="nc" id="L37">            productEntity.setLimit(product.getLimit().doubleValue());</span>
-<span class="nc" id="L38">        return productEntity;</span>
+<span class="fc" id="L33">        ProductEntity productEntity = ProductEntity.builder().build();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (product.getId() == null)</span>
+<span class="fc" id="L35">            throw new IllegalArgumentException(&quot;Product should have id&quot;);</span>
+<span class="fc" id="L36">        productEntity.setId(product.getId());</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (product.getType() != null)</span>
+<span class="fc" id="L38">            productEntity.setType(product.getType().getValue());</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (product.getNumber() != null)</span>
+<span class="fc" id="L40">            productEntity.setNumber(product.getNumber());</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (product.getBalance() != null)</span>
+<span class="fc" id="L42">            productEntity.setBalance(product.getBalance().doubleValue());</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (product.getLimit() != null)</span>
+<span class="fc" id="L44">            productEntity.setLimit(product.getLimit().doubleValue());</span>
+<span class="fc" id="L45">        return productEntity;</span>
+    }
+
+    public static ProductEntity accountResponseDtoToProductEntity(AccountResponseCreateDTO accountResponseCreateDTO) {
+<span class="fc" id="L49">        if (</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">                accountResponseCreateDTO.getId() == null ||</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">                        accountResponseCreateDTO.getAccountNumber() == null ||</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                        accountResponseCreateDTO.getAccountType() == null</span>
+<span class="fc" id="L53">        ) throw new IllegalArgumentException(&quot;Account should have id, number, balance, type&quot;);</span>
+<span class="fc" id="L54">        ProductEntity productEntity = ProductEntity.builder().build();</span>
+<span class="fc" id="L55">        productEntity.setId(accountResponseCreateDTO.getId());</span>
+<span class="fc" id="L56">        productEntity.setNumber(accountResponseCreateDTO.getAccountNumber());</span>
+<span class="fc" id="L57">        productEntity.setBalance(accountResponseCreateDTO.getBalance());</span>
+        //savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card
+        //SAVINGS, CHECKING, FIXED_TERM
+<span class="fc bfc" id="L60" title="All 4 branches covered.">        switch (accountResponseCreateDTO.getAccountType()) {</span>
+            case &quot;SAVINGS&quot;:
+<span class="fc" id="L62">                productEntity.setType(&quot;savings_account&quot;);</span>
+<span class="fc" id="L63">                break;</span>
+            case &quot;CHECKING&quot;:
+<span class="fc" id="L65">                productEntity.setType(&quot;checking_account&quot;);</span>
+<span class="fc" id="L66">                break;</span>
+            case &quot;FIXED_TERM&quot;:
+<span class="fc" id="L68">                productEntity.setType(&quot;fixed_term_account&quot;);</span>
+<span class="fc" id="L69">                break;</span>
+            default:
+<span class="fc" id="L71">                throw new IllegalArgumentException(&quot;Account Product Type should be like SAVINGS, CHECKING, FIXED_TERM.&quot;);</span>
+        }
+<span class="fc" id="L73">        return productEntity;</span>
+    }
+
+
+    public static ProductEntity creditResponseDtoToProductEntity(CreditResponseDTO creditResponseDTO) {
+<span class="fc" id="L78">        if (</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">                creditResponseDTO.getId() == null ||</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">                        creditResponseDTO.getType() == null ||</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">                        creditResponseDTO.getLimit() &lt;= 0</span>
+<span class="fc" id="L82">        ) throw new IllegalArgumentException(&quot;Credit should have id, type&quot;);</span>
+<span class="fc" id="L83">        ProductEntity productEntity = ProductEntity.builder().build();</span>
+<span class="fc" id="L84">        productEntity.setId(creditResponseDTO.getId());</span>
+<span class="fc" id="L85">        productEntity.setLimit(creditResponseDTO.getLimit());</span>
+<span class="fc" id="L86">        productEntity.setBalance(creditResponseDTO.getBalance());</span>
+        //personal_credit, business_credit, credit_card
+        //PERSONAL, BUSINESS, CREDIT_CARD
+<span class="fc bfc" id="L89" title="All 4 branches covered.">        switch (creditResponseDTO.getType()) {</span>
+            case &quot;PERSONAL&quot;:
+<span class="fc" id="L91">                productEntity.setType(&quot;personal_credit&quot;);</span>
+<span class="fc" id="L92">                break;</span>
+            case &quot;BUSINESS&quot;:
+<span class="fc" id="L94">                productEntity.setType(&quot;business_credit&quot;);</span>
+<span class="fc" id="L95">                break;</span>
+            case &quot;CREDIT_CARD&quot;:
+<span class="fc" id="L97">                productEntity.setType(&quot;credit_card&quot;);</span>
+<span class="fc" id="L98">                break;</span>
+            default:
+<span class="fc" id="L100">                throw new IllegalArgumentException(&quot;Credit Product Type should be like PERSONAL, BUSINESS, CREDIT_CARD&quot;);</span>
+        }
+<span class="fc" id="L102">        return productEntity;</span>
+    }
+
+    public static Product transactionProductDtoToProduct(TransactionProductDTO transactionProductDTO) {
+<span class="fc" id="L106">        if (</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">                transactionProductDTO.getId() == null ||</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">                        transactionProductDTO.getType() == null</span>
+<span class="nc" id="L109">        ) throw new IllegalArgumentException(&quot;Transaction Product should have id, type&quot;);</span>
+<span class="fc" id="L110">        Product product = new Product();</span>
+<span class="fc" id="L111">        product.setId(transactionProductDTO.getId());</span>
+        //savings_account, checking_account, fixed_term_account, personal_credit, business_credit, credit_card
+        //SAVINGS, CHECKING, FIXED_TERM, PERSONAL, BUSINESS, CREDIT_CARD
+<span class="fc" id="L114">        product.setType(ProductType.fromValue(transactionProductDTO.getType()));</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        if (transactionProductDTO.getNumber() != null)</span>
+<span class="nc" id="L116">            product.setNumber(transactionProductDTO.getNumber());</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (transactionProductDTO.getBalance() &gt; 0)</span>
+<span class="nc" id="L118">            product.setBalance(BigDecimal.valueOf(transactionProductDTO.getBalance()));</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if (transactionProductDTO.getLimit() &gt; 0)</span>
+<span class="nc" id="L120">            product.setLimit(BigDecimal.valueOf(transactionProductDTO.getLimit()));</span>
+<span class="fc" id="L121">        return product;</span>
     }
 
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

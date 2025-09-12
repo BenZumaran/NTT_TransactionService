@@ -2,13 +2,14 @@ package com.nttdata.transaction_service.dto.account;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
+@Builder
 @NoArgsConstructor
 public class AccountResponseCreateDTO {
     private String id;
@@ -43,20 +44,20 @@ public class AccountResponseCreateDTO {
             @JsonProperty("active") boolean active,
             @JsonProperty("linkedCar") AccountCardDTO linkedCard
     ) {
-         this.id = id;
-         this.accountNumber = accountNumber;
-         this.interbankNumber = interbankNumber;
-         this.holderDocument = holderDocument;
-         this.authorizedSigners = authorizedSigners;
-         this.accountType = accountType;
-         this.balance = balance;
-         this.interestRate = interestRate;
-         this.monthlyMovementLimit = monthlyMovementLimit;
-         this.maintenanceFee = maintenanceFee;
-         this.allowedDayOfMonth = allowedDayOfMonth;
-         this.creationDate = creationDate;
-         this.active = active;
-         this.linkedCard = linkedCard;
+        this.id = id;
+        this.accountNumber = accountNumber;
+        this.interbankNumber = interbankNumber;
+        this.holderDocument = holderDocument;
+        this.authorizedSigners = authorizedSigners;
+        this.accountType = accountType;
+        this.balance = balance;
+        this.interestRate = interestRate;
+        this.monthlyMovementLimit = monthlyMovementLimit;
+        this.maintenanceFee = maintenanceFee;
+        this.allowedDayOfMonth = allowedDayOfMonth;
+        this.creationDate = creationDate;
+        this.active = active;
+        this.linkedCard = linkedCard;
     }
 
     /*

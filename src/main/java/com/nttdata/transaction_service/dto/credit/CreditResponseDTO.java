@@ -2,12 +2,14 @@ package com.nttdata.transaction_service.dto.credit;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class CreditResponseDTO {
     private String id;
     private String customerId;
@@ -33,7 +35,7 @@ public class CreditResponseDTO {
             @JsonProperty("status") String status,
             @JsonProperty("card") CreditCardDTO card,
             @JsonProperty("createdAt") LocalDateTime createdAt,
-            @JsonProperty("updatedAt") LocalDateTime updatedAt){
+            @JsonProperty("updatedAt") LocalDateTime updatedAt) {
         this.id = id;
         this.customerId = customerId;
         this.type = type;

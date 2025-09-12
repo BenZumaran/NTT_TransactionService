@@ -3,6 +3,7 @@ package com.nttdata.transaction_service.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.nttdata.transaction_service.model.Card;
 import com.nttdata.transaction_service.model.Person;
 import com.nttdata.transaction_service.model.Product;
 import com.nttdata.transaction_service.model.TransactionType;
@@ -15,7 +16,7 @@ import javax.validation.constraints.*;
 /**
  * TransactionPut
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-29T17:52:57.098615300-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-11T14:02:40.114452100-05:00[America/Lima]")
 public class TransactionPut   {
   @JsonProperty("id")
   private String id;
@@ -37,6 +38,9 @@ public class TransactionPut   {
 
   @JsonProperty("signatory")
   private Person signatory = null;
+
+  @JsonProperty("card")
+  private Card card = null;
 
   public TransactionPut id(String id) {
     this.id = id;
@@ -184,6 +188,27 @@ public class TransactionPut   {
     this.signatory = signatory;
   }
 
+  public TransactionPut card(Card card) {
+    this.card = card;
+    return this;
+  }
+
+  /**
+   * Get card
+   * @return card
+  */
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Card getCard() {
+    return card;
+  }
+
+  public void setCard(Card card) {
+    this.card = card;
+  }
+
 
   @Override
   public boolean equals(Object o) {
@@ -200,12 +225,13 @@ public class TransactionPut   {
         Objects.equals(this.type, transactionPut.type) &&
         Objects.equals(this.amount, transactionPut.amount) &&
         Objects.equals(this.holder, transactionPut.holder) &&
-        Objects.equals(this.signatory, transactionPut.signatory);
+        Objects.equals(this.signatory, transactionPut.signatory) &&
+        Objects.equals(this.card, transactionPut.card);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, sender, receiver, type, amount, holder, signatory);
+    return Objects.hash(id, sender, receiver, type, amount, holder, signatory, card);
   }
 
   @Override
@@ -220,6 +246,7 @@ public class TransactionPut   {
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
     sb.append("    holder: ").append(toIndentedString(holder)).append("\n");
     sb.append("    signatory: ").append(toIndentedString(signatory)).append("\n");
+    sb.append("    card: ").append(toIndentedString(card)).append("\n");
     sb.append("}");
     return sb.toString();
   }
