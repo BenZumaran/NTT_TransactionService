@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.nttdata.transaction_service.service.transaction.TransactionServiceImpTest
 -------------------------------------------------------------------------------
-Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.128 s - in com.nttdata.transaction_service.service.transaction.TransactionServiceImpTest
+Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.34 s - in com.nttdata.transaction_service.service.transaction.TransactionServiceImpTest

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KafkaMessageListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.service.kafka</a> &gt; <span class="el_source">KafkaMessageListener.java</span></div><h1>KafkaMessageListener.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.service.kafka;
+
+import com.nttdata.transaction_service.dto.transaction.TransactionPostDTO;
+import com.nttdata.transaction_service.mapper.TransactionMapper;
+import com.nttdata.transaction_service.service.transaction.TransactionService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
+
+@Service
+<span class="fc" id="L13">@Slf4j</span>
+<span class="fc" id="L14">public class KafkaMessageListener {</span>
+
+
+    @Autowired
+    TransactionService transactionService;
+
+    @KafkaListener(topics = &quot;transaction-credit-operation&quot;, groupId = &quot;transactions-group&quot;)
+    public void consumeEvents(TransactionPostDTO transactionPost) {
+<span class="nc" id="L22">        transactionService.insertTransaction(</span>
+<span class="nc" id="L23">                        Mono.just(</span>
+<span class="nc" id="L24">                                TransactionMapper.transactionPostDtoToTransactionPost(transactionPost)))</span>
+<span class="nc" id="L25">                .subscribe();</span>
+<span class="nc" id="L26">        log.info(&quot;consumer consume the events {} &quot;, transactionPost);</span>
+<span class="nc" id="L27">    }</span>
+
+//    @KafkaListener(topics = &quot;javatechie-demo1&quot;,groupId = &quot;jt-group-new&quot;)
+//    public void consume2(String message) {
+//        log.info(&quot;consumer2 consume the message {} &quot;, message);
+//    }
+//
+//    @KafkaListener(topics = &quot;javatechie-demo1&quot;,groupId = &quot;jt-group-new&quot;)
+//    public void consume3(String message) {
+//        log.info(&quot;consumer3 consume the message {} &quot;, message);
+//    }
+//
+//    @KafkaListener(topics = &quot;javatechie-demo1&quot;,groupId = &quot;jt-group-new&quot;)
+//    public void consume4(String message) {
+//        log.info(&quot;consumer4 consume the message {} &quot;, message);
+//    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

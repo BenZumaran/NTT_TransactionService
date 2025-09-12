@@ -1,11 +1,11 @@
 package com.nttdata.transaction_service.mapper;
 
 import com.nttdata.transaction_service.dto.client.ClientResponseDTO;
+import com.nttdata.transaction_service.dto.transaction.TransactionPostDTO;
 import com.nttdata.transaction_service.model.TransactionGet;
 import com.nttdata.transaction_service.model.TransactionPost;
 import com.nttdata.transaction_service.model.TransactionPut;
 import com.nttdata.transaction_service.model.TransactionType;
-import com.nttdata.transaction_service.model.entity.ProductEntity;
 import com.nttdata.transaction_service.model.entity.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,11 @@ public class TransactionMapper {
 
     // Converts Transaction to TransactionGet
     public static TransactionGet transactionToTransactionGet(Transaction transaction) throws IllegalArgumentException {
-
+        if (
+                transaction.getId() == null ||
+                        transaction.getSender() == null ||
+                        transaction.getAmount() <= 0
+        ) throw new IllegalArgumentException("Transaction should have id, sender, amount");
         TransactionGet transactionGet = new TransactionGet();
         transactionGet.setId(transaction.getId());
         transactionGet.setNumber(transaction.getNumber());
@@ -95,21 +99,26 @@ public class TransactionMapper {
     }
 
     public static Transaction transactionPostToTransaction(Tuple2<TransactionPost, Integer> tuple2) throws IllegalArgumentException {
-        if (tuple2.getT1().getHolder() != null && tuple2.getT1().getSignatory() != null)
+        if (tuple2.getT1().getHolder() == null &&
+                tuple2.getT1().getSignatory() == null)
             throw new IllegalArgumentException("Transaction must have at least one Signatory or Holder");
+        if (
+                tuple2.getT1().getSender() == null ||
+                        tuple2.getT1().getType() == null ||
+                        tuple2.getT1().getAmount() == null
+        ) throw new IllegalArgumentException("Transaction must have Sender, Type and Correct Amount");
         Transaction transaction = Transaction.builder().build();
         transaction.setNumber(tuple2.getT2() + 1);
         transaction.setSender(ProductMapper.productToProductEntity(tuple2.getT1().getSender()));
+        transaction.setType(tuple2.getT1().getType().getValue());
+        transaction.setAmount(tuple2.getT1().getAmount().doubleValue());
+        transaction.setCreatedDate(LocalDateTime.now());
         if (tuple2.getT1().getReceiver() != null)
             transaction.setReceiver(ProductMapper.productToProductEntity(tuple2.getT1().getReceiver()));
-
-        transaction.setType(tuple2.getT1().getType().getValue());
-        transaction.setCreatedDate(LocalDateTime.now());
         if (tuple2.getT1().getHolder() != null)
             transaction.setHolder(PersonMapper.personToPersonEntity(tuple2.getT1().getHolder()));
         if (tuple2.getT1().getSignatory() != null)
             transaction.setSignatory(PersonMapper.personToPersonEntity(tuple2.getT1().getSignatory()));
-        transaction.setAmount(tuple2.getT1().getAmount().doubleValue());
         if (tuple2.getT1().getCard() != null)
             transaction.setCard(CardMapper.cardToCardEntity(tuple2.getT1().getCard()));
 
@@ -121,22 +130,36 @@ public class TransactionMapper {
             Tuple2<Transaction, ClientResponseDTO> tuple2) {
         if (tuple2.getT1().getHolder() != null) {
             tuple2.getT1().setHolder(PersonMapper.clientResponseDtoToPersonEntity(tuple2.getT2()));
+            return tuple2.getT1();
         }
         if (tuple2.getT1().getSignatory() != null) {
             tuple2.getT1().setSignatory(PersonMapper.clientResponseDtoToPersonEntity(tuple2.getT2()));
+            return tuple2.getT1();
         }
         return tuple2.getT1();
-
     }
 
-    public static Transaction updateTransactionFromProductEntity(
-            Tuple2<Transaction, ProductEntity> tuple2) {
+    public static TransactionPost transactionPostDtoToTransactionPost(TransactionPostDTO transactionPostDTO) {
+        if (transactionPostDTO.getType() == null ||
+                transactionPostDTO.getSender() == null ||
+                transactionPostDTO.getAmount() <= 0
+        ) throw new IllegalArgumentException("Transaction must have Sender, Type and Correct Amount");
 
-        tuple2.getT1().setSender(tuple2.getT2());
+        TransactionPost transactionPost = new TransactionPost();
+        transactionPost.setSender(ProductMapper.transactionProductDtoToProduct(transactionPostDTO.getSender()));
+        transactionPost.setAmount(BigDecimal.valueOf(transactionPostDTO.getAmount()));
+        transactionPost.setType(TransactionType.fromValue(transactionPostDTO.getType()));
+        if (transactionPostDTO.getReceiver() != null)
+            transactionPost.setReceiver(ProductMapper.transactionProductDtoToProduct(transactionPostDTO.getReceiver()));
+        if (transactionPostDTO.getHolder() != null)
+            transactionPost.setHolder(PersonMapper.transactionPersonDtoToPerson(transactionPostDTO.getHolder()));
+        if (transactionPostDTO.getSignatory() != null)
+            transactionPost.setSignatory(PersonMapper.transactionPersonDtoToPerson(transactionPostDTO.getSignatory()));
+        if (transactionPostDTO.getType() != null)
+            transactionPost.setType(TransactionType.fromValue(transactionPostDTO.getType().toLowerCase()));
+        if (transactionPostDTO.getCard() != null)
+            transactionPost.setCard(CardMapper.transactionCardDtoToCard(transactionPostDTO.getCard()));
 
-        return tuple2.getT1();
-
+        return transactionPost;
     }
-
-
 }

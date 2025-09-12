@@ -6,16 +6,17 @@ import com.nttdata.transaction_service.model.TransactionGet;
 import com.nttdata.transaction_service.model.TransactionPost;
 import com.nttdata.transaction_service.model.TransactionPut;
 import com.nttdata.transaction_service.repository.TransactionRepository;
-import com.nttdata.transaction_service.service.account.AccountService;
 import com.nttdata.transaction_service.service.client.ClientService;
-import com.nttdata.transaction_service.service.credit.CreditService;
 import com.nttdata.transaction_service.util.TransactionNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
@@ -23,18 +24,15 @@ import java.util.Arrays;
 @Service
 public class TransactionServiceImp implements TransactionService {
 
-
     @Autowired
     TransactionRepository repository;
-    @Autowired
-    AccountService accountService;
-    @Autowired
-    CreditService creditService;
     @Autowired
     ClientService clientService;
 
     @Override
     public Flux<TransactionGet> getTransactions() {
+
+
         try {
             return repository.findAll()
                     .map(TransactionMapper::transactionToTransactionGet)
@@ -52,6 +50,7 @@ public class TransactionServiceImp implements TransactionService {
     @Override
     public Mono<Void> deleteTransactionById(String id) {
         try {
+
             return repository.deleteById(id)
                     .doOnSuccess(nonusing2 -> log.info("Transaction with id {} was deleted.", id))
                     .doOnError(nonusing3 -> log.error("Error at delete transaction --> deleteTransactionById."));
@@ -66,15 +65,30 @@ public class TransactionServiceImp implements TransactionService {
     @Override
     public Mono<TransactionGet> getTransactionById(String id) {
         try {
+
+
             //Search in DB
-            return repository.findById(id)
+            return
                     //Map response to TransactionGet to respond
-                    .switchIfEmpty(Mono.error(new TransactionNotFoundException(id)))
-                    .map(TransactionMapper::transactionToTransactionGet)
-                    //Log success
-                    .doOnSuccess(nonusing -> log.info("Transaction with id {} was found.", id))
-                    .doOnError(error ->
-                            log.error("Error: {} --> getTransactionById", error.getMessage()));
+                    //cacheOperations.get(id).map(
+                    //                res -> res
+                    //        ).map(CacheMapper::cacheTransactionDtoToTransaction)
+                    //        .switchIfEmpty(
+                    //                repository.findById(id)
+                    //                        .map(transaction -> {
+                    //                                    cacheOperations
+                    //                                            .set(id, CacheMapper.transactionToCacheTransactionDto(transaction))
+                    //                                            .subscribe();
+                    //                                    return transaction;
+                    //                                }
+                    //                        ))
+                    repository.findById(id)
+                            .switchIfEmpty(Mono.error(new TransactionNotFoundException(id)))
+                            .map(TransactionMapper::transactionToTransactionGet)
+                            //Log success
+                            .doOnSuccess(nonusing -> log.info("Transaction with id {} was found.", id))
+                            .doOnError(error ->
+                                    log.error("Error: {} --> getTransactionById", error.getMessage()));
         } catch (Exception ex) {
             Arrays.stream(ex.fillInStackTrace().getStackTrace()).forEach(stackTraceElement ->
                     log.error(stackTraceElement.toString()));
@@ -101,9 +115,17 @@ public class TransactionServiceImp implements TransactionService {
                         else
                             return clientService.fetchGetClientByDocument(transaction.getSignatory().getDocument());
                     })
+                    .retryWhen(Retry.backoff(3, Duration.ofSeconds(1))
+                            .filter(throwable -> throwable instanceof WebClientResponseException)) // Retries 3 times with 1-second backoff only for WebClientRequestException
                     .map(TransactionMapper::updatePersonsFromTransactionAndClientResponseDTO)
                     .flatMap(repository::save)
                     .map(TransactionMapper::transactionToTransactionGet)
+//                    .map(transactionGet -> {
+//                        Cache cache = cacheManager.getCache("TRANSACTION_CACHE");
+//                        if (cache != null)
+//                            cache.put(transactionGet.getId(), transactionGet);
+//                        return transactionGet;
+//                    })
                     .doOnSuccess(transactionGetResponseEntity ->
                             log.info("Transaction was inserted id: {}",
                                     transactionGetResponseEntity.getId()))

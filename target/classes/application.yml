@@ -26,3 +26,24 @@ resilience4j:
         permittedNumberOfCallsInHalfOpenState: 3
         slidingWindowSize: 10
         slidingWindowType: COUNT_BASED
+
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: transactions-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: com.*
+  data:
+    redis:
+      host: localhost
+      port:
+      time-to-live: 600000 # 10 minutes in milliseconds
+  cache:
+    type: redis
+    cache-names: transaction

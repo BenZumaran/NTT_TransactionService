@@ -1,54 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.mapper</a> &gt; <span class="el_source">CardMapper.java</span></div><h1>CardMapper.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.mapper;
 
+import com.nttdata.transaction_service.dto.transaction.TransactionCardDTO;
 import com.nttdata.transaction_service.model.Card;
 import com.nttdata.transaction_service.model.entity.CardEntity;
 
-import java.time.OffsetDateTime;
+import java.time.ZoneId;
 
-<span class="nc" id="L8">public class CardMapper {</span>
+<span class="nc" id="L9">public class CardMapper {</span>
 
     public static CardEntity cardToCardEntity(Card card) throws IllegalArgumentException {
-<span class="nc" id="L11">        CardEntity cardEntity = CardEntity.builder().build();</span>
+<span class="fc bfc" id="L12" title="All 2 branches covered.">        if (card.getId() == null)</span>
+<span class="fc" id="L13">            throw new IllegalArgumentException(&quot;Card should have ID&quot;);</span>
 
-<span class="nc bnc" id="L13" title="All 2 branches missed.">        if (card.getId() == null)</span>
-<span class="nc" id="L14">            throw new IllegalArgumentException(&quot;Card should have ID&quot;);</span>
-<span class="nc" id="L15">        cardEntity.setId(card.getId());</span>
+<span class="fc" id="L15">        CardEntity cardEntity = CardEntity.builder().build();</span>
 
-<span class="nc bnc" id="L17" title="All 2 branches missed.">        if (card.getCardNumber() != null)</span>
-<span class="nc" id="L18">            cardEntity.setCardNumber(card.getCardNumber());</span>
+<span class="fc" id="L17">        cardEntity.setId(card.getId());</span>
 
-<span class="nc bnc" id="L20" title="All 2 branches missed.">        if (card.getIsVirtual() != null)</span>
-<span class="nc" id="L21">            cardEntity.setVirtual(card.getIsVirtual());</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">        if (card.getCardNumber() != null)</span>
+<span class="fc" id="L20">            cardEntity.setCardNumber(card.getCardNumber());</span>
 
-<span class="nc bnc" id="L23" title="All 2 branches missed.">        if (card.getCreationDate() != null)</span>
-<span class="nc" id="L24">            cardEntity.setCreationDate(card.getCreationDate().toLocalDateTime());</span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        if (card.getIsVirtual() != null)</span>
+<span class="nc" id="L23">            cardEntity.setVirtual(card.getIsVirtual());</span>
 
-<span class="nc bnc" id="L26" title="All 2 branches missed.">        if (card.getCardType() != null)</span>
-<span class="nc" id="L27">            cardEntity.setCardType(card.getCardType().getValue());</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (card.getCreationDate() != null)</span>
+<span class="fc" id="L26">            cardEntity.setCreationDate(card.getCreationDate().toLocalDateTime());</span>
 
-<span class="nc bnc" id="L29" title="All 2 branches missed.">        if (card.getBrand() != null)</span>
-<span class="nc" id="L30">            cardEntity.setBrand(card.getBrand().getValue());</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (card.getCardType() != null)</span>
+<span class="fc" id="L29">            cardEntity.setCardType(card.getCardType().getValue());</span>
 
-<span class="nc" id="L32">        return cardEntity;</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (card.getBrand() != null)</span>
+<span class="fc" id="L32">            cardEntity.setBrand(card.getBrand().getValue());</span>
+
+<span class="fc" id="L34">        return cardEntity;</span>
     }
 
     public static Card cardEntityToCard(CardEntity cardEntity) {
-<span class="nc" id="L36">        Card card = new Card();</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (cardEntity.getId() == null)</span>
+<span class="fc" id="L39">            throw new IllegalArgumentException(&quot;Card should have ID&quot;);</span>
 
-<span class="nc" id="L38">        card.setId(cardEntity.getId());</span>
+<span class="fc" id="L41">        Card card = new Card();</span>
+<span class="fc" id="L42">        card.setId(cardEntity.getId());</span>
 
-<span class="nc" id="L40">        card.setCardNumber(cardEntity.getCardNumber());</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (cardEntity.getCardNumber() != null)</span>
+<span class="fc" id="L45">            card.setCardNumber(cardEntity.getCardNumber());</span>
 
-<span class="nc" id="L42">        card.setIsVirtual(cardEntity.isVirtual());</span>
+<span class="fc" id="L47">        card.setIsVirtual(cardEntity.isVirtual());</span>
 
-<span class="nc" id="L44">        card.setCreationDate(OffsetDateTime.from(cardEntity.getCreationDate()));</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (cardEntity.getCreationDate() != null)</span>
+<span class="fc" id="L50">            card.setCreationDate(</span>
+<span class="fc" id="L51">                    cardEntity.getCreationDate().atZone(ZoneId.systemDefault()).toOffsetDateTime()</span>
+            );
 
-<span class="nc" id="L46">        card.setCardType(Card.CardTypeEnum.fromValue(cardEntity.getCardType()));</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (cardEntity.getCardType() != null)</span>
+<span class="fc" id="L55">            card.setCardType(Card.CardTypeEnum.fromValue(cardEntity.getCardType()));</span>
 
-<span class="nc" id="L48">        card.setBrand(Card.BrandEnum.fromValue(cardEntity.getBrand()));</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (cardEntity.getBrand() != null)</span>
+<span class="fc" id="L58">            card.setBrand(Card.BrandEnum.fromValue(cardEntity.getBrand()));</span>
 
-<span class="nc" id="L50">        return card;</span>
+<span class="fc" id="L60">        return card;</span>
     }
 
+    public static Card transactionCardDtoToCard(TransactionCardDTO transactionCardDTO) throws IllegalArgumentException {
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (transactionCardDTO.getId() == null)</span>
+<span class="nc" id="L65">            throw new IllegalArgumentException(&quot;Card should have ID&quot;);</span>
+
+<span class="fc" id="L67">        Card card = new Card();</span>
+<span class="fc" id="L68">        card.setId(transactionCardDTO.getId());</span>
+
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (transactionCardDTO.getCardNumber() != null)</span>
+<span class="nc" id="L71">            card.setCardNumber(transactionCardDTO.getCardNumber());</span>
+
+<span class="fc" id="L73">        card.setIsVirtual(transactionCardDTO.isVirtual());</span>
+
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (transactionCardDTO.getCreationDate() != null)</span>
+<span class="nc" id="L76">            card.setCreationDate(transactionCardDTO.getCreationDate().toLocalDateTime().atZone(ZoneId.systemDefault()).toOffsetDateTime());</span>
+
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (transactionCardDTO.getCardType() != null)</span>
+<span class="nc" id="L79">            card.setCardType(Card.CardTypeEnum.fromValue(transactionCardDTO.getCardType()));</span>
+
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        if (transactionCardDTO.getBrand() != null)</span>
+<span class="nc" id="L82">            card.setBrand(Card.BrandEnum.fromValue(transactionCardDTO.getBrand()));</span>
+
+<span class="fc" id="L84">        return card;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

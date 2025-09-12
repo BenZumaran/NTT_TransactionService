@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 <span class="fc" id="L9">public class ClientClient {</span>
 
     @Value(&quot;${external.client.service.uri}&quot;)
-    private String CLIENT_URI;
+    String CLIENT_URI;
 
     @Bean
     public WebClient clientWebClient() {

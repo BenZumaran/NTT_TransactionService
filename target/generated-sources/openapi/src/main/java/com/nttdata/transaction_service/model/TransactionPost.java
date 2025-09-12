@@ -16,7 +16,7 @@ import javax.validation.constraints.*;
 /**
  * TransactionPost
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-04T01:24:52.394066600-05:00[America/Lima]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-11T14:02:40.114452100-05:00[America/Lima]")
 public class TransactionPost   {
   @JsonProperty("sender")
   private Product sender;

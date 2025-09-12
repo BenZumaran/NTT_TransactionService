@@ -1,61 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersonMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transaction_service</a> &gt; <a href="index.source.html" class="el_package">com.nttdata.transaction_service.mapper</a> &gt; <span class="el_source">PersonMapper.java</span></div><h1>PersonMapper.java</h1><pre class="source lang-java linenums">package com.nttdata.transaction_service.mapper;
 
 import com.nttdata.transaction_service.dto.client.ClientResponseDTO;
+import com.nttdata.transaction_service.dto.transaction.TransactionPersonDTO;
 import com.nttdata.transaction_service.model.Person;
 import com.nttdata.transaction_service.model.entity.PersonEntity;
 
-<span class="nc" id="L7">public class PersonMapper {</span>
+<span class="nc" id="L8">public class PersonMapper {</span>
 
     // Validate and Converts Person to Person Entity
     public static PersonEntity personToPersonEntity(Person person) throws IllegalArgumentException {
-<span class="fc" id="L11">        PersonEntity personEntity = PersonEntity.builder().build();</span>
-<span class="fc bfc" id="L12" title="All 4 branches covered.">        if (person.getId() == null &amp;&amp; person.getDocument() == null) {</span>
-<span class="fc" id="L13">            throw new IllegalArgumentException(&quot;Holder or Signatory should have at least document or id&quot;);</span>
+<span class="fc" id="L12">        PersonEntity personEntity = PersonEntity.builder().build();</span>
+<span class="fc bfc" id="L13" title="All 4 branches covered.">        if (person.getId() == null &amp;&amp; person.getDocument() == null) {</span>
+<span class="fc" id="L14">            throw new IllegalArgumentException(&quot;Holder or Signatory should have at least document or id&quot;);</span>
         }
-<span class="fc bfc" id="L15" title="All 2 branches covered.">        if (person.getId() != null)</span>
-<span class="fc" id="L16">            personEntity.setId(person.getId());</span>
-<span class="fc bfc" id="L17" title="All 2 branches covered.">        if (person.getDocument() != null)</span>
-<span class="fc" id="L18">            personEntity.setDocument(person.getDocument());</span>
-<span class="fc bfc" id="L19" title="All 2 branches covered.">        if (person.getType() != null)</span>
-<span class="fc" id="L20">            personEntity.setType(person.getType().getValue());</span>
-<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (person.getFullName() != null)</span>
-<span class="fc" id="L22">            personEntity.setFullName(person.getFullName());</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        if (person.getId() != null)</span>
+<span class="fc" id="L17">            personEntity.setId(person.getId());</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        if (person.getDocument() != null)</span>
+<span class="fc" id="L19">            personEntity.setDocument(person.getDocument());</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        if (person.getType() != null)</span>
+<span class="fc" id="L21">            personEntity.setType(person.getType().getValue());</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if (person.getFullName() != null)</span>
+<span class="fc" id="L23">            personEntity.setFullName(person.getFullName());</span>
 
-<span class="fc" id="L24">        return personEntity;</span>
+<span class="fc" id="L25">        return personEntity;</span>
     }
 
     // Validate and Converts Person Entity to Person
-    public static Person personEntityToPerson(PersonEntity personEntity) throws Error {
-<span class="fc" id="L29">        Person person = new Person();</span>
-<span class="pc bpc" id="L30" title="3 of 4 branches missed.">        if (personEntity.getId() == null &amp;&amp; personEntity.getDocument() == null) {</span>
-<span class="nc" id="L31">            throw new Error(&quot;Holder or Signatory should have at least document or id&quot;);</span>
+    public static Person personEntityToPerson(PersonEntity personEntity) throws IllegalArgumentException {
+<span class="fc" id="L30">        Person person = new Person();</span>
+<span class="fc bfc" id="L31" title="All 4 branches covered.">        if (personEntity.getId() == null &amp;&amp; personEntity.getDocument() == null) {</span>
+<span class="fc" id="L32">            throw new IllegalArgumentException(&quot;Holder or Signatory should have at least document or id&quot;);</span>
         }
-<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (personEntity.getId() != null)</span>
-<span class="fc" id="L34">            person.setId(personEntity.getId());</span>
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (personEntity.getDocument() != null)</span>
-<span class="fc" id="L36">            person.setDocument(personEntity.getDocument());</span>
-<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (personEntity.getType() != null)</span>
-<span class="fc" id="L38">            person.setType(Person.TypeEnum.valueOf(personEntity.getType().toUpperCase()));</span>
-<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (personEntity.getFullName() != null)</span>
-<span class="fc" id="L40">            person.setFullName(personEntity.getFullName());</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (personEntity.getId() != null)</span>
+<span class="fc" id="L35">            person.setId(personEntity.getId());</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if (personEntity.getDocument() != null)</span>
+<span class="fc" id="L37">            person.setDocument(personEntity.getDocument());</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if (personEntity.getType() != null)</span>
+<span class="fc" id="L39">            person.setType(Person.TypeEnum.valueOf(personEntity.getType().toUpperCase()));</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (personEntity.getFullName() != null)</span>
+<span class="fc" id="L41">            person.setFullName(personEntity.getFullName());</span>
 
-<span class="fc" id="L42">        return person;</span>
+<span class="fc" id="L43">        return person;</span>
     }
 
-    public static PersonEntity clientResponseDtoToPersonEntity(ClientResponseDTO clientResponseDTO) {
-<span class="fc" id="L46">        PersonEntity personEntity = PersonEntity.builder().build();</span>
-<span class="fc" id="L47">        personEntity.setId(clientResponseDTO.getId());</span>
-<span class="fc" id="L48">        personEntity.setDocument(clientResponseDTO.getDocumentNumber());</span>
-<span class="fc" id="L49">        personEntity.setFullName(clientResponseDTO.getFullName());</span>
-<span class="pc bpc" id="L50" title="2 of 3 branches missed.">        switch (clientResponseDTO.getType()) {</span>
-            case &quot;PERSONAL&quot;:
-<span class="nc" id="L52">                personEntity.setType(&quot;personal&quot;);</span>
-            case &quot;BUSINESS&quot;:
-<span class="nc" id="L54">                personEntity.setType(&quot;business&quot;);</span>
-        }
-<span class="fc" id="L56">        return personEntity;</span>
+    public static PersonEntity clientResponseDtoToPersonEntity(ClientResponseDTO clientResponseDTO) throws IllegalArgumentException {
+<span class="fc" id="L47">        if (</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                clientResponseDTO.getId() == null &amp;&amp;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">                        clientResponseDTO.getDocumentNumber() == null</span>
+<span class="fc" id="L50">        ) throw new IllegalArgumentException(&quot;Person should have at least id or document number&quot;);</span>
+<span class="fc" id="L51">        PersonEntity personEntity = PersonEntity.builder().build();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (clientResponseDTO.getId() != null)</span>
+<span class="fc" id="L53">            personEntity.setId(clientResponseDTO.getId());</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (clientResponseDTO.getDocumentNumber() != null)</span>
+<span class="fc" id="L55">            personEntity.setDocument(clientResponseDTO.getDocumentNumber());</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (clientResponseDTO.getFullName() != null)</span>
+<span class="fc" id="L57">            personEntity.setFullName(clientResponseDTO.getFullName());</span>
+        /*
+        PERSONAL, PERSONAL_VIP, BUSINESS, BUSINESS_VIP
+       personal, personal_vip, business, business_vip
+         */
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (clientResponseDTO.getType() != null)</span>
+<span class="fc bfc" id="L63" title="All 5 branches covered.">            switch (clientResponseDTO.getType()) {</span>
+                case &quot;PERSONAL&quot;:
+<span class="fc" id="L65">                    personEntity.setType(&quot;personal&quot;);</span>
+<span class="fc" id="L66">                    break;</span>
+                case &quot;PERSONAL_VIP&quot;:
+<span class="fc" id="L68">                    personEntity.setType(&quot;personal_vip&quot;);</span>
+<span class="fc" id="L69">                    break;</span>
+                case &quot;BUSINESS&quot;:
+<span class="fc" id="L71">                    personEntity.setType(&quot;business&quot;);</span>
+<span class="fc" id="L72">                    break;</span>
+                case &quot;BUSINESS_VIP&quot;:
+<span class="fc" id="L74">                    personEntity.setType(&quot;business_vip&quot;);</span>
+<span class="fc" id="L75">                    break;</span>
+                default:
+<span class="fc" id="L77">                    throw new IllegalArgumentException(&quot;Person type should be like PERSONAL, PERSONAL_VIP, BUSINESS, BUSINESS_VIP&quot;);</span>
+            }
+<span class="fc" id="L79">        return personEntity;</span>
     }
 
+    public static Person transactionPersonDtoToPerson(TransactionPersonDTO transactionPersonDTO) throws IllegalArgumentException {
+<span class="fc" id="L83">        Person person = new Person();</span>
+<span class="pc bpc" id="L84" title="3 of 4 branches missed.">        if (transactionPersonDTO.getId() == null &amp;&amp; transactionPersonDTO.getDocument() == null) {</span>
+<span class="nc" id="L85">            throw new IllegalArgumentException(&quot;Holder or Signatory should have at least document or id&quot;);</span>
+        }
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (transactionPersonDTO.getId() != null)</span>
+<span class="fc" id="L88">            person.setId(transactionPersonDTO.getId());</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        if (transactionPersonDTO.getDocument() != null)</span>
+<span class="nc" id="L90">            person.setDocument(transactionPersonDTO.getDocument());</span>
+
+<span class="fc" id="L92">        return person;</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -148,7 +148,7 @@ class TransactionServiceImpTest {
                         .build())
                 .segment("basic")
                 .documentNumber("12345678")
-                .type("personal")
+                .type("PERSONAL")
                 .build();
         clientResponseDTOMono = Mono.just(clientResponseDTO);
 

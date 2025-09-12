@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class AccountClient {
 
     @Value("${external.account.service.uri}")
-    private String ACCOUNT_URI;
+    String ACCOUNT_URI;
 
     @Bean
     public WebClient accountWebClient() {

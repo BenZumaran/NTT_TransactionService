@@ -13,8 +13,8 @@ import reactor.core.publisher.Mono;
 
     @Override
     public Mono&lt;CreditResponseDTO&gt; fetchGetCreditById(String clientId) {
-<span class="nc" id="L16">        return creditClient.creditWebClient().get().uri(clientId)</span>
-<span class="nc" id="L17">                .retrieve().bodyToMono(CreditResponseDTO.class);</span>
+<span class="fc" id="L16">        return creditClient.creditWebClient().get().uri(clientId)</span>
+<span class="fc" id="L17">                .retrieve().bodyToMono(CreditResponseDTO.class);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

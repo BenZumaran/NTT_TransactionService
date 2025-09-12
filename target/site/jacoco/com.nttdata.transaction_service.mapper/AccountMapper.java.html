@@ -3,38 +3,35 @@
 import com.nttdata.transaction_service.dto.account.AccountResponseCreateDTO;
 import com.nttdata.transaction_service.model.Product;
 import com.nttdata.transaction_service.model.ProductType;
-import com.nttdata.transaction_service.model.TransactionPost;
-import com.nttdata.transaction_service.model.entity.ProductEntity;
-import com.nttdata.transaction_service.model.entity.Transaction;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-<span class="nc" id="L13">public class AccountMapper {</span>
+<span class="nc" id="L9">public class AccountMapper {</span>
 
-    public static Product accountResponseCreateDtoToProduct(AccountResponseCreateDTO accountResponseCreateDTO){
-<span class="nc" id="L16">        Product product = new Product();</span>
-<span class="nc" id="L17">        product.setId(accountResponseCreateDTO.getId());</span>
-<span class="nc" id="L18">        product.setBalance(BigDecimal.valueOf(accountResponseCreateDTO.getBalance()));</span>
-<span class="nc bnc" id="L19" title="All 4 branches missed.">        switch (accountResponseCreateDTO.getAccountType()){</span>
+    public static Product accountResponseCreateDtoToProduct(AccountResponseCreateDTO accountResponseCreateDTO) {
+<span class="fc" id="L12">        Product product = new Product();</span>
+<span class="fc" id="L13">        product.setId(accountResponseCreateDTO.getId());</span>
+<span class="fc" id="L14">        product.setBalance(BigDecimal.valueOf(accountResponseCreateDTO.getBalance()));</span>
+<span class="fc bfc" id="L15" title="All 2 branches covered.">        if (accountResponseCreateDTO.getAccountNumber() != null)</span>
+<span class="fc" id="L16">            product.setNumber(accountResponseCreateDTO.getAccountNumber());</span>
+<span class="fc bfc" id="L17" title="All 4 branches covered.">        switch (accountResponseCreateDTO.getAccountType()) {</span>
             //[ SAVINGS, CHECKING, FIXED_TERM ]
             //savings_account, checking_account, fixed_term_account
             case &quot;SAVINGS&quot;:
-<span class="nc" id="L23">                product.setType(ProductType.fromValue(&quot;savings_account&quot;));</span>
-<span class="nc" id="L24">                break;</span>
+<span class="fc" id="L21">                product.setType(ProductType.fromValue(&quot;savings_account&quot;));</span>
+<span class="fc" id="L22">                break;</span>
             case &quot;CHECKING&quot;:
-<span class="nc" id="L26">                product.setType(ProductType.fromValue(&quot;checking_account&quot;));</span>
-<span class="nc" id="L27">                break;</span>
+<span class="fc" id="L24">                product.setType(ProductType.fromValue(&quot;checking_account&quot;));</span>
+<span class="fc" id="L25">                break;</span>
             case &quot;FIXED_TERM&quot;:
-<span class="nc" id="L29">                product.setType(ProductType.fromValue(&quot;fixed_term_account&quot;));</span>
-<span class="nc" id="L30">                break;</span>
+<span class="fc" id="L27">                product.setType(ProductType.fromValue(&quot;fixed_term_account&quot;));</span>
+<span class="fc" id="L28">                break;</span>
             default:
-<span class="nc" id="L32">                throw  new IllegalArgumentException(&quot;No account product type &quot; + accountResponseCreateDTO.getAccountType()</span>
-                        + &quot;valid types: [ personal_credit, business_credit, credit_card ]&quot;);
+<span class="fc" id="L30">                throw new IllegalArgumentException(&quot;No account product type &quot; + accountResponseCreateDTO.getAccountType()</span>
+                        + &quot;, valid types: [ personal_credit, business_credit, credit_card ]&quot;);
         }
-<span class="nc" id="L35">        return product;</span>
+<span class="fc" id="L33">        return product;</span>
     }
-
 
 
 }

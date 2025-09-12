@@ -15,8 +15,8 @@ import reactor.core.publisher.Mono;
 
     @Override
     public Mono&lt;AccountResponseCreateDTO&gt; fetchGetAccountById(String accountId) {
-<span class="nc" id="L18">        return accountClient.accountWebClient().get()</span>
-<span class="nc" id="L19">                .uri(&quot;/&quot; + accountId).retrieve().bodyToMono(AccountResponseCreateDTO.class);</span>
+<span class="fc" id="L18">        return accountClient.accountWebClient().get()</span>
+<span class="fc" id="L19">                .uri(&quot;/&quot; + accountId).retrieve().bodyToMono(AccountResponseCreateDTO.class);</span>
     }
 
 

@@ -1,17 +1,19 @@
 package com.nttdata.transaction_service.mapper;
 
+import com.nttdata.transaction_service.dto.transaction.TransactionCardDTO;
 import com.nttdata.transaction_service.model.Card;
 import com.nttdata.transaction_service.model.entity.CardEntity;
 
-import java.time.OffsetDateTime;
+import java.time.ZoneId;
 
 public class CardMapper {
 
     public static CardEntity cardToCardEntity(Card card) throws IllegalArgumentException {
-        CardEntity cardEntity = CardEntity.builder().build();
-
         if (card.getId() == null)
             throw new IllegalArgumentException("Card should have ID");
+
+        CardEntity cardEntity = CardEntity.builder().build();
+
         cardEntity.setId(card.getId());
 
         if (card.getCardNumber() != null)
@@ -33,21 +35,52 @@ public class CardMapper {
     }
 
     public static Card cardEntityToCard(CardEntity cardEntity) {
-        Card card = new Card();
+        if (cardEntity.getId() == null)
+            throw new IllegalArgumentException("Card should have ID");
 
+        Card card = new Card();
         card.setId(cardEntity.getId());
 
-        card.setCardNumber(cardEntity.getCardNumber());
+        if (cardEntity.getCardNumber() != null)
+            card.setCardNumber(cardEntity.getCardNumber());
 
         card.setIsVirtual(cardEntity.isVirtual());
 
-        card.setCreationDate(OffsetDateTime.from(cardEntity.getCreationDate()));
+        if (cardEntity.getCreationDate() != null)
+            card.setCreationDate(
+                    cardEntity.getCreationDate().atZone(ZoneId.systemDefault()).toOffsetDateTime()
+            );
 
-        card.setCardType(Card.CardTypeEnum.fromValue(cardEntity.getCardType()));
+        if (cardEntity.getCardType() != null)
+            card.setCardType(Card.CardTypeEnum.fromValue(cardEntity.getCardType()));
 
-        card.setBrand(Card.BrandEnum.fromValue(cardEntity.getBrand()));
+        if (cardEntity.getBrand() != null)
+            card.setBrand(Card.BrandEnum.fromValue(cardEntity.getBrand()));
 
         return card;
     }
 
+    public static Card transactionCardDtoToCard(TransactionCardDTO transactionCardDTO) throws IllegalArgumentException {
+        if (transactionCardDTO.getId() == null)
+            throw new IllegalArgumentException("Card should have ID");
+
+        Card card = new Card();
+        card.setId(transactionCardDTO.getId());
+
+        if (transactionCardDTO.getCardNumber() != null)
+            card.setCardNumber(transactionCardDTO.getCardNumber());
+
+        card.setIsVirtual(transactionCardDTO.isVirtual());
+
+        if (transactionCardDTO.getCreationDate() != null)
+            card.setCreationDate(transactionCardDTO.getCreationDate().toLocalDateTime().atZone(ZoneId.systemDefault()).toOffsetDateTime());
+
+        if (transactionCardDTO.getCardType() != null)
+            card.setCardType(Card.CardTypeEnum.fromValue(transactionCardDTO.getCardType()));
+
+        if (transactionCardDTO.getBrand() != null)
+            card.setBrand(Card.BrandEnum.fromValue(transactionCardDTO.getBrand()));
+
+        return card;
+    }
 }
